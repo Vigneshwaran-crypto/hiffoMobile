@@ -1,0 +1,10 @@
+MJ Roofting  Android JKS Information : 
+
+Path = /android/app/keystore/LeadPartner.jks
+
+Created At : 23/07/2022
+JKS Password : Betamonks@123
+
+Alias. :  leadpartner 
+
+Alias Password : Betamonks@123

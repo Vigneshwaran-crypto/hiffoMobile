@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+<style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <!-- removing the dialog's action bar -->
+    </style>
+
+       <style name="AppTheme.AppBarOverlay" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+
+   </style>
+
+   <style name="AppTheme.PopupOverlay" parent="Theme.MaterialComponents.Light.NoActionBar">
+    </style>
+
+</resources>
