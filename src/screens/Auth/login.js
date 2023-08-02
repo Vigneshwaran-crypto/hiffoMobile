@@ -47,9 +47,11 @@ const LogIn = (props) => {
 
   const validateFields = () => {
     if (!email && !password) {
-      Toast("Please enter valid email and password");
+      Toast("Please enter  email and password");
     } else if (!email) {
       Toast("Please enter your email");
+    } else if (!validateEmailAndPhone(email, "email")) {
+      Toast("Please enter valid email");
     } else if (!password) {
       Toast("Please enter your password");
     } else {
@@ -62,8 +64,9 @@ const LogIn = (props) => {
           email: email,
           password: encryptedPass,
         };
-        dispatch(initSpinner());
-        dispatch(authenticationVerify(loginRequestData));
+        // dispatch(initSpinner());
+        // dispatch(authenticationVerify(loginRequestData));
+        Toast("Login Successfully");
       } else {
         Toast("Please enter valid email");
       }
@@ -108,30 +111,15 @@ const LogIn = (props) => {
         >
           <View style={styles.splashContent}>
             <Image
-              source={require("../../../Assests/images/formConLogo.png")}
-              style={styles.splashEightOne}
+              source={require("../../../Assests/images/hiffo.png")}
+              style={styles.hiffoLogo}
             />
 
-            <Text style={styles.mediumText}>WELCOME TO</Text>
-            <Text
-              style={[
-                styles.headingText,
-                {
-                  color: userTheme ? colors.white : colors.black,
-                  marginVertical: -5,
-                },
-              ]}
-            >
-              FARM SHOP CONNECT
+            <Text style={styles.mediumText}>WELCOME TO HIFFO</Text>
+            <Text style={styles.headingText}>
+              Let the peace meet the plates
             </Text>
-            <Text
-              style={[
-                styles.subText,
-                { color: userTheme ? colors.white : colors.black },
-              ]}
-            >
-              Login
-            </Text>
+            <Text style={styles.subText}>Login</Text>
           </View>
 
           {customSpinner ? (
@@ -147,22 +135,11 @@ const LogIn = (props) => {
 
           <View style={styles.authContent}>
             <View style={styles.emailView}>
-              {/* <Text style={styles.authText}>Your email</Text> */}
-              {/* <TextInput
-              onChangeText={setMail}
-              placeholder={"Enter email"}
-              style={styles.textInputAuth}
-              placeholderTextColor={userTheme ? colors.greyC4 : colors.black}
-              color={userTheme ? colors.white : colors.black}
-              value={email}
-            /> */}
-
               <TextInput
                 style={styles.tIStyle(userTheme)}
                 onChangeText={setMail}
                 placeholder={"Enter Email"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                // color={userTheme ? colors.white : colors.black}
                 value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -175,14 +152,11 @@ const LogIn = (props) => {
             </View>
 
             <View style={styles.passwordView}>
-             
-
               <TextInput
                 style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
                 onChangeText={setPassword}
                 placeholder={"Password"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                // color={userTheme ? colors.white : colors.black}
                 value={password}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -199,7 +173,7 @@ const LogIn = (props) => {
           <View style={styles.bottomContent}>
             <TouchableOpacity onPress={validateFields}>
               <LinearGradient
-                colors={[colors.buttonGreen, colors.lightGreen]}
+                colors={[colors.buttonGreen, colors.activeGreen]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.logInButton}
@@ -208,47 +182,23 @@ const LogIn = (props) => {
               </LinearGradient>
             </TouchableOpacity>
 
-            <Text
-              style={[
-                styles.subText,
-                {
-                  color: userTheme ? colors.white : colors.grey,
-                  fontSize: 13,
-                  marginVertical: 15,
-                },
-              ]}
+            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
+              <Text style={styles.forgotText}>Forgot Password</Text>
+            </TouchableOpacity>
+
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
             >
-              By signing in you agree to Commons'{" "}
-              <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
-              <Text style={styles.linkText}>Privacy Policy</Text>
-            </Text>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text style={[styles.mediumText, { fontSize: 15 }]}>
-                Forgot Password
+              <Text style={styles.termsText}>
+                By signing in you agree to Commons{" "}
+                <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
+                <Text style={styles.linkText}>Privacy Policy</Text>
               </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text
-                style={[
-                  styles.mediumText,
-                  {
-                    fontSize: 15,
-                    marginTop: 40,
-                    fontFamily: textFontFaceLight,
-                  },
-                ]}
-              >
-                Verify an account?
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text style={[styles.mediumText, { fontSize: 15, marginTop: 5 }]}>
-                First Time User
-              </Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -259,7 +209,6 @@ const LogIn = (props) => {
 const styles = StyleSheet.create({
   tIStyle: (userTheme) => ({
     backgroundColor: userTheme ? colors.black : colors.inputGrey,
-    // height: 40,
     flex: 1,
     borderColor: userTheme ? colors.white : colors.grey,
     color: userTheme ? colors.white : colors.black,
@@ -267,7 +216,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-    // borderWidth: 1,
   }),
   splashContent: {
     justifyContent: "center",
@@ -275,12 +223,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginTop: 50,
   },
-  splashEightOne: {
-    height: Dheight * 0.22,
-    width: Dwidth * 0.4,
+  hiffoLogo: {
+    height: Dheight * 0.25,
+    width: Dwidth * 0.6,
     resizeMode: "contain",
-    // borderWidth: 1,
-    // borderColor: colors.black,
   },
   container: {
     flex: 1,
@@ -311,14 +257,15 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   headingText: {
-    fontFamily: textFontFaceSemiBold,
+    fontFamily: textFontFaceLight,
     color: colors.black,
-    fontSize: 28,
+    // fontSize: 28,
   },
   subText: {
     textAlign: "center",
-    fontFamily: textFontFaceLight,
+    fontFamily: textFontFaceMedium,
     marginVertical: 10,
+    color: colors.black,
   },
   authContent: {
     marginHorizontal: 25,
@@ -355,8 +302,8 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     alignSelf: "center",
-    color: colors.textGreen,
-    marginVertical: 20,
+    color: colors.logoBlue,
+    marginVertical: 25,
   },
   mediumText: {
     color: colors.black,
@@ -365,8 +312,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: "center",
   },
+
   linkText: {
     textDecorationLine: "underline",
+  },
+  termsText: {
+    fontFamily: textFontFaceLight,
+    fontSize: 12,
+    marginHorizontal: 20,
+    textAlign: "center",
   },
 });
 

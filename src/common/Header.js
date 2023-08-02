@@ -55,7 +55,6 @@ const Header = (props) => {
             { color: userTheme ? colors.white : colors.black },
           ]}
         >
-          {/* {titleLen < 20 ? title : trimedTitle} */}
           {title}
         </Text>
       </View>
@@ -71,10 +70,8 @@ const styles = StyleSheet.create({
   },
   backButton: {
     borderRadius: 50,
-    // borderWidth: 1,
-    // borderColor: colors.borderGrey,
     marginVertical: 10,
-    marginRight: 10,
+    marginRight: 15,
   },
   headingView: {
     alignSelf: "center",

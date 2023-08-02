@@ -36,15 +36,22 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const win = Dimensions.get("window");
 
+const Dheight = Dimensions.get("window").height;
+const Dwidth = Dimensions.get("window").width;
+
 const ForgotPassword = () => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
 
   const forgotOnPress = () => {
-    navigation.navigate("verifyOtp");
+    if (!number) {
+      Toast("Please enter your number");
+    } else {
+      navigation.navigate("verifyOtp");
+    }
     // if (email) {
     //   const isValidEmail = validateEmailAndPhone(email, "email");
 
@@ -90,14 +97,10 @@ const ForgotPassword = () => {
 
           <View style={styles.forgotView}>
             <View style={styles.splashContent}>
-              <Text
-                style={[
-                  styles.headingText,
-                  { color: userTheme ? colors.white : colors.black },
-                ]}
-              >
-                ENTER EMAIL
-              </Text>
+              <Image
+                source={require("../../../Assests/images/hiffo.png")}
+                style={styles.hiffoLogo}
+              />
               <Text
                 style={[
                   styles.headingText,
@@ -108,7 +111,7 @@ const ForgotPassword = () => {
                   },
                 ]}
               >
-                We will send an OTP to your mail to verify your account
+                We will send an OTP to your number to verify your account
               </Text>
             </View>
 
@@ -126,17 +129,18 @@ const ForgotPassword = () => {
             <View style={styles.fieldView}>
               <TextInput
                 style={styles.textInputs}
-                placeholder="Enter Email"
+                placeholder="Enter mobile number"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.black}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                onChangeText={setNumber}
+                value={number}
+                keyboardType={"decimal-pad"}
               />
             </View>
 
             <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
               <LinearGradient
-                colors={[colors.lightGreen, colors.buttonGreen]}
+                colors={[colors.lightGreen, colors.activeGreen]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.gradientButton}
@@ -158,7 +162,6 @@ const styles = StyleSheet.create({
 
   container: (userTheme) => ({
     flex: 1,
-    // marginHorizontal: 20,
     backgroundColor: userTheme ? colors.black : colors.white,
   }),
   wholeView: {
@@ -180,16 +183,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   textInputs: {
-    fontFamily: textFontFaceMedium,
+    fontFamily: textFontFaceLight,
     fontSize: fontsSize.smallText,
     alignSelf: "flex-start",
     borderRadius: 8,
-    // borderWidth: 1,
-    // borderColor: colors.baseBackground,
     padding: 10,
     marginVertical: 10,
     width: win.width * 0.8,
-    color: colors.black,
+    color: colors.grey,
     marginRight: 20,
     backgroundColor: colors.inputGrey,
   },
@@ -233,6 +234,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
+  },
+  hiffoLogo: {
+    height: Dheight * 0.27,
+    width: Dwidth * 0.8,
+    resizeMode: "contain",
+    marginVertical: 10,
   },
 });
 

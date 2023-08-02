@@ -12,7 +12,11 @@ import {
 } from "react-native";
 
 import { ProgressBar } from "react-native-paper";
-import { textFontFaceMedium, textFontFaceSemiBold } from "../../common/styles";
+import {
+  textFontFaceLight,
+  textFontFaceMedium,
+  textFontFaceSemiBold,
+} from "../../common/styles";
 import { darkMode, getItem, LOG, removeItem, Toast } from "../../common/util";
 
 import { PermissionsAndroid } from "react-native";
@@ -100,13 +104,13 @@ const Application = (props) => {
         if (value) {
           var gotCredent = JSON.parse(value);
           LOG("GOT VALUE IN TESTING :", gotCredent);
-          Dispatch(authenticationVerify(gotCredent));
+          // Dispatch(authenticationVerify(gotCredent));
         } else {
-          navigation.navigate("intro");
+          navigation.navigate("login");
         }
       });
 
-      //network connection status check
+      // network connection status check
       // if (netInfo.isConnected) {
 
       // } else {
@@ -120,11 +124,6 @@ const Application = (props) => {
   }, []);
 
   const handleBackButtonClick = () => {
-    // var routeName = Actions.currentScene;
-    // LOG("BACK pressed ON : " + routeName);
-    // backPressHandler(routeName);
-    // return true;
-
     navigation.goBack();
   };
 
@@ -137,8 +136,8 @@ const Application = (props) => {
     >
       <View style={styles.splashContent}>
         <Image
-          source={require("../../../Assests/images/stoneLogo.png")} //splashLayer.png
-          style={styles.splashEightOne}
+          source={require("../../../Assests/images/hiffo.png")} //splashLayer.png
+          style={styles.hiffoLogo}
         />
 
         <Text
@@ -149,14 +148,17 @@ const Application = (props) => {
         >
           Hiffo
         </Text>
+
+        {/* <Text style={styles.subText}> let the peace meet the plates</Text> */}
       </View>
       <View style={styles.progressbarView}>
         <ProgressBar
           visible={data.showProgress}
           style={styles.progressbarStyle}
-          progress={1000}
+          progress={15000}
           indeterminate={true}
-          color={colors.deepGreen}
+          // color={colors.deepGreen}
+          color={colors.logoBlue}
         />
       </View>
       <View>
@@ -175,22 +177,29 @@ const styles = StyleSheet.create({
   progressbarStyle: {
     marginHorizontal: 40,
     marginVertical: 80,
-    backgroundColor: colors.mildGreen,
+    // backgroundColor: colors.mildGreen,
+    backgroundColor: colors.logoGreen,
   },
   splashContent: {
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
   },
-  splashEightOne: {
-    height: win.height * 0.25,
-    width: win.width * 0.3,
+  hiffoLogo: {
+    height: win.height * 0.3,
+    width: win.width * 0.8,
     resizeMode: "contain",
+    borderWidth: 1,
+    // borderColor: colors.black,
   },
   headingText: {
     color: colors.black,
     fontFamily: textFontFaceSemiBold,
     fontSize: 35,
+    marginTop: -15,
+  },
+  subText: {
+    fontFamily: textFontFaceLight,
   },
   versionText: {
     alignSelf: "center",

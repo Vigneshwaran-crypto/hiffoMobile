@@ -33,6 +33,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
+
   const [newPassword, setNewPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [email, setEmail] = useState("");
@@ -50,8 +51,9 @@ const ResetPassword = () => {
           mailId: email,
           password: encryptedPass,
         };
-        dispatch(initSpinner());
-        dispatch(resetPasswordAction(resetPasswordReq));
+        // dispatch(initSpinner());
+        // dispatch(resetPasswordAction(resetPasswordReq));
+        Toast("Password changed successfully");
       } else {
         Toast("Miss Matching Passwords");
       }
@@ -59,13 +61,17 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    getItem("resetEmail").then((result) => {
-      const validData = JSON.parse(result);
+    getItem("resetEmail")
+      .then((result) => {
+        const validData = JSON.parse(result);
 
-      LOG("get item email in reset password ", validData.mailId);
+        LOG("get item email in reset password ", validData.mailId);
 
-      setEmail(validData.mailId);
-    });
+        setEmail(validData.mailId);
+      })
+      .catch((err) => {
+        LOG("err");
+      });
   }, []);
 
   useEffect(() => {
@@ -88,9 +94,11 @@ const ResetPassword = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-        <View style={styles.wholeView}>
-          <Header title={"FORGOT PASSWORD"} />
+        <View style={{ marginHorizontal: 10 }}>
+          <Header title={"CREATE PASSWORD"} />
+        </View>
 
+        <View style={styles.wholeView}>
           <View style={styles.forgotView}>
             <View style={styles.splashContent}>
               <Text
@@ -132,22 +140,24 @@ const ResetPassword = () => {
                 placeholder="New Password"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                onChangeText={setNewPassword}
+                value={newPassword}
+                secureTextEntry={true}
               />
               <TextInput
                 style={styles.textInputs}
                 placeholder="Confirm Password"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                onChangeText={setConfirmPassword}
+                value={confirmPassword}
+                secureTextEntry={true}
               />
             </View>
 
             <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
               <LinearGradient
-                colors={[colors.lightGreen, colors.buttonGreen]}
+                colors={[colors.lightGreen, colors.activeGreen]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.gradientButton}

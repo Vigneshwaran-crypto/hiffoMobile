@@ -90,6 +90,10 @@ export const colors = {
   mildBlack: "#20262E",
   inputGrey: "#E8E6E2",
   bgGreen: "#8ABC49",
+
+  logoBlue: "#172f4b",
+  logoGreen: "#7ed956",
+  logoOrange: "#fe5722",
 };
 
 export const TextColors = {

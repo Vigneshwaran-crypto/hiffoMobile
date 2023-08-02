@@ -9,7 +9,7 @@ export const backPressHandler = (routeName, firstTimeLogin) => {
   LOG("Route Name in backPressHandler :" + routeName);
 
   if (routeName == "login") {
-    Alert.alert(null, "Are you sure you want to exit the App?", [
+    Alert.alert(null, "Are you sure you want to exit the app?", [
       {
         text: "Cancel",
         onPress: () => {},

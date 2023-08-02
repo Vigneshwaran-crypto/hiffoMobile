@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -26,11 +26,11 @@ import {
 } from "../../common/styles";
 import { getItem, LOG, Toast } from "../../common/util";
 import { initSpinner } from "../../redux/Api-Action";
-import { verifyOtpAction } from "../../redux/Auth-Action";
+import { sendOtpAction, verifyOtpAction } from "../../redux/Auth-Action";
 
 const win = Dimensions.get("window");
 
-const VerifyOtp = () => {
+const VerifyOtp = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userTheme = useSelector(({ api }) => api.getTheme);
@@ -38,29 +38,70 @@ const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
 
-  const forgotOnPress = () => {
-    navigation.navigate("resetPassword");
+  const [pin1, setPin1] = useState(null);
+  const [pin2, setPin2] = useState(null);
+  const [pin3, setPin3] = useState(null);
+  const [pin4, setPin4] = useState(null);
 
-    // if (otp) {
-    //   const verifyOtpRequest = {
-    //     otp: otp,
-    //     mailId: email,
-    //   };
-    //   dispatch(initSpinner());
-    //   dispatch(verifyOtpAction(verifyOtpRequest));
-    // } else {
-    //   Toast("Please enter otp");
-    // }
+  const pin1Ref = useRef(null);
+  const pin2Ref = useRef(null);
+  const pin3Ref = useRef(null);
+  const pin4Ref = useRef(null);
+
+  const [time, setTime] = useState(60);
+  const timerRef = useRef(time);
+
+  const verifyOnPress = () => {
+    if (pin1 && pin2 && pin3 && pin4) {
+      const validOtp = pin1 + pin2 + pin3 + pin4;
+      LOG("valid Otp :", validOtp);
+
+      const verifyOtpRequest = {
+        otp: validOtp,
+        mailId: email,
+      };
+      // dispatch(initSpinner());
+      // dispatch(verifyOtpAction(verifyOtpRequest));
+      navigation.navigate("resetPassword");
+    } else {
+      Toast("Please enter otp");
+    }
+  };
+
+  const resendOnPress = () => {
+    const otpRequest = {
+      mailId: email,
+    };
+    dispatch(initSpinner());
+    dispatch(sendOtpAction(otpRequest));
   };
 
   useEffect(() => {
-    getItem("resetEmail").then((result) => {
-      const validData = JSON.parse(result);
+    getItem("resetEmail")
+      .then((result) => {
+        const validData = JSON.parse(result);
 
-      LOG("get item email in verify otp ", validData.mailId);
+        LOG("get item email in verify otp ", validData.mailId);
 
-      setEmail(validData.mailId);
-    });
+        setEmail(validData.mailId);
+      })
+      .catch((err) => {
+        LOG("error oocured while getting getItem", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      timerRef.current -= 1;
+      if (timerRef.current < 0) {
+        clearInterval(timerId);
+      } else {
+        setTime(timerRef.current);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
   }, []);
 
   useEffect(() => {
@@ -84,7 +125,7 @@ const VerifyOtp = () => {
         style={{ flex: 1 }}
       >
         <View style={styles.wholeView}>
-          <Header title={"FORGOT PASSWORD"} />
+          <Header title={"VERIFY OTP"} />
 
           <View style={styles.forgotView}>
             <View style={styles.splashContent}>
@@ -124,19 +165,23 @@ const VerifyOtp = () => {
                     fontFamily: textFontFaceMedium,
                   }}
                 >
-                  00:32 Sec
+                  {/* 00:32 Sec */}
+                  {time} Sec
                 </Text>
-                <Text
-                  style={[
-                    styles.headingText,
-                    {
-                      color: userTheme ? colors.white : colors.black,
-                      fontSize: 14,
-                    },
-                  ]}
-                >
-                  RESEND
-                </Text>
+
+                <TouchableOpacity disabled={time != 0} onPress={resendOnPress}>
+                  <Text
+                    style={[
+                      styles.headingText,
+                      {
+                        color: userTheme ? colors.white : colors.black,
+                        fontSize: 14,
+                      },
+                    ]}
+                  >
+                    RESEND
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -157,8 +202,16 @@ const VerifyOtp = () => {
                 placeholder="X"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                ref={pin1Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin1(val);
+                  if (val.length != 0) {
+                    pin2Ref.current.focus();
+                  }
+                }}
+                value={pin1}
               />
 
               <TextInput
@@ -166,8 +219,16 @@ const VerifyOtp = () => {
                 placeholder="X"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                ref={pin2Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin2(val);
+                  if (val.length != 0) {
+                    pin3Ref.current.focus();
+                  }
+                }}
+                value={pin2}
               />
 
               <TextInput
@@ -175,8 +236,16 @@ const VerifyOtp = () => {
                 placeholder="X"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                ref={pin3Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin3(val);
+                  if (val.length != 0) {
+                    pin4Ref.current.focus();
+                  }
+                }}
+                value={pin3}
               />
 
               <TextInput
@@ -184,12 +253,20 @@ const VerifyOtp = () => {
                 placeholder="X"
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 color={userTheme ? colors.white : colors.black}
-                onChangeText={setEmail}
-                value={email}
+                ref={pin4Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin4(val);
+                  if (val.length != 0) {
+                    pin4Ref.current.focus();
+                  }
+                }}
+                value={pin4}
               />
             </View>
 
-            <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
+            <TouchableOpacity style={styles.buttonView} onPress={verifyOnPress}>
               <LinearGradient
                 colors={[colors.lightGreen, colors.buttonGreen]}
                 start={{ x: 0, y: 0 }}
@@ -214,7 +291,7 @@ const styles = StyleSheet.create({
   }),
   wholeView: {
     flex: 1,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   forgotView: {
     flex: 1,
