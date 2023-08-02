@@ -147,7 +147,7 @@ const Application = (props) => {
             { color: userTheme ? colors.white : colors.black },
           ]}
         >
-          Agri-Comp
+          Hiffo
         </Text>
       </View>
       <View style={styles.progressbarView}>

@@ -54,7 +54,7 @@ export const Toast = (value) => {
       ToastAndroid.CENTER
     );
   } else if (Platform.OS === "ios") {
-    Alert.alert("Agri-Comp ", value, [
+    Alert.alert("Hiffo ", value, [
       { text: "OK", onPress: () => console.log("") },
     ]);
   }
