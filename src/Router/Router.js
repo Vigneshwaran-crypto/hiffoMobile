@@ -14,12 +14,7 @@ import Feather from "react-native-vector-icons/Feather";
 
 import { colors } from "../common/colors";
 import { textFontFace, textFontFaceMedium } from "../common/styles";
-import Application from "../screens/App/Application";
-import Login from "../screens/Auth/login";
-import ForgotPassword from "../screens/Auth/ForgotPassword";
-import ResetPassword from "../screens/Auth/ResetPassword";
-import VerifyOtp from "../screens/Auth/VerifyOtp";
-import Intro from "../screens/Auth/Intro";
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -28,6 +23,14 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import Application from "../screens/App/Application";
+import Login from "../screens/Auth/login";
+import ForgotPassword from "../screens/Auth/ForgotPassword";
+import ResetPassword from "../screens/Auth/ResetPassword";
+import VerifyOtp from "../screens/Auth/VerifyOtp";
+import Intro from "../screens/Auth/Intro";
+import SignUp from "../screens/Auth/SignUp";
 
 import Home from "../screens/HomeTab/Home/Home";
 import Chat from "../screens/HomeTab/Chat";
@@ -158,6 +161,12 @@ const Route = (props) => {
         <Stack.Screen
           name="forgotPassword"
           component={ForgotPassword}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="signUp"
+          component={SignUp}
           options={{ headerShown: false }}
         />
 

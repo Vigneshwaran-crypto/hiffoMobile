@@ -105,6 +105,7 @@ const Application = (props) => {
           var gotCredent = JSON.parse(value);
           LOG("GOT VALUE IN TESTING :", gotCredent);
           // Dispatch(authenticationVerify(gotCredent));
+          navigation.navigate("login");
         } else {
           navigation.navigate("login");
         }
@@ -140,17 +141,15 @@ const Application = (props) => {
           style={styles.hiffoLogo}
         />
 
-        <Text
-          style={[
-            styles.headingText,
-            { color: userTheme ? colors.white : colors.black },
-          ]}
-        >
-          Hiffo
-        </Text>
-
-        {/* <Text style={styles.subText}> let the peace meet the plates</Text> */}
+        <View style={styles.logoTextParent}>
+          <Text style={styles.headingText}>Hiff</Text>
+          <View style={styles.oParent}>
+            <Text style={styles.deskText}>Desk</Text>
+            <Text style={styles.oText}>o</Text>
+          </View>
+        </View>
       </View>
+
       <View style={styles.progressbarView}>
         <ProgressBar
           visible={data.showProgress}
@@ -196,10 +195,27 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: textFontFaceSemiBold,
     fontSize: 35,
+  },
+  logoTextParent: {
+    flexDirection: "row",
     marginTop: -15,
   },
+  oParent: {},
+  deskText: {
+    color: colors.logoOrange,
+    fontFamily: textFontFaceMedium,
+    height: 20,
+    marginTop: 5,
+    marginStart: 2,
+  },
+  oText: {
+    color: colors.black,
+    fontFamily: textFontFaceSemiBold,
+    fontSize: 31,
+    marginVertical: -18,
+  },
   subText: {
-    fontFamily: textFontFaceLight,
+    // fontFamily: textFontFaceLight,
   },
   versionText: {
     alignSelf: "center",

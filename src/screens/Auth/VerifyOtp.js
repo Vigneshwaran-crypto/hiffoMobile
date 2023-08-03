@@ -42,11 +42,15 @@ const VerifyOtp = (props) => {
   const [pin2, setPin2] = useState(null);
   const [pin3, setPin3] = useState(null);
   const [pin4, setPin4] = useState(null);
+  const [pin5, setPin5] = useState(null);
+  const [pin6, setPin6] = useState(null);
 
   const pin1Ref = useRef(null);
   const pin2Ref = useRef(null);
   const pin3Ref = useRef(null);
   const pin4Ref = useRef(null);
+  const pin5Ref = useRef(null);
+  const pin6Ref = useRef(null);
 
   const [time, setTime] = useState(60);
   const timerRef = useRef(time);
@@ -72,8 +76,8 @@ const VerifyOtp = (props) => {
     const otpRequest = {
       mailId: email,
     };
-    dispatch(initSpinner());
-    dispatch(sendOtpAction(otpRequest));
+    // dispatch(initSpinner());
+    // dispatch(sendOtpAction(otpRequest));
   };
 
   useEffect(() => {
@@ -176,6 +180,7 @@ const VerifyOtp = (props) => {
                       {
                         color: userTheme ? colors.white : colors.black,
                         fontSize: 14,
+                        textDecorationLine: "underline",
                       },
                     ]}
                   >
@@ -259,10 +264,44 @@ const VerifyOtp = (props) => {
                 onChangeText={(val) => {
                   setPin4(val);
                   if (val.length != 0) {
-                    pin4Ref.current.focus();
+                    pin5Ref.current.focus();
                   }
                 }}
                 value={pin4}
+              />
+
+              <TextInput
+                style={styles.textInputs}
+                placeholder="X"
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                color={userTheme ? colors.white : colors.black}
+                ref={pin5Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin5(val);
+                  if (val.length != 0) {
+                    pin6Ref.current.focus();
+                  }
+                }}
+                value={pin5}
+              />
+
+              <TextInput
+                style={styles.textInputs}
+                placeholder="X"
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                color={userTheme ? colors.white : colors.black}
+                ref={pin6Ref}
+                maxLength={1}
+                keyboardType={"decimal-pad"}
+                onChangeText={(val) => {
+                  setPin6(val);
+                  if (val.length != 0) {
+                    pin6Ref.current.focus();
+                  }
+                }}
+                value={pin6}
               />
             </View>
 
@@ -302,6 +341,8 @@ const styles = StyleSheet.create({
   fieldView: {
     marginVertical: 5,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   formText: {
     color: colors.tanGrey,
@@ -313,16 +354,14 @@ const styles = StyleSheet.create({
     fontSize: fontsSize.smallText,
     alignSelf: "center",
     borderRadius: 5,
-    // borderWidth: 1,
-    // borderColor: colors.baseBackground,
-    padding: 10,
+    padding: 8,
     marginVertical: 10,
-    // width: win.width * 0.8,
-    width: 50,
+    width: win.width * 0.1,
+    // width: 50,
     color: colors.black,
-    marginRight: 20,
+    // marginRight: 20,
     backgroundColor: colors.inputGrey,
-    marginEnd: 12,
+    marginEnd: 15,
     textAlign: "center",
   },
   gradientButton: {

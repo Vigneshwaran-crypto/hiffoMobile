@@ -31,11 +31,12 @@ import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
 import { authenticationVerify } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
+import Header from "../../common/Header";
 
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
 
-const LogIn = (props) => {
+const SignUp = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
@@ -44,6 +45,22 @@ const LogIn = (props) => {
 
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackButtonClick
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
+
+  const handleBackButtonClick = () => {
+    backPressHandler(route.name, false);
+    return true;
+  };
 
   const validateFields = () => {
     if (!email && !password) {
@@ -73,30 +90,6 @@ const LogIn = (props) => {
     }
   };
 
-  const forgotPasswordClick = () => {
-    navigation.navigate("forgotPassword");
-  };
-
-  const signUpOnPress = () => {
-    navigation.navigate("signUp");
-  };
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      handleBackButtonClick
-    );
-
-    return () => {
-      backHandler.remove();
-    };
-  }, []);
-
-  const handleBackButtonClick = () => {
-    backPressHandler(route.name, false);
-    return true;
-  };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -108,6 +101,8 @@ const LogIn = (props) => {
           { backgroundColor: userTheme ? colors.black : colors.white },
         ]}
       >
+        <Header title={"CREATE ACCOUNT"} />
+
         <ScrollView
           behavior="padding"
           showsHorizontalScrollIndicator={false}
@@ -115,15 +110,11 @@ const LogIn = (props) => {
         >
           <View style={styles.splashContent}>
             <Image
-              source={require("../../../Assests/images/hiffo.png")}
+              source={require("../../../Assests/images/hiffoDesk.png")}
               style={styles.hiffoLogo}
             />
 
-            <Text style={styles.mediumText}>WELCOME TO HIFFO DESK</Text>
-            <Text style={styles.headingText}>
-              Let the peace meet the plates
-            </Text>
-            <Text style={styles.subText}>Login</Text>
+            <Text style={styles.mediumText}>CREATE ACCOUNT</Text>
           </View>
 
           {customSpinner ? (
@@ -142,13 +133,47 @@ const LogIn = (props) => {
               <TextInput
                 style={styles.tIStyle(userTheme)}
                 onChangeText={setMail}
-                placeholder={"Enter HID"}
+                placeholder={"First name"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
                 value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
                 textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setPassword}
+                placeholder={"Last name"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={password}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setPassword}
+                placeholder={"Email"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={password}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
@@ -182,31 +207,9 @@ const LogIn = (props) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.logInButton}
               >
-                <Text style={styles.logInText}>LOGIN</Text>
+                <Text style={styles.logInText}>CREATE ACCOUNT</Text>
               </LinearGradient>
             </TouchableOpacity>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text style={styles.forgotText}>Forgot Password</Text>
-            </TouchableOpacity>
-
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <Text style={styles.termsText}>
-                By signing in you agree to Commons{" "}
-                <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
-                <Text style={styles.linkText}>Privacy Policy</Text>
-              </Text>
-
-              <TouchableOpacity onPress={signUpOnPress}>
-                <Text style={styles.signUpText}>First Time User ?</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </View>
@@ -229,12 +232,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-    marginTop: 50,
+    marginTop: 20,
   },
   hiffoLogo: {
-    height: Dheight * 0.25,
-    width: Dwidth * 0.6,
+    height: Dheight * 0.2,
+    width: Dwidth * 0.8,
     resizeMode: "contain",
+    // borderWidth: 1,
+    borderColor: colors.black,
   },
   container: {
     flex: 1,
@@ -280,7 +285,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   emailView: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
   passwordView: {
     marginVertical: 20,
@@ -338,4 +343,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogIn;
+export default SignUp;
