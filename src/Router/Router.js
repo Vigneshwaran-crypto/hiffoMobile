@@ -24,6 +24,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+//Auth screens
 import Application from "../screens/App/Application";
 import Login from "../screens/Auth/login";
 import ForgotPassword from "../screens/Auth/ForgotPassword";
@@ -32,6 +33,7 @@ import VerifyOtp from "../screens/Auth/VerifyOtp";
 import Intro from "../screens/Auth/Intro";
 import SignUp from "../screens/Auth/SignUp";
 
+//home tab screens
 import Home from "../screens/HomeTab/Home/Home";
 import Chat from "../screens/HomeTab/Chat";
 import Profile from "../screens/HomeTab/Profile";
@@ -40,6 +42,8 @@ import { darkMode, getItem, LOG } from "../common/util";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Foundation from "react-native-vector-icons/Foundation";
 import { navigationRef } from "./RootNavigation";
+import CreateRest from "../screens/Auth/CreateRest";
+import CreateManagement from "../screens/Auth/CreateManagement";
 
 const Route = (props) => {
   const Stack = createNativeStackNavigator();
@@ -179,6 +183,18 @@ const Route = (props) => {
         <Stack.Screen
           name="resetPassword"
           component={ResetPassword}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="createRest"
+          component={CreateRest}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="createManagement"
+          component={CreateManagement}
           options={{ headerShown: false }}
         />
 

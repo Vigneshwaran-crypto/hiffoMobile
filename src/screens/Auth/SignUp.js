@@ -43,8 +43,10 @@ const SignUp = (props) => {
   const route = useRoute();
   const dispatch = useDispatch();
 
-  const [email, setMail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setMail] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -58,35 +60,21 @@ const SignUp = (props) => {
   }, []);
 
   const handleBackButtonClick = () => {
-    backPressHandler(route.name, false);
+    navigation.goBack();
     return true;
   };
 
   const validateFields = () => {
-    if (!email && !password) {
-      Toast("Please enter  email and password");
-    } else if (!email) {
-      Toast("Please enter your email");
-    } else if (!validateEmailAndPhone(email, "email")) {
-      Toast("Please enter valid email");
+    if (!userName) {
+      Toast("Please enter username");
     } else if (!password) {
-      Toast("Please enter your password");
+      Toast("Please enter password");
+    } else if (!email) {
+      Toast("Please enter email");
+    } else if (!mobileNo) {
+      Toast("Please enter mobile number");
     } else {
-      var isValidEmail = validateEmailAndPhone(email, "email");
-
-      if (isValidEmail) {
-        var encryptedPass = CryptoJS.MD5(password).toString();
-        LOG("ENCRYPTED PASSWORD :", encryptedPass);
-        var loginRequestData = {
-          email: email,
-          password: encryptedPass,
-        };
-        // dispatch(initSpinner());
-        // dispatch(authenticationVerify(loginRequestData));
-        Toast("Login Successfully");
-      } else {
-        Toast("Please enter valid email");
-      }
+      Toast("created successfully");
     }
   };
 
@@ -132,48 +120,14 @@ const SignUp = (props) => {
             <View style={styles.emailView}>
               <TextInput
                 style={styles.tIStyle(userTheme)}
-                onChangeText={setMail}
-                placeholder={"First name"}
+                onChangeText={setUserName}
+                placeholder={"User name"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                value={email}
+                value={userName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
                 textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-            </View>
-
-            <View style={styles.passwordView}>
-              <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
-                onChangeText={setPassword}
-                placeholder={"Last name"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                value={password}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-            </View>
-
-            <View style={styles.passwordView}>
-              <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
-                onChangeText={setPassword}
-                placeholder={"Email"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                value={password}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="password"
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
@@ -195,6 +149,40 @@ const SignUp = (props) => {
                 autoCorrect={false}
                 autoCompleteType="email"
                 secureTextEntry={true}
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setMail}
+                placeholder={"Email"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={email}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setMobileNo}
+                placeholder={"Mobile number"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={mobileNo}
+                keyboardType={"decimal-pad"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
               />
             </View>
           </View>

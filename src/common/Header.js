@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 20,
     alignItems: "center",
+    marginHorizontal: 5,
   },
   backButton: {
     borderRadius: 50,

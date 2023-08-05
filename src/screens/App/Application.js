@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     fontFamily: textFontFaceMedium,
     height: 20,
     marginTop: 5,
-    marginStart: 2,
+    marginStart: 1,
   },
   oText: {
     color: colors.black,

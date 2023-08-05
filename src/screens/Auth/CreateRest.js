@@ -31,60 +31,24 @@ import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
 import { authenticationVerify } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
+import Header from "../../common/Header";
 
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
 
-const LogIn = (props) => {
+const CreateRest = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
   const route = useRoute();
   const dispatch = useDispatch();
 
+  const [resName, setRestName] = useState("");
   const [email, setMail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const validateFields = () => {
-    if (!email && !password) {
-      Toast("Please enter  email and password");
-    } else if (!email) {
-      Toast("Please enter your email");
-    } else if (!validateEmailAndPhone(email, "email")) {
-      Toast("Please enter valid email");
-    } else if (!password) {
-      Toast("Please enter your password");
-    } else {
-      var isValidEmail = validateEmailAndPhone(email, "email");
-
-      if (isValidEmail) {
-        var encryptedPass = CryptoJS.MD5(password).toString();
-        LOG("ENCRYPTED PASSWORD :", encryptedPass);
-        var loginRequestData = {
-          email: email,
-          password: encryptedPass,
-        };
-        // dispatch(initSpinner());
-        // dispatch(authenticationVerify(loginRequestData));
-        Toast("Login Successfully");
-        navigation.navigate("createRest");
-      } else {
-        Toast("Please enter valid email");
-      }
-    }
-  };
-
-  const forgotPasswordClick = () => {
-    navigation.navigate("forgotPassword");
-  };
-
-  const signUpOnPress = () => {
-    navigation.navigate("signUp");
-  };
+  const [totalSeat, setTotalSeat] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
-    setMail("Vickytata619@gmail.com");
-    setPassword("helloNanba");
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackButtonClick
@@ -96,8 +60,25 @@ const LogIn = (props) => {
   }, []);
 
   const handleBackButtonClick = () => {
-    backPressHandler(route.name, false);
+    navigation.goBack();
     return true;
+  };
+
+  const validateFields = () => {
+    navigation.navigate("createManagement");
+
+    if (!resName) {
+      Toast("Please enter restaurant");
+    } else if (!email) {
+      Toast("Please enter email");
+    } else if (!totalSeat) {
+      Toast("Please enter total seat");
+    } else if (!address) {
+      Toast("Please enter address");
+    } else {
+      Toast("created successfully");
+      //   navigation.navigate("createManagement");
+    }
   };
 
   return (
@@ -111,6 +92,8 @@ const LogIn = (props) => {
           { backgroundColor: userTheme ? colors.black : colors.white },
         ]}
       >
+        <Header title={"CREATE RESTAURANT"} />
+
         <ScrollView
           behavior="padding"
           showsHorizontalScrollIndicator={false}
@@ -118,36 +101,25 @@ const LogIn = (props) => {
         >
           <View style={styles.splashContent}>
             <Image
-              source={require("../../../Assests/images/hiffo.png")}
+              source={require("../../../Assests/images/hiffoDesk.png")}
               style={styles.hiffoLogo}
             />
 
-            <Text style={styles.mediumText}>WELCOME TO HIFFO DESK</Text>
-            <Text style={styles.headingText}>
-              Let the peace meet the plates
-            </Text>
-            <Text style={styles.subText}>Login</Text>
-          </View>
+            <Text style={styles.mediumText}>Create Restaurant </Text>
 
-          {customSpinner ? (
-            <View style={styles.loaderView}>
-              <ActivityIndicator
-                size={"large"}
-                color={colors.buttonGreen}
-                animating={customSpinner}
-                style={styles.loaderStyle}
-              />
-            </View>
-          ) : null}
+            <Text style={styles.subText}>
+              Create your Restaurant here manage it with stress free
+            </Text>
+          </View>
 
           <View style={styles.authContent}>
             <View style={styles.emailView}>
               <TextInput
                 style={styles.tIStyle(userTheme)}
-                onChangeText={setMail}
-                placeholder={"Enter HID"}
+                onChangeText={setRestName}
+                placeholder={"Restaurant name"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                value={email}
+                value={resName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
@@ -161,10 +133,10 @@ const LogIn = (props) => {
             <View style={styles.passwordView}>
               <TextInput
                 style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
-                onChangeText={setPassword}
-                placeholder={"Password"}
+                onChangeText={setMail}
+                placeholder={"Email"}
                 placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                value={password}
+                value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
@@ -172,7 +144,40 @@ const LogIn = (props) => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
-                secureTextEntry={true}
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setTotalSeat}
+                placeholder={"Total seat"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={totalSeat}
+                keyboardType={"number-pad"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                onChangeText={setAddress}
+                placeholder={"Address"}
+                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                value={address}
+                keyboardType={"default"}
+                multiline={true}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
               />
             </View>
           </View>
@@ -185,31 +190,9 @@ const LogIn = (props) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.logInButton}
               >
-                <Text style={styles.logInText}>LOGIN</Text>
+                <Text style={styles.logInText}>CREATE</Text>
               </LinearGradient>
             </TouchableOpacity>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text style={styles.forgotText}>Forgot Password</Text>
-            </TouchableOpacity>
-
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <Text style={styles.termsText}>
-                By signing in you agree to Commons{" "}
-                <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
-                <Text style={styles.linkText}>Privacy Policy</Text>
-              </Text>
-
-              <TouchableOpacity onPress={signUpOnPress}>
-                <Text style={styles.signUpText}>First Time User ?</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </View>
@@ -232,58 +215,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-    marginTop: 50,
   },
   hiffoLogo: {
-    height: Dheight * 0.25,
-    width: Dwidth * 0.6,
+    height: Dheight * 0.18,
+    width: Dwidth * 0.8,
     resizeMode: "contain",
   },
   container: {
     flex: 1,
     justifyContent: "center",
   },
-  loaderView: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    zIndex: 2,
-    elevation: 5,
-  },
-  loaderStyle: {
-    alignSelf: "center",
-  },
-  backButtonView: {
-    marginVertical: 15,
-    marginHorizontal: 10,
-    alignSelf: "flex-start",
-  },
-  headerContent: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  headingText: {
-    fontFamily: textFontFaceLight,
-    color: colors.black,
-    // fontSize: 28,
-  },
-  subText: {
-    textAlign: "center",
-    fontFamily: textFontFaceMedium,
-    marginVertical: 10,
-    color: colors.black,
-  },
+
   authContent: {
     marginHorizontal: 25,
     marginVertical: 20,
   },
   emailView: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
   passwordView: {
     marginVertical: 20,
@@ -323,22 +271,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: "center",
   },
-
-  linkText: {
-    textDecorationLine: "underline",
-  },
-  termsText: {
+  subText: {
     fontFamily: textFontFaceLight,
-    fontSize: 12,
-    marginHorizontal: 20,
-    textAlign: "center",
-  },
-  signUpText: {
-    fontFamily: textFontFaceMedium,
-    fontSize: 15,
-    marginTop: 18,
     color: colors.logoBlue,
+    textAlign: "center",
+    fontSize: 13,
   },
 });
 
-export default LogIn;
+export default CreateRest;
