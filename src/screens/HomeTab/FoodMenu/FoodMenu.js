@@ -5,19 +5,19 @@ import React, { useEffect, useState } from "react";
 import { BackHandler, StyleSheet, Text, View } from "react-native";
 import { Checkbox } from "react-native-paper";
 import { useSelector } from "react-redux";
-import { colors } from "../../common/colors";
-import TopBar from "../../common/TopBar";
-import { getItem, LOG } from "../../common/util";
+import { colors } from "../../../common/colors";
+import TopBar from "../../../common/TopBar";
+import { getItem, LOG } from "../../../common/util";
 
-const Chat = () => {
+const FoodMenu = () => {
   const navigation = useNavigation();
   return (
     <View>
-      <Text>chat</Text>
+      <Text>FoodMenu</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default Chat;
+export default FoodMenu;

@@ -29,7 +29,7 @@ import backPressHandler from "../../common/backPressHandler";
 import { LOG, validateEmailAndPhone } from "../../common/util";
 import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
-import { authenticationVerify } from "../../redux/Auth-Action";
+import { authenticationVerify, createAccount } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
 import Header from "../../common/Header";
 
@@ -49,6 +49,11 @@ const SignUp = (props) => {
   const [mobileNo, setMobileNo] = useState("");
 
   useEffect(() => {
+    setUserName("VigneshDemo");
+    setPassword("pass123");
+    setMail("vickyterrito@mailinator.com");
+    setMobileNo("9876787655");
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackButtonClick
@@ -74,7 +79,18 @@ const SignUp = (props) => {
     } else if (!mobileNo) {
       Toast("Please enter mobile number");
     } else {
-      Toast("created successfully");
+      // Toast("created successfully");
+
+      const req = {
+        username: userName,
+        password: password,
+        mobile_no: mobileNo,
+        email: email,
+      };
+
+      const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
+
+      dispatch(createAccount(modalReq));
     }
   };
 

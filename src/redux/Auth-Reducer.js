@@ -8,12 +8,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 const initialState = {
   userDetails: {},
-  flowTypeLogin: 1,
   loginResponse: {},
   getOtpResponse: {},
   getVerifyOtpResponse: {},
   getResetPasswordResponse: {},
-  profilephoto: "",
+  hotelId: {},
 };
 const reducer = (state = initialState, action) => {
   LOG("<<<<== Auth Reducerr ==>>>> ");
@@ -22,17 +21,21 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     // LOGIN RESPONSE WILL BE HANDLES HERE WE WILL get userdetails, and authToken.
 
+    case StaticValues.createAccount:
+      LOG("create_Account_in_reducer :", action);
+
+      const hId = action.jsonData[0].D0;
+
+      LOG("single hotel id :", hId);
+
+      return Object.assign({}, state, {
+        hotelId: hId,
+      });
+
     case StaticValues.loginRequest:
       LOG("LOGIN REQUEST IN REDUCER :", action.jsonData);
       return Object.assign({}, state, {
         loginResponse: action.jsonData,
-        profilephoto: action.jsonData.profilephoto,
-      });
-
-    case StaticValues.profilePhotoUpload:
-      LOG("PROFILE PHOTO UPLOAD IN REDUCER :", action.jsonData);
-      return Object.assign({}, state, {
-        profilephoto: action.jsonData.fileName,
       });
 
     case StaticValues.sentOtp:
@@ -53,26 +56,10 @@ const reducer = (state = initialState, action) => {
         getResetPasswordResponse: action,
       });
 
-    case ActionConstants.VALIDATE_OTP:
-      LOG("Validate OTP REQUEST" + JSON.stringify(action));
-      var result_data = action.jsonData;
-      if (result_data.userDetails && result_data.token) {
-        return Object.assign({}, state, {
-          userDetails: result_data.userDetails,
-        });
-      }
-      return state;
-
     case GET_PROVIDER_DETAIL:
       LOG("GET_PROVIDER_DETAIL Flow Type : ", action.jsonData);
       // navigation.navigate("clientlist");
       return Object.assign({}, state, {});
-
-    case ActionConstants.FLOW_TYPE:
-      LOG("Flow Type : ", action.jsonData);
-      return Object.assign({}, state, {
-        flowTypeLogin: action.jsonData,
-      });
 
     default:
       LOG("AUTH REDUCER Default");

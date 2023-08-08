@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
+  Animated,
   FlatList,
   StyleSheet,
   Text,
@@ -14,9 +15,13 @@ import {
   textFontFaceSemiBold,
 } from "../../common/styles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import LinearGradient from "react-native-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const CreateManagement = () => {
+  const navigation = useNavigation();
   const [selected, setSelected] = useState(0);
+  const fadInButton = useRef(new Animated.Value(0)).current;
 
   const flatData = [
     { id: 1, title: "Restaurant" },
@@ -25,9 +30,18 @@ const CreateManagement = () => {
     { id: 4, title: "Restaurant" },
   ];
 
+  const createManage = () => {
+    navigation.navigate("homeTab");
+  };
+
   const renderItem = ({ item }) => {
     const itemClick = () => {
       setSelected(item.id);
+      Animated.timing(fadInButton, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
     };
 
     return (
@@ -75,6 +89,19 @@ const CreateManagement = () => {
             numColumns={2}
           />
         </View>
+
+        <Animated.View style={{ opacity: fadInButton }}>
+          <TouchableOpacity onPress={createManage}>
+            <LinearGradient
+              colors={[colors.buttonGreen, colors.activeGreen]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.createButton}
+            >
+              <Text style={styles.createText}>CREATE</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     </View>
   );
@@ -87,6 +114,8 @@ const styles = StyleSheet.create({
   },
   screenContent: {
     marginHorizontal: 20,
+    justifyContent: "center",
+    flex: 1,
   },
   mediumText: {
     color: colors.black,
@@ -101,11 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   parentFlat: {
-    // marginVertical: 50,
     marginTop: 30,
   },
   singleRenderItem: {
-    // borderWidth: 1,
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
@@ -114,10 +141,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     borderWidth: 1.5,
     alignItems: "center",
-    // justifyContent: "center",
     marginVertical: 15,
     width: "80%",
-
     borderRadius: 8,
   },
   itemText: {
@@ -129,6 +154,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 25,
+  },
+  createButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 60,
+    paddingVertical: 10,
+    borderRadius: 30,
+    marginTop: 50,
+  },
+  createText: {
+    color: colors.white,
+    fontFamily: textFontFaceMedium,
+    paddingVertical: 2,
   },
 });
 

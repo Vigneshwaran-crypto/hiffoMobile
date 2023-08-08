@@ -34,9 +34,11 @@ import Intro from "../screens/Auth/Intro";
 import SignUp from "../screens/Auth/SignUp";
 
 //home tab screens
-import Home from "../screens/HomeTab/Home/Home";
-import Chat from "../screens/HomeTab/Chat";
-import Profile from "../screens/HomeTab/Profile";
+import Orders from "../screens/HomeTab/Orders/Orders";
+import FoodMenu from "../screens/HomeTab/FoodMenu/FoodMenu";
+import Tables from "../screens/HomeTab/Tables/Tables";
+import Analytics from "../screens/HomeTab/Analytics/Analytics";
+import Users from "../screens/HomeTab/Users/Users";
 
 import { darkMode, getItem, LOG } from "../common/util";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -60,34 +62,60 @@ const Route = (props) => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === "home") {
+            if (route.name === "orders") {
               return (
                 <View style={[styles.tabView]}>
-                  <Foundation name="home" size={20} color={color} />
-                  <Text style={[styles.tabLabel, (color = { color })]}>
-                    Home
-                  </Text>
-                </View>
-              );
-            } else if (route.name === "chat") {
-              return (
-                <View style={[styles.tabView]}>
-                  <Ionicon
-                    name="chatbubble-ellipses-outline"
-                    size={20}
+                  <Feather
+                    name="clipboard"
+                    size={focused ? 22 : 20}
                     color={color}
                   />
                   <Text style={[styles.tabLabel, (color = { color })]}>
-                    Chat
+                    Orders
                   </Text>
                 </View>
               );
-            } else if (route.name === "profile") {
+            } else if (route.name === "foodMenu") {
               return (
                 <View style={[styles.tabView]}>
-                  <Feather name="user" size={20} color={color} />
+                  <Feather
+                    name="align-center"
+                    size={focused ? 22 : 20}
+                    color={color}
+                  />
                   <Text style={[styles.tabLabel, (color = { color })]}>
-                    Profile
+                    FoodMenu
+                  </Text>
+                </View>
+              );
+            } else if (route.name === "tables") {
+              return (
+                <View style={[styles.tabView]}>
+                  <Feather name="disc" size={focused ? 25 : 20} color={color} />
+                  <Text style={[styles.tabLabel, (color = { color })]}>
+                    Tables
+                  </Text>
+                </View>
+              );
+            } else if (route.name === "analytics") {
+              return (
+                <View style={[styles.tabView]}>
+                  <Feather
+                    name="trending-up"
+                    size={focused ? 22 : 20}
+                    color={color}
+                  />
+                  <Text style={[styles.tabLabel, (color = { color })]}>
+                    Analytics
+                  </Text>
+                </View>
+              );
+            } else if (route.name === "users") {
+              return (
+                <View style={[styles.tabView]}>
+                  <Feather name="user" size={focused ? 22 : 20} color={color} />
+                  <Text style={[styles.tabLabel, (color = { color })]}>
+                    Users
                   </Text>
                 </View>
               );
@@ -104,35 +132,45 @@ const Route = (props) => {
           },
           tabBarShowLabel: false,
         })}
-        initialRouteName="home"
+        initialRouteName="orders"
       >
         <Tab.Screen
-          name="home"
-          component={Home}
-          title={"home"}
+          name="orders"
+          component={Orders}
           options={{
-            tabBarLabel: "Client",
             color: colors.baseBackground,
             headerShown: false,
             headerBackVisible: false,
           }}
         />
         <Tab.Screen
-          name="chat"
-          component={Chat}
-          title={"AdminChat"}
+          name="foodMenu"
+          component={FoodMenu}
           options={{
-            tabBarLabel: "",
-            title: "AdminChat",
             color: colors.baseBackground,
             headerShown: false,
           }}
         />
         <Tab.Screen
-          name="profile"
-          component={Profile}
+          name="tables"
+          component={Tables}
           options={{
-            tabBarLabel: "",
+            color: colors.baseBackground,
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="analytics"
+          component={Analytics}
+          options={{
+            color: colors.baseBackground,
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="users"
+          component={Users}
+          options={{
             color: colors.baseBackground,
             headerShown: false,
           }}

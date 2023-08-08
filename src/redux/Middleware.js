@@ -71,10 +71,10 @@ export const apiMiddleware = (store) => (next) => (action) => {
       var config = {
         method: method,
         url: action.requestUrl.trim(),
-        data: action.multiPart
-          ? action.jsonData
-          : JSON.stringify(action.jsonData),
-        headers: header,
+        // data: action.multiPart
+        //   ? action.jsonData
+        //   : JSON.stringify(action.jsonData),
+        // headers: header,
       };
 
       LOG("request Type ==> " + action.requestType);
@@ -83,12 +83,13 @@ export const apiMiddleware = (store) => (next) => (action) => {
       // Axios is used in this application to make api calls
       axios(config, { timeout: 2 })
         .then((response) => {
-          LOG("Status Code :" + response);
+          LOG("Raw Response :", response);
+          LOG("Status Code :" + response.status);
           LOG("Status Code :" + typeof response.status);
           return Promise.all([response.data, response.status]);
         })
         .then((responseData, status) => {
-          LOG("---------------->Response Data<----------------------");
+          LOG("---------------->Response Data<----------------------" + status);
           LOG("request Type ==>" + action.requestType);
           LOG("Axios Response  >>:" + JSON.stringify(responseData));
 
@@ -171,14 +172,22 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
         );
 
         switch (action.requestType) {
-          case StaticValues.loginRequest:
-            LOG("LOGIN REQUEST IN MIDDLEWARE :", action.responseData);
-            LOG(
-              "LOG IN STATUS IN MIDDLEWARE :",
-              action.responseData.data.loginStatus
-            );
+          case StaticValues.createAccount:
+            LOG("create_Account_in_middleware :", action);
+            dispatchNext = true;
 
-            LOG("LOGIN REQUEST DATA IN MIDDLEWARE:", action.requestData);
+            if (action.responseData.message == "msgcode0005") {
+              Toast("Hiffo Id created successfully");
+              RootNavigation.navigateScreen("login");
+            } else if (action.responseData.message == "msgcode0006") {
+              Toast("Mobile number already exists");
+            } else {
+              Toast("Please try again");
+            }
+            break;
+
+          case StaticValues.loginRequest:
+            LOG("LOGIN REQUEST IN MIDDLEWARE :", action);
 
             if (action.responseData.data.loginStatus == "SUCCESS") {
               LOG("AUTHENTICATION PASSED");

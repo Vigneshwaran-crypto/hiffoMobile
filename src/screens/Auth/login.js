@@ -58,12 +58,15 @@ const LogIn = (props) => {
       var isValidEmail = validateEmailAndPhone(email, "email");
 
       if (isValidEmail) {
-        var encryptedPass = CryptoJS.MD5(password).toString();
-        LOG("ENCRYPTED PASSWORD :", encryptedPass);
-        var loginRequestData = {
-          email: email,
-          password: encryptedPass,
-        };
+        // var encryptedPass = CryptoJS.MD5(password).toString();
+        // LOG("ENCRYPTED PASSWORD :", encryptedPass);
+        // var loginRequestData = {
+        //   email: email,
+        //   password: encryptedPass,
+        // };
+
+        const req = ``;
+
         // dispatch(initSpinner());
         // dispatch(authenticationVerify(loginRequestData));
         Toast("Login Successfully");

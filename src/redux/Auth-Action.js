@@ -26,6 +26,20 @@ import {
 
 import { LOG, storeItem } from "../common/util";
 
+export const createAccount = (jsonData) => {
+  LOG("CREATE_ACCOUNT_IN_ACTION :", HTTP.CREATE_ACCOUNT + jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestUrl: HTTP.CREATE_ACCOUNT + jsonData,
+      requestType: StaticValues.createAccount,
+      noAuth: true,
+      jsonData: jsonData,
+      get: true,
+    });
+  };
+};
+
 export const authenticationVerify = (jsonData) => {
   LOG("LOGIN REQUEST IN ACTION :", jsonData);
   return (dispatch) => {
@@ -81,88 +95,6 @@ export const resetPasswordAction = (jsonData) => {
   };
 };
 
-export const loginWithCredentials = (jsonData, from) => {
-  console.log("Inside Uath action >>");
-  return async (dispatch) => {
-    const params = new URLSearchParams();
-    params.append("grant_type", "password");
-    params.append("username", "DemoProvider");
-    params.append("password", "Wellness2!");
-    params.append("device_id", "b8ad7de1fc2f8db2");
-    params.append("ip_address", "");
-    LOG("params--->" + params);
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-
-    axios
-      .post("https://intlws.myoutcomesapp.com/token", params, config)
-      .then((result) => {
-        LOG("ResultGGGG---------------------" + JSON.stringify(result));
-        LOG("INSIDE LOGw");
-        HTTP.AuthHeader.Authorization = "Bearer " + result.data.access_token;
-        LOG("INSIDE LOGw2");
-        HTTP.access_token = result.data.access_token;
-        LOG("INSIDE LOGw3");
-        HTTP.FormDataHeader.Authorization =
-          "Bearer " + result.data.access_token;
-        LOG("INSIDE LOGw4");
-        var cookie = "";
-        cookie =
-          result.headers["set-cookie"] +
-          ", KEYCLOAK_IDENTITY=" +
-          result.data.access_token +
-          "; KEYCLOAK_SESSION=" +
-          result.data.session_state +
-          "; Domain=admin.bml.betalearnings.com;";
-        result.headers["set-cookie"] = cookie;
-        LOG("INSIDE LOGw55");
-        dispatch(storeCookieInState(result.headers));
-        LOG("INSIDE LOGw6");
-        dispatch(storeTokenInRedux(result.data));
-        LOG("INSIDE LOGw7");
-
-        // if (storeCredentials == "checked") {
-        var tempCredential = JSON.stringify({
-          username: jsonData.username,
-          password: jsonData.password,
-        });
-        storeItem("credentials", tempCredential);
-        LOG("INSIDE LOGw8");
-        let emptyJson = {};
-        dispatch(getProviderDetail(emptyJson));
-        LOG("INSIDE LOGw9");
-        // }
-      })
-      .catch((err) => {
-        LOG(
-          "errGGGG---------------------Email Verification Pending" +
-            JSON.stringify(err)
-        );
-        dispatch(stopSpinner());
-        if (JSON.stringify(err.message).toString().includes("400")) {
-          LOG(
-            "JSON.stringify(err.message).toString().includes",
-            JSON.stringify(err.message).toString().includes("400")
-          );
-          Toast("Getting Response 400");
-        } else {
-          if (
-            JSON.stringify(err.message).toString().includes("Network Error")
-          ) {
-            Toast("Please check your network connection");
-          } else {
-            Toast("Please enter valid credentials");
-          }
-        }
-        if (from == "application") Actions.login();
-      });
-  };
-};
-
 export const getProviderDetail = (jsondata) => {
   // get getGroupDetails Action
   LOG("GET PROVIDER DETAILS Action");
@@ -174,25 +106,6 @@ export const getProviderDetail = (jsondata) => {
       requestUrl: HTTP.GET_PROVIDER_URL,
       get: true,
       requestType: GET_PROVIDER_DETAIL,
-    });
-  };
-};
-
-export const flowTypeChange = (data) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionConstants.FLOW_TYPE,
-      jsonData: data,
-    });
-  };
-};
-
-export const storeUserDetailsInRedux = (data) => {
-  return (dispatch) => {
-    dispatch({
-      type: API_DATA_RECEIVED,
-      responseData: data,
-      requestType: ActionConstants.VALIDATE_OTP,
     });
   };
 };

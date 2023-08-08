@@ -1,7 +1,7 @@
 // CONSTANTS used in the overall application
 export const isTesting = true;
 
-export const ServerUrl = "http://159.89.172.215:8080/StoneFruit/";
+export const ServerUrl = "http://hiffo.in/";
 
 export const ActionConstants = {};
 
@@ -13,6 +13,7 @@ export const StaticValues = {
   editProfile: "editProfile",
   profilePhotoUpload: "profilePhotoUpload",
 
+  createAccount: "createAccount",
   loginRequest: "loginRequest",
   sentOtp: "sentOtp",
   verifyOtp: "verifyOtp",
@@ -47,9 +48,10 @@ export const AuthToken = "Bearer ";
 export const HTTP = {
   // Urls'
 
-  LOGIN_REQUEST: ServerUrl + "auth/mlogin",
-  SEND_OTP_URL: ServerUrl + "auth/forgotPasswordMobile",
-  VERIFY_OTP_URL: ServerUrl + "auth/checkOTPVaild",
+  CREATE_ACCOUNT: ServerUrl + "signup?",
+  LOGIN_REQUEST: ServerUrl + "signin?",
+  SEND_OTP_URL: ServerUrl + "otpgenerator?",
+  VERIFY_OTP_URL: ServerUrl + "otpverifier?",
   RESET_PASSWORD_URL: ServerUrl + "auth/mobilePasswordChanged",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",
