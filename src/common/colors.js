@@ -94,6 +94,9 @@ export const colors = {
   logoBlue: "#172f4b",
   logoGreen: "#7ed956",
   logoOrange: "#fe5722",
+
+  purple: "#512B81",
+  darkBlue: "#241468",
 };
 
 export const TextColors = {

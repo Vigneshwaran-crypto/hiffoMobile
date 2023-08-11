@@ -1,22 +1,46 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { colors } from "../../../common/colors";
 import { textFontFaceMedium } from "../../../common/styles";
 import orderList from "../../../../Assests/OrdereList.json";
+import LinearGradient from "react-native-linear-gradient";
 
 const Orders = () => {
   const orderListItem = ({ item }) => {
     return (
-      <View style={styles.itemParent}>
-        <View style={styles.tableView}>
-          <Text style={styles.tableText}>{item.table}</Text>
-        </View>
+      <TouchableOpacity
+        style={{
+          flex: 1,
+        }}
+      >
+        <LinearGradient
+          colors={["#512B81", "#241468"]}
+          start={{ x: 0.7, y: 0.4 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.itemParent}
+        >
+          <LinearGradient
+            colors={["#20A090", "#a0ce4e"]}
+            start={{ x: 0.7, y: 0.4 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.tableView}
+          >
+            <Text style={styles.tableText}>{item.table}</Text>
+          </LinearGradient>
 
-        <View style={styles.billContainer}>
-          <Text style={styles.billText}>{item.billNo}</Text>
-        </View>
-      </View>
+          <View style={styles.billContainer}>
+            <Text style={styles.billText}>{item.billNo}</Text>
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
     );
   };
 
@@ -106,7 +130,6 @@ const styles = StyleSheet.create({
   },
   itemParent: {
     margin: 5,
-    flex: 1,
     borderRadius: 5,
     marginHorizontal: 15,
     marginVertical: 12,
