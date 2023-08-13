@@ -1,6 +1,7 @@
 import React from "react";
 import {
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -8,6 +9,8 @@ import {
   View,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
 import { colors } from "../../../common/colors";
 import { textFontFaceMedium } from "../../../common/styles";
 import orderList from "../../../../Assests/OrdereList.json";
@@ -47,7 +50,20 @@ const Orders = () => {
   return (
     <View style={styles.container}>
       <View style={styles.screenContent}>
-        <Text style={styles.titleText}>Orders</Text>
+        <View style={styles.titleView}>
+          <Image
+            source={require("../../../../Assests/images/hiffoTitle.png")}
+            style={styles.titleImage}
+          />
+
+          <View>
+            <Text style={styles.hotelNameText}>
+              <FontAwesome5 name="hotel" color={colors.logoBlue} size={20} />{" "}
+              Adyar Anandha bahavan
+            </Text>
+            <Text style={styles.hotelBranchText}>Branch Name</Text>
+          </View>
+        </View>
 
         <View style={styles.searchParent}>
           <View style={styles.filterIconParent}>
@@ -98,10 +114,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 14,
   },
-  titleText: {
+  titleView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  titleImage: {
+    resizeMode: "cover",
+    height: "100%",
+    width: "45%",
+    marginStart: -15,
+  },
+  hotelNameText: {
+    color: colors.logoBlue,
     fontFamily: textFontFaceMedium,
-    fontSize: 21,
-    color: colors.black,
+    fontSize: 14,
+  },
+  hotelBranchText: {
+    alignSelf: "flex-end",
+    color: colors.logoBlue,
+    fontFamily: textFontFaceMedium,
   },
   searchParent: {
     flexDirection: "row",
@@ -115,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   searchIconParent: {
-    flex: 0.95,
+    flex: 1,
     borderWidth: 1,
     borderColor: colors.activeGreen,
     borderRadius: 8,
@@ -125,7 +156,6 @@ const styles = StyleSheet.create({
   },
   flatListStyle: {
     flex: 1,
-    marginHorizontal: 10,
     marginBottom: 50,
   },
   itemParent: {
