@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import {
   Animated,
+  Dimensions,
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -17,6 +19,8 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+
+const { width, height } = Dimensions.get("window");
 
 const CreateManagement = () => {
   const navigation = useNavigation();
@@ -51,7 +55,7 @@ const CreateManagement = () => {
             styles.itemContainer,
             {
               borderColor:
-                item.id == selected ? colors.logoOrange : colors.black,
+                item.id == selected ? colors.lightGreen : colors.black,
             },
           ]}
         >
@@ -74,6 +78,13 @@ const CreateManagement = () => {
     <View style={styles.container}>
       <Header title={"CREATE MANAGEMENT"} />
 
+      <View style={styles.splashContent}>
+        <Image
+          source={require("../../../Assests/images/hiffoDesk.png")}
+          style={styles.hiffoLogo}
+        />
+      </View>
+
       <View style={styles.screenContent}>
         <Text style={styles.mediumText}>
           Hiffo welcomes you to join with us
@@ -90,7 +101,7 @@ const CreateManagement = () => {
           />
         </View>
 
-        <Animated.View style={{ opacity: fadInButton }}>
+        <Animated.View style={{ opacity: fadInButton, position: "absolute" }}>
           <TouchableOpacity onPress={createManage}>
             <LinearGradient
               colors={[colors.buttonGreen, colors.activeGreen]}
@@ -115,14 +126,30 @@ const styles = StyleSheet.create({
   screenContent: {
     marginHorizontal: 20,
     justifyContent: "center",
-    flex: 1,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  splashContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10,
+    marginTop: 20,
+    width: "70%",
+    alignSelf: "center",
+  },
+  hiffoLogo: {
+    height: height * 0.2,
+    width: width * 0.8,
+    resizeMode: "contain",
+    borderColor: colors.black,
+    marginTop: -30,
   },
   mediumText: {
     color: colors.black,
     fontFamily: textFontFaceSemiBold,
     color: colors.black,
     fontSize: 18,
-    marginVertical: 5,
+    marginTop: 25,
   },
   subText: {
     fontFamily: textFontFaceLight,
@@ -162,6 +189,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
     marginTop: 50,
+    width: "60%",
+    alignSelf: "center",
   },
   createText: {
     color: colors.white,

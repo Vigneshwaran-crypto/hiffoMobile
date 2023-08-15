@@ -67,31 +67,23 @@ const CreateRest = (props) => {
   const validateFields = () => {
     navigation.navigate("createManagement");
 
-    if (!resName) {
-      Toast("Please enter restaurant");
-    } else if (!email) {
-      Toast("Please enter email");
-    } else if (!totalSeat) {
-      Toast("Please enter total seat");
-    } else if (!address) {
-      Toast("Please enter address");
-    } else {
-      Toast("created successfully");
-      //   navigation.navigate("createManagement");
-    }
+    // if (!resName) {
+    //   Toast("Please enter restaurant");
+    // } else if (!email) {
+    //   Toast("Please enter email");
+    // } else if (!totalSeat) {
+    //   Toast("Please enter total seat");
+    // } else if (!address) {
+    //   Toast("Please enter address");
+    // } else {
+    //   Toast("created successfully");
+    //   //   navigation.navigate("createManagement");
+    // }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: userTheme ? colors.black : colors.white },
-        ]}
-      >
+    <View style={styles.container}>
+      <View style={styles.container}>
         <Header title={"CREATE RESTAURANT"} />
 
         <ScrollView
@@ -115,10 +107,10 @@ const CreateRest = (props) => {
           <View style={styles.authContent}>
             <View style={styles.emailView}>
               <TextInput
-                style={styles.tIStyle(userTheme)}
+                style={styles.tIStyle}
                 onChangeText={setRestName}
                 placeholder={"Restaurant name"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={resName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -132,10 +124,10 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setMail}
                 placeholder={"Email"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -149,10 +141,10 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setTotalSeat}
                 placeholder={"Total seat"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={totalSeat}
                 keyboardType={"number-pad"}
                 underlineColorAndroid={colors.transparent}
@@ -165,10 +157,10 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setAddress}
                 placeholder={"Address"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={address}
                 keyboardType={"default"}
                 multiline={true}
@@ -196,25 +188,28 @@ const CreateRest = (props) => {
           </View>
         </ScrollView>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  tIStyle: (userTheme) => ({
-    backgroundColor: userTheme ? colors.black : colors.inputGrey,
+  tIStyle: {
+    backgroundColor: colors.inputGrey,
     flex: 1,
-    borderColor: userTheme ? colors.white : colors.grey,
-    color: userTheme ? colors.white : colors.black,
+    borderColor: colors.grey,
+    color: colors.black,
     padding: 10,
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-  }),
+    textAlign: "center",
+  },
   splashContent: {
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
+    width: "70%",
+    alignSelf: "center",
   },
   hiffoLogo: {
     height: Dheight * 0.18,
@@ -229,6 +224,8 @@ const styles = StyleSheet.create({
   authContent: {
     marginHorizontal: 25,
     marginVertical: 20,
+    width: "60%",
+    alignSelf: "center",
   },
   emailView: {
     marginVertical: 20,
@@ -245,7 +242,9 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.transparent,
   },
   bottomContent: {
-    // marginVertical: 10,
+    alignSelf: "center",
+    width: "60%",
+    alignSelf: "center",
   },
   logInButton: {
     justifyContent: "center",

@@ -35,6 +35,8 @@ import { initSpinner } from "../../redux/Api-Action";
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
 
+const { fontScale } = Dimensions.get("window");
+
 const LogIn = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
@@ -87,7 +89,8 @@ const LogIn = (props) => {
 
   useEffect(() => {
     setMail("Vickytata619@gmail.com");
-    setPassword("helloNanba");
+    setPassword("123456");
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackButtonClick
@@ -104,16 +107,8 @@ const LogIn = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: userTheme ? colors.black : colors.white },
-        ]}
-      >
+    <View style={styles.parentContainer}>
+      <View style={styles.container}>
         <ScrollView
           behavior="padding"
           showsHorizontalScrollIndicator={false}
@@ -146,10 +141,10 @@ const LogIn = (props) => {
           <View style={styles.authContent}>
             <View style={styles.emailView}>
               <TextInput
-                style={styles.tIStyle(userTheme)}
+                style={styles.tIStyle}
                 onChangeText={setMail}
                 placeholder={"Enter HID"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -163,10 +158,10 @@ const LogIn = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={styles.tIStyle}
                 onChangeText={setPassword}
                 placeholder={"Password"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={password}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -196,13 +191,7 @@ const LogIn = (props) => {
               <Text style={styles.forgotText}>Forgot Password</Text>
             </TouchableOpacity>
 
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
+            <View style={styles.bottomTextsView}>
               <Text style={styles.termsText}>
                 By signing in you agree to Commons{" "}
                 <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
@@ -216,21 +205,23 @@ const LogIn = (props) => {
           </View>
         </ScrollView>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  tIStyle: (userTheme) => ({
-    backgroundColor: userTheme ? colors.black : colors.inputGrey,
+  parentContainer: {
     flex: 1,
-    borderColor: userTheme ? colors.white : colors.grey,
-    color: userTheme ? colors.white : colors.black,
-    padding: 10,
+    backgroundColor: colors.white,
+  },
+  tIStyle: {
+    backgroundColor: colors.inputGrey,
+    color: colors.black,
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-  }),
+    textAlign: "center",
+  },
   splashContent: {
     justifyContent: "center",
     alignItems: "center",
@@ -243,8 +234,12 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   container: {
-    flex: 1,
     justifyContent: "center",
+    backgroundColor: colors.white,
+    width: "85%",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   loaderView: {
     position: "absolute",
@@ -273,7 +268,6 @@ const styles = StyleSheet.create({
   headingText: {
     fontFamily: textFontFaceLight,
     color: colors.black,
-    // fontSize: 28,
   },
   subText: {
     textAlign: "center",
@@ -284,6 +278,7 @@ const styles = StyleSheet.create({
   authContent: {
     marginHorizontal: 25,
     marginVertical: 20,
+    justifyContent: "center",
   },
   emailView: {
     marginVertical: 10,
@@ -299,9 +294,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.transparent,
   },
-  bottomContent: {
-    // marginVertical: 10,
-  },
+  bottomContent: {},
   logInButton: {
     justifyContent: "center",
     alignItems: "center",
@@ -341,6 +334,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 18,
     color: colors.logoBlue,
+  },
+  bottomTextsView: {
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
 

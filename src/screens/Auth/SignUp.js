@@ -49,10 +49,10 @@ const SignUp = (props) => {
   const [mobileNo, setMobileNo] = useState("");
 
   useEffect(() => {
-    setUserName("VigneshDemo");
-    setPassword("pass123");
-    setMail("vickyterrito@mailinator.com");
-    setMobileNo("9876787655");
+    // setUserName("VigneshDemo");
+    // setPassword("pass123");
+    // setMail("vickyterrito@mailinator.com");
+    // setMobileNo("9876787655");
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -90,21 +90,13 @@ const SignUp = (props) => {
 
       const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
 
-      dispatch(createAccount(modalReq));
+      // dispatch(createAccount(modalReq));
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: userTheme ? colors.black : colors.white },
-        ]}
-      >
+    <View style={styles.container}>
+      <View style={styles.container}>
         <Header title={"CREATE ACCOUNT"} />
 
         <ScrollView
@@ -135,10 +127,10 @@ const SignUp = (props) => {
           <View style={styles.authContent}>
             <View style={styles.emailView}>
               <TextInput
-                style={styles.tIStyle(userTheme)}
+                style={styles.tIStyle}
                 onChangeText={setUserName}
                 placeholder={"User name"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={userName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -152,10 +144,10 @@ const SignUp = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setPassword}
                 placeholder={"Password"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={password}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -170,10 +162,10 @@ const SignUp = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setMail}
                 placeholder={"Email"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={email}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -187,10 +179,10 @@ const SignUp = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle(userTheme), { marginTop: -15 }]}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setMobileNo}
                 placeholder={"Mobile number"}
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
+                placeholderTextColor={colors.grey}
                 value={mobileNo}
                 keyboardType={"decimal-pad"}
                 underlineColorAndroid={colors.transparent}
@@ -217,37 +209,40 @@ const SignUp = (props) => {
           </View>
         </ScrollView>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  tIStyle: (userTheme) => ({
-    backgroundColor: userTheme ? colors.black : colors.inputGrey,
+  tIStyle: {
+    backgroundColor: colors.inputGrey,
     flex: 1,
-    borderColor: userTheme ? colors.white : colors.grey,
-    color: userTheme ? colors.white : colors.black,
+    borderColor: colors.grey,
+    color: colors.black,
     padding: 10,
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-  }),
+    textAlign: "center",
+  },
   splashContent: {
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
     marginTop: 20,
+    width: "70%",
+    alignSelf: "center",
   },
   hiffoLogo: {
     height: Dheight * 0.2,
     width: Dwidth * 0.8,
     resizeMode: "contain",
-    // borderWidth: 1,
     borderColor: colors.black,
   },
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: colors.white,
   },
   loaderView: {
     position: "absolute",
@@ -276,7 +271,6 @@ const styles = StyleSheet.create({
   headingText: {
     fontFamily: textFontFaceLight,
     color: colors.black,
-    // fontSize: 28,
   },
   subText: {
     textAlign: "center",
@@ -287,6 +281,8 @@ const styles = StyleSheet.create({
   authContent: {
     marginHorizontal: 25,
     marginVertical: 20,
+    width: "60%",
+    alignSelf: "center",
   },
   emailView: {
     marginVertical: 20,
@@ -303,7 +299,8 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.transparent,
   },
   bottomContent: {
-    // marginVertical: 10,
+    width: "73%",
+    alignSelf: "center",
   },
   logInButton: {
     justifyContent: "center",

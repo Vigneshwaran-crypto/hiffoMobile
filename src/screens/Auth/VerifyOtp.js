@@ -123,211 +123,182 @@ const VerifyOtp = (props) => {
   };
 
   return (
-    <View style={styles.container(userTheme)}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <View style={styles.wholeView}>
-          <Header title={"VERIFY OTP"} />
+    <View style={styles.container}>
+      <View style={styles.wholeView}>
+        <Header title={"VERIFY OTP"} />
 
-          <View style={styles.forgotView}>
-            <View style={styles.splashContent}>
-              <Text
-                style={[
-                  styles.headingText,
-                  { color: userTheme ? colors.white : colors.black },
-                ]}
-              >
-                ENTER OTP
-              </Text>
-              <Text
-                style={[
-                  styles.headingText,
-                  {
-                    color: userTheme ? colors.white : colors.black,
-                    fontFamily: textFontFaceLight,
-                    fontSize: 15,
-                  },
-                ]}
-              >
-                Enter OTP for verify your account
-              </Text>
+        <View style={styles.forgotView}>
+          <View style={styles.splashContent}>
+            <Text style={styles.headingText}>ENTER OTP</Text>
+            <Text
+              style={[
+                styles.headingText,
+                {
+                  color: userTheme ? colors.white : colors.black,
+                  fontFamily: textFontFaceLight,
+                  fontSize: 15,
+                },
+              ]}
+            >
+              Enter OTP for verify your account
+            </Text>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "flex-start",
-                  alignItems: "center",
-                  marginVertical: 2,
-                }}
-              >
+            <View style={styles.runningTimingView}>
+              <Text style={styles.runningTime}>{time} Sec</Text>
+
+              <TouchableOpacity disabled={time != 0} onPress={resendOnPress}>
                 <Text
-                  style={{
-                    color: colors.lightGreen,
-                    marginEnd: 8,
-                    fontFamily: textFontFaceMedium,
-                  }}
+                  style={[
+                    styles.headingText,
+                    {
+                      color: userTheme ? colors.white : colors.black,
+                      fontSize: 14,
+                      textDecorationLine: "underline",
+                    },
+                  ]}
                 >
-                  {/* 00:32 Sec */}
-                  {time} Sec
+                  RESEND
                 </Text>
-
-                <TouchableOpacity disabled={time != 0} onPress={resendOnPress}>
-                  <Text
-                    style={[
-                      styles.headingText,
-                      {
-                        color: userTheme ? colors.white : colors.black,
-                        fontSize: 14,
-                        textDecorationLine: "underline",
-                      },
-                    ]}
-                  >
-                    RESEND
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
-
-            {customSpinner ? (
-              <View style={styles.loaderView}>
-                <ActivityIndicator
-                  color={colors.buttonGreen}
-                  animating={customSpinner}
-                  size={"large"}
-                  style={styles.loaderStyle}
-                />
-              </View>
-            ) : null}
-
-            <View style={styles.fieldView}>
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin1Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin1(val);
-                  if (val.length != 0) {
-                    pin2Ref.current.focus();
-                  }
-                }}
-                value={pin1}
-              />
-
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin2Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin2(val);
-                  if (val.length != 0) {
-                    pin3Ref.current.focus();
-                  }
-                }}
-                value={pin2}
-              />
-
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin3Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin3(val);
-                  if (val.length != 0) {
-                    pin4Ref.current.focus();
-                  }
-                }}
-                value={pin3}
-              />
-
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin4Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin4(val);
-                  if (val.length != 0) {
-                    pin5Ref.current.focus();
-                  }
-                }}
-                value={pin4}
-              />
-
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin5Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin5(val);
-                  if (val.length != 0) {
-                    pin6Ref.current.focus();
-                  }
-                }}
-                value={pin5}
-              />
-
-              <TextInput
-                style={styles.textInputs}
-                placeholder="X"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.grey}
-                color={userTheme ? colors.white : colors.black}
-                ref={pin6Ref}
-                maxLength={1}
-                keyboardType={"decimal-pad"}
-                onChangeText={(val) => {
-                  setPin6(val);
-                  if (val.length != 0) {
-                    pin6Ref.current.focus();
-                  }
-                }}
-                value={pin6}
-              />
-            </View>
-
-            <TouchableOpacity style={styles.buttonView} onPress={verifyOnPress}>
-              <LinearGradient
-                colors={[colors.lightGreen, colors.buttonGreen]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientButton}
-              >
-                <Text style={styles.buttonText}>VERIFY</Text>
-              </LinearGradient>
-            </TouchableOpacity>
           </View>
+
+          {customSpinner ? (
+            <View style={styles.loaderView}>
+              <ActivityIndicator
+                color={colors.buttonGreen}
+                animating={customSpinner}
+                size={"large"}
+                style={styles.loaderStyle}
+              />
+            </View>
+          ) : null}
+
+          <View style={styles.fieldView}>
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin1Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin1(val);
+                if (val.length != 0) {
+                  pin2Ref.current.focus();
+                }
+              }}
+              value={pin1}
+            />
+
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin2Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin2(val);
+                if (val.length != 0) {
+                  pin3Ref.current.focus();
+                }
+              }}
+              value={pin2}
+            />
+
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin3Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin3(val);
+                if (val.length != 0) {
+                  pin4Ref.current.focus();
+                }
+              }}
+              value={pin3}
+            />
+
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin4Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin4(val);
+                if (val.length != 0) {
+                  pin5Ref.current.focus();
+                }
+              }}
+              value={pin4}
+            />
+
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin5Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin5(val);
+                if (val.length != 0) {
+                  pin6Ref.current.focus();
+                }
+              }}
+              value={pin5}
+            />
+
+            <TextInput
+              style={styles.textInputs}
+              placeholder="X"
+              placeholderTextColor={colors.grey}
+              color={colors.black}
+              ref={pin6Ref}
+              maxLength={1}
+              keyboardType={"decimal-pad"}
+              onChangeText={(val) => {
+                setPin6(val);
+                if (val.length != 0) {
+                  pin6Ref.current.focus();
+                }
+              }}
+              value={pin6}
+            />
+          </View>
+
+          <TouchableOpacity style={styles.buttonView} onPress={verifyOnPress}>
+            <LinearGradient
+              colors={[colors.lightGreen, colors.buttonGreen]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientButton}
+            >
+              <Text style={styles.buttonText}>VERIFY</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: (userTheme) => ({
+  container: {
     flex: 1,
-    // marginHorizontal: 20,
-    backgroundColor: userTheme ? colors.black : colors.white,
-  }),
+    backgroundColor: colors.white,
+  },
   wholeView: {
     flex: 1,
     marginHorizontal: 10,
@@ -336,7 +307,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 20,
-    marginBottom: 100,
+    width: "60%",
+    alignSelf: "center",
   },
   fieldView: {
     marginVertical: 5,
@@ -356,10 +328,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     marginVertical: 10,
-    width: win.width * 0.1,
-    // width: 50,
     color: colors.black,
-    // marginRight: 20,
     backgroundColor: colors.inputGrey,
     marginEnd: 15,
     textAlign: "center",
@@ -367,7 +336,7 @@ const styles = StyleSheet.create({
   gradientButton: {
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
+    width: "50%",
     paddingVertical: 10,
     borderRadius: 30,
   },
@@ -409,6 +378,17 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: "center",
     alignItems: "center",
+  },
+  runningTime: {
+    color: colors.lightGreen,
+    marginEnd: 8,
+    fontFamily: textFontFaceMedium,
+  },
+  runningTimingView: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    alignItems: "center",
+    marginVertical: 2,
   },
 });
 

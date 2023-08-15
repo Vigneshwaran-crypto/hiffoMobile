@@ -87,70 +87,56 @@ const ForgotPassword = () => {
   };
 
   return (
-    <View style={styles.container(userTheme)}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <View style={styles.wholeView}>
-          <Header title={"FORGOT PASSWORD"} />
+    <View style={styles.container}>
+      <View style={styles.wholeView}>
+        <Header title={"FORGOT PASSWORD"} />
 
-          <View style={styles.forgotView}>
-            <View style={styles.splashContent}>
-              <Image
-                source={require("../../../Assests/images/hiffo.png")}
-                style={styles.hiffoLogo}
-              />
-              <Text
-                style={[
-                  styles.headingText,
-                  {
-                    color: userTheme ? colors.white : colors.black,
-                    fontFamily: textFontFaceLight,
-                    fontSize: 15,
-                  },
-                ]}
-              >
-                We will send an OTP to your number to verify your account
-              </Text>
-            </View>
-
-            {customSpinner ? (
-              <View style={styles.loaderView}>
-                <ActivityIndicator
-                  color={colors.buttonGreen}
-                  animating={customSpinner}
-                  size={"large"}
-                  style={styles.loaderStyle}
-                />
-              </View>
-            ) : null}
-
-            <View style={styles.fieldView}>
-              <TextInput
-                style={styles.textInputs}
-                placeholder="Enter mobile number"
-                placeholderTextColor={userTheme ? colors.greyC4 : colors.black}
-                color={userTheme ? colors.white : colors.black}
-                onChangeText={setNumber}
-                value={number}
-                keyboardType={"decimal-pad"}
-              />
-            </View>
-
-            <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
-              <LinearGradient
-                colors={[colors.lightGreen, colors.activeGreen]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientButton}
-              >
-                <Text style={styles.buttonText}>SEND</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+        <View style={styles.forgotView}>
+          <View style={styles.splashContent}>
+            <Image
+              source={require("../../../Assests/images/hiffo.png")}
+              style={styles.hiffoLogo}
+            />
+            <Text style={styles.headingText}>
+              We will send an OTP to your number to verify your account
+            </Text>
           </View>
+
+          {customSpinner ? (
+            <View style={styles.loaderView}>
+              <ActivityIndicator
+                color={colors.buttonGreen}
+                animating={customSpinner}
+                size={"large"}
+                style={styles.loaderStyle}
+              />
+            </View>
+          ) : null}
+
+          <View style={styles.fieldView}>
+            <TextInput
+              style={styles.textInputs}
+              placeholder="Enter mobile number"
+              placeholderTextColor={colors.black}
+              color={colors.black}
+              onChangeText={setNumber}
+              value={number}
+              keyboardType={"decimal-pad"}
+            />
+          </View>
+
+          <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
+            <LinearGradient
+              colors={[colors.lightGreen, colors.activeGreen]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientButton}
+            >
+              <Text style={styles.buttonText}>SEND</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </View>
   );
 };
@@ -160,10 +146,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
-  container: (userTheme) => ({
+  container: {
     flex: 1,
-    backgroundColor: userTheme ? colors.black : colors.white,
-  }),
+    backgroundColor: colors.white,
+  },
   wholeView: {
     flex: 1,
     marginHorizontal: 20,
@@ -173,9 +159,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 20,
     marginBottom: 100,
+    width: "75%",
+    alignSelf: "center",
   },
   fieldView: {
     marginVertical: 5,
+    width: "75%",
+    alignSelf: "center",
   },
   formText: {
     color: colors.tanGrey,
@@ -185,19 +175,17 @@ const styles = StyleSheet.create({
   textInputs: {
     fontFamily: textFontFaceLight,
     fontSize: fontsSize.smallText,
-    alignSelf: "flex-start",
     borderRadius: 8,
     padding: 10,
     marginVertical: 10,
-    width: win.width * 0.8,
     color: colors.grey,
-    marginRight: 20,
     backgroundColor: colors.inputGrey,
+    textAlign: "center",
   },
   gradientButton: {
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
+    width: "40%",
     paddingVertical: 10,
     borderRadius: 30,
   },
@@ -222,9 +210,9 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: colors.black,
-    fontFamily: textFontFaceSemiBold,
-    fontSize: 25,
-    alignSelf: "flex-start",
+    fontFamily: textFontFaceLight,
+    fontSize: 15,
+    textAlign: "justify",
   },
   loaderView: {
     position: "absolute",

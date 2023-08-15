@@ -66,15 +66,6 @@ const Orders = () => {
         </View>
 
         <View style={styles.searchParent}>
-          <View style={styles.filterIconParent}>
-            <Feather
-              name="filter"
-              color={colors.activeGreen}
-              size={22}
-              style={{ padding: 8 }}
-            />
-          </View>
-
           <View style={styles.searchIconParent}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Feather
@@ -113,10 +104,18 @@ const styles = StyleSheet.create({
   screenContent: {
     marginHorizontal: 15,
     marginVertical: 14,
+    alignSelf: "center",
+  },
+  flatListStyle: {
+    flex: 1,
+    marginBottom: 50,
+    width: "90%",
+    alignSelf: "center",
   },
   titleView: {
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "90%",
   },
   titleImage: {
     resizeMode: "cover",
@@ -139,12 +138,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 15,
   },
-  filterIconParent: {
-    borderWidth: 1,
-    marginEnd: 15,
-    borderColor: colors.activeGreen,
-    borderRadius: 8,
-  },
+
   searchIconParent: {
     flex: 1,
     borderWidth: 1,
@@ -154,10 +148,7 @@ const styles = StyleSheet.create({
   searchInput: {
     marginVertical: -5,
   },
-  flatListStyle: {
-    flex: 1,
-    marginBottom: 50,
-  },
+
   itemParent: {
     margin: 5,
     borderRadius: 5,
