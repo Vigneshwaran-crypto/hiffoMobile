@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.inputGrey,
     width: "70%",
     alignSelf: "center",
-    textAlign: "center",
+    // textAlign: "center",
   },
   gradientButton: {
     justifyContent: "center",

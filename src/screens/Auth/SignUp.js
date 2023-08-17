@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-    textAlign: "center",
+    // textAlign: "center",
   },
   splashContent: {
     justifyContent: "center",

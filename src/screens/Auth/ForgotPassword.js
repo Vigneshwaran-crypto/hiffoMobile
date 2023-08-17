@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: colors.grey,
     backgroundColor: colors.inputGrey,
-    textAlign: "center",
+    // textAlign: "center",
   },
   gradientButton: {
     justifyContent: "center",

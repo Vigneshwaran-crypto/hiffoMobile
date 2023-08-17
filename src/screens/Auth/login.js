@@ -52,14 +52,12 @@ const LogIn = (props) => {
       Toast("Please enter  email and password");
     } else if (!email) {
       Toast("Please enter your email");
-    } else if (!validateEmailAndPhone(email, "email")) {
-      Toast("Please enter valid email");
     } else if (!password) {
       Toast("Please enter your password");
     } else {
       var isValidEmail = validateEmailAndPhone(email, "email");
 
-      if (isValidEmail) {
+      if (true) {
         // var encryptedPass = CryptoJS.MD5(password).toString();
         // LOG("ENCRYPTED PASSWORD :", encryptedPass);
         // var loginRequestData = {
@@ -88,8 +86,8 @@ const LogIn = (props) => {
   };
 
   useEffect(() => {
-    setMail("Vickytata619@gmail.com");
-    setPassword("123456");
+    // setMail("Vickytata619@gmail.com");
+    // setPassword("123456");
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -220,7 +218,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-    textAlign: "center",
+    // textAlign: "center",
+    paddingStart: 10,
   },
   splashContent: {
     justifyContent: "center",

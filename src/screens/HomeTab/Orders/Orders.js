@@ -16,6 +16,9 @@ import { textFontFaceMedium } from "../../../common/styles";
 import orderList from "../../../../Assests/OrdereList.json";
 import LinearGradient from "react-native-linear-gradient";
 
+//#4182f0
+//#1AD1FD
+
 const Orders = () => {
   const orderListItem = ({ item }) => {
     return (
@@ -25,7 +28,7 @@ const Orders = () => {
         }}
       >
         <LinearGradient
-          colors={["#512B81", "#241468"]}
+          colors={["#4182f0", "#1AD1FD"]}
           start={{ x: 0.7, y: 0.4 }}
           end={{ x: 0, y: 1 }}
           style={styles.itemParent}
