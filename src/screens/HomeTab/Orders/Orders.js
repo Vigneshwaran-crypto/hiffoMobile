@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   Image,
+  Modal,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +11,9 @@ import {
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Entypo from "react-native-vector-icons/Entypo";
 
 import { colors } from "../../../common/colors";
 import { textFontFaceMedium } from "../../../common/styles";
@@ -20,6 +24,12 @@ import LinearGradient from "react-native-linear-gradient";
 //#1AD1FD
 
 const Orders = () => {
+  const [showBillAdd, setShowBillAdd] = useState(false);
+
+  const billPlusOnPress = () => {
+    setShowBillAdd(true);
+  };
+
   const orderListItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -96,6 +106,23 @@ const Orders = () => {
         numColumns={4}
         horizontal={false}
       />
+
+      <View style={styles.bottomButtonsView}>
+        <TouchableOpacity style={styles.bottomButton}>
+          <MatIcons name="pencil" size={21} color={colors.black} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bottomButton} onPress={billPlusOnPress}>
+          <Entypo name="plus" size={24} color={colors.black} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.bottomButton}>
+          <MatIcons name="trash-can-outline" size={21} color={colors.black} />
+        </TouchableOpacity>
+      </View>
+
+      <Modal>
+        <View></View>
+      </Modal>
     </View>
   );
 };
@@ -151,7 +178,6 @@ const styles = StyleSheet.create({
   searchInput: {
     marginVertical: -5,
   },
-
   itemParent: {
     margin: 5,
     borderRadius: 5,
@@ -183,6 +209,27 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontFamily: textFontFaceMedium,
     color: colors.white,
+  },
+  bottomButtonsView: {
+    position: "absolute",
+    bottom: "8%",
+    alignSelf: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.greyF1,
+    borderRadius: 40,
+    width: "36%",
+  },
+  bottomButton: {
+    borderWidth: 1,
+    height: 32,
+    width: 32,
+    borderRadius: 17,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 8,
+    marginVertical: 5,
   },
 });
 
