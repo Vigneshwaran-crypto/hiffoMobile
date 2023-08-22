@@ -48,6 +48,8 @@ const LogIn = (props) => {
   const [password, setPassword] = useState("");
 
   const validateFields = () => {
+    navigation.navigate("createRest");
+
     if (!email && !password) {
       Toast("Please enter  email and password");
     } else if (!email) {

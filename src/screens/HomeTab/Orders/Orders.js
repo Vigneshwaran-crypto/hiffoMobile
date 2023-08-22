@@ -16,18 +16,23 @@ import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 
 import { colors } from "../../../common/colors";
-import { textFontFaceMedium } from "../../../common/styles";
+import {
+  textFontFaceLight,
+  textFontFaceMedium,
+  textFontFaceSemiBold,
+} from "../../../common/styles";
 import orderList from "../../../../Assests/OrdereList.json";
 import LinearGradient from "react-native-linear-gradient";
 
-//#4182f0
-//#1AD1FD
-
 const Orders = () => {
-  const [showBillAdd, setShowBillAdd] = useState(false);
+  const [showAddBill, seShowAddBill] = useState(false);
 
   const billPlusOnPress = () => {
-    setShowBillAdd(true);
+    seShowAddBill(true);
+  };
+
+  const parentModalPress = () => {
+    seShowAddBill(false);
   };
 
   const orderListItem = ({ item }) => {
@@ -120,8 +125,51 @@ const Orders = () => {
         </TouchableOpacity>
       </View>
 
-      <Modal>
-        <View></View>
+      <Modal visible={showAddBill} animationType="fade" transparent={true}>
+        <TouchableOpacity style={styles.modalParent} onPress={parentModalPress}>
+          <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
+            <Text style={styles.modalTitle}>Create Bill</Text>
+
+            <TextInput
+              style={styles.modalMobileInput}
+              placeholder={"Mobile number"}
+              keyboardType={"decimal-pad"}
+            />
+
+            <Text style={styles.selectTableText}>Select your Table</Text>
+
+            <View style={styles.tableSelectView}>
+              <Image
+                source={require("../../../../Assests/images/table.png")}
+                style={styles.tableImage}
+              />
+            </View>
+
+            <View style={styles.decisionButtonView}>
+              <TouchableOpacity>
+                <LinearGradient
+                  colors={[colors.buttonGreen, colors.lightGreen]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.gradientButton}
+                >
+                  <Text style={styles.gradientText}>Create</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <LinearGradient
+                  colors={[colors.buttonGreen, colors.lightGreen]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.gradientButton}
+                >
+                  <Text style={styles.gradientText}>Close</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
       </Modal>
     </View>
   );
@@ -230,6 +278,69 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 8,
     marginVertical: 5,
+  },
+  modalParent: {
+    // height: "100%",
+    // width: "100%",
+    justifyContent: "center",
+    backgroundColor: colors.transparentGrey,
+    flex: 1,
+  },
+  modalContent: {
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    alignSelf: "center",
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    width: "87%",
+    height: "50%",
+  },
+  modalTitle: {
+    fontFamily: textFontFaceSemiBold,
+    color: colors.black,
+    fontSize: 22,
+  },
+  modalMobileInput: {
+    paddingStart: 10,
+    marginTop: 10,
+    marginBottom: 15,
+    backgroundColor: colors.thingrey,
+    borderRadius: 10,
+    fontFamily: textFontFaceLight,
+  },
+  selectTableText: {
+    fontFamily: textFontFaceLight,
+    color: colors.grey,
+    alignSelf: "center",
+  },
+  tableSelectView: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tableImage: {
+    height: "70%",
+    width: "70%",
+    resizeMode: "center",
+    marginTop: -20,
+  },
+  decisionButtonView: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    position: "absolute",
+    alignSelf: "center",
+    bottom: 10,
+  },
+  gradientButton: {
+    alignItems: "center",
+    borderRadius: 30,
+    paddingHorizontal: 50,
+  },
+  gradientText: {
+    color: colors.white,
+    fontFamily: textFontFaceMedium,
+    paddingVertical: 6,
+    marginBottom: -1,
   },
 });
 
