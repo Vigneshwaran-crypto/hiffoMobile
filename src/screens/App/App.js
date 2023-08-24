@@ -20,28 +20,13 @@ const App = () => {
   const userTheme = useSelector(({ api }) => api.getTheme);
   const Dispatch = useDispatch();
 
-  useEffect(() => {
-    LOG("USERTHEME IN APP .JS", userTheme);
 
-    getItem("themeState")
-      .then((result) => {
-        var parsed = JSON.parse(result);
-        LOG("GET ITEM IN APP JS :" + parsed.theme);
-        var vals = parsed.theme;
-        Dispatch(setTheme(parsed.theme));
-      })
-      .catch((error) => {
-        LOG("GET ITEM ERROR IN App.js", error);
-      });
-  }, []);
 
-  useEffect(() => {
-    LOG("PROPS VALUE IN APP.JS :", userTheme);
-  }, []);
+
 
   useEffect(() => {
     LOG("===========================");
-    LOG("    WELCOME TO My Agri-Comp");
+    LOG("    WELCOME TO My HIFFO");
     LOG("===========================");
   }, []);
 
@@ -49,17 +34,6 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        {/* <StatusBar
-            //animated={true}
-             backgroundColor={colors.baseBackground}
-            hidden={false}
-            barStyle="light-content"
-          /> */}
-        {/* <StatusBar hidden /> 
-          import { StatusBar } from 'react-native';
-          StatusBar.setHidden(true);
-          */}
-        {/* <OfflineMonitor />   themeStatus={userTheme} */}
         <View style={{ height: "100%" }}>
           <Route themeStatus={userTheme ? true : false} />
         </View>
