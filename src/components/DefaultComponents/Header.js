@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: "90%",
-        alignSelf:"center"
+        alignSelf:"center",
+        marginTop:15
       },
       titleImage: {
         resizeMode: "cover",

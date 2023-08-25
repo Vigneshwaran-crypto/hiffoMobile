@@ -101,8 +101,8 @@ const CreateManagement = () => {
           />
         </View>
 
-        <Animated.View style={{ opacity: fadInButton, position: "absolute" }}>
-          <TouchableOpacity onPress={createManage}>
+        <Animated.View style={{ opacity: fadInButton, position: "absolute",width: "100%", }}>
+          <TouchableOpacity onPress={createManage} >
             <LinearGradient
               colors={[colors.buttonGreen, colors.activeGreen]}
               start={{ x: 0, y: 0 }}
@@ -183,9 +183,7 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
   },
   createButton: {
-    justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 60,
     paddingVertical: 10,
     borderRadius: 30,
     marginTop: 50,

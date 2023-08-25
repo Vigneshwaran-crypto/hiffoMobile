@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   titleView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "90%",
+    width: "80%",
   },
   titleImage: {
     resizeMode: "cover",

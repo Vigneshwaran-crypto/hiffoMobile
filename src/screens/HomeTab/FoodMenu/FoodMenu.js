@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {  FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {  FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "../../../common/colors";
 import Header from "../../../components/DefaultComponents/Header";
-import { textFontFace, textFontFaceMedium } from "../../../common/styles";
+import { textFontFace, textFontFaceLight, textFontFaceMedium } from "../../../common/styles";
 import Feather from 'react-native-vector-icons/Feather'
 
 
@@ -15,14 +15,46 @@ const FoodMenu = () => {
 
   const categoryList = [{id:1,value:"Indian"},{id:2,value:"Chinese"},{id:3,value:"Italian"},{id:4,value:"Sea food"},{id:5,value:"Chats"},{id:6,value:"+"}]
 
-
+  const foodList = [
+    {id:1,name:"Meals with indian chars",price:"250 ₹",quantity:"200 g",type:true,imagePath:require('../../../../Assests/images/meals.jpg')},
+    {id:2,name:"Muttom Kozhambu",price:"200 ₹",quantity:"200 g",type:true,imagePath:require('../../../../Assests/images/mutton.jpg')},
+    {id:3,name:"Sea Food",price:"350 ₹",quantity:"200 g",type:true,imagePath:require('../../../../Assests/images/seaFood.jpg')},
+    {id:4,name:"Chapati and Salna",price:"150 ₹",quantity:"2 pcs",type:true,imagePath:require('../../../../Assests/images/chapati.jpg')},
+    {id:5,name:"South Indian Filter Coffee",price:"50 ₹",quantity:"60 ml",type:true,imagePath:require('../../../../Assests/images/coffee.jpg')},
+  ]
 
   const foodCategoryRender  = ({item,index})=>{
-
     return (
       <TouchableOpacity style={[styles.categoryParent,{borderColor:categoryFocus.id == item.id ? colors.logoBlue : colors.transparent}]}  key={index} onPress={()=>{setCategoryFocus(item)}} >
         <Text style={styles.categoryItemText} >{item.value}</Text>
       </TouchableOpacity>
+    )
+  }
+
+  const foodItemRenderer = ({item,ind})=>{
+
+    return(
+      <View style={styles.foodItemParent} key={ind} >
+
+        <View style={styles.itemImageView} >
+       <Image 
+       style={styles.foodItemImage}
+       source={item.imagePath}
+       />
+        </View>
+
+       <View style={styles.foodItemTexts} >
+
+        <Text style={styles.foodName} >{item.name}</Text>
+        <Text style={styles.foodItemQuantity} >{item.quantity}</Text>
+
+        <View style={styles.foodItemPriceView} >
+
+          <Text style={styles.foodItemPrice} >{item.price}</Text>
+
+        </View>
+       </View>
+      </View>
     )
   }
 
@@ -50,18 +82,28 @@ const FoodMenu = () => {
           <Feather name="search" size={21} color={colors.grey}  style={styles.searchIcon} />
         </View>
 
-
       </View>
 
+<View  >
 
+    {/* Food category list */}
       <FlatList
       data={categoryList}
       renderItem={foodCategoryRender}
       keyExtractor={(itm,ind)=> ind}
       horizontal={true}
       contentContainerStyle={styles.categoryListContainer}
-      // style={{borderWidth:1}}
       />
+
+
+
+<FlatList
+      data={foodList}
+      renderItem={foodItemRenderer}
+      keyExtractor={(itm,ind)=> ind}
+      contentContainerStyle={styles.foodListContainer}
+      />
+</View>
 
 
 </View>
@@ -76,7 +118,9 @@ const styles = StyleSheet.create({
   },
   screenContent:{
     flex:1,
-    marginHorizontal:10
+    width:"90%",
+    alignSelf:"center",
+    marginTop:15
   },
   foodTab:{
     flexDirection:"row",
@@ -119,7 +163,7 @@ backgroundColor:colors.thingrey
     marginHorizontal:8
   },
   categoryListContainer:{
-    marginTop:15
+    marginTop:15,
   },
   categoryParent:{
     borderWidth:1,
@@ -138,7 +182,54 @@ borderColor:colors.logoBlue
     fontFamily:textFontFaceMedium,
     fontSize:12,
     color:colors.black,
-  }
+  },
+  foodListContainer:{
+  marginTop:20
+  },
+  foodItemParent:{
+    flexDirection:"row",
+    borderWidth:1,
+    borderColor:colors.itemBorderGrey,
+    marginTop:15,
+    padding:20,
+    paddingVertical:28,
+    backgroundColor:colors.mildBg,
+    borderRadius:25,
+    
+  },
+  itemImageView:{
+    elevation:15,
+    shadowColor:colors.black,
+    shadowOpacity:10,
+    backgroundColor:colors.white,
+    height:75,
+    width:75,
+    borderRadius:50,
+  },
+  foodItemImage:{
+    height:75,
+    width:75,
+    borderRadius:50,
+    resizeMode:"cover",
+  
+  },
+  foodItemTexts:{
+    marginStart:20
+  },
+  foodName:{
+    color:colors.black,
+    fontFamily:textFontFaceMedium
+  },
+  foodItemQuantity:{
+    color:colors.subTextColor,
+    fontFamily:textFontFace
+  },
+  foodItemPrice:{
+    color:colors.black,
+    fontFamily:textFontFaceLight,
+    marginTop:5
+  },
+  foodItemPriceView:{},
 });
 
 export default FoodMenu;

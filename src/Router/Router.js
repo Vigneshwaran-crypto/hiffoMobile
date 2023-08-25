@@ -30,7 +30,6 @@ import Login from "../screens/Auth/login";
 import ForgotPassword from "../screens/Auth/ForgotPassword";
 import ResetPassword from "../screens/Auth/ResetPassword";
 import VerifyOtp from "../screens/Auth/VerifyOtp";
-import Intro from "../screens/Auth/Intro";
 import SignUp from "../screens/Auth/SignUp";
 
 //home tab screens
@@ -188,11 +187,7 @@ const Route = (props) => {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen
-          name="intro"
-          component={Intro}
-          options={{ headerShown: false }}
-        />
+       
 
         <Stack.Screen
           name="login"

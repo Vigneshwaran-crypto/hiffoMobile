@@ -97,6 +97,10 @@ export const colors = {
 
   purple: "#512B81",
   darkBlue: "#241468",
+
+  itemBorderGrey:"#F0F0F4",
+  subTextColor:"#A1A1A1",
+  mildBg:"#FAFAFA"
 };
 
 export const TextColors = {
