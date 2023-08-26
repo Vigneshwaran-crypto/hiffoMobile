@@ -50,8 +50,7 @@ const Route = (props) => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  // var userTheme = props.themeStatus;
-  LOG("PROPS VALUE IN ROUTER :", props);
+  
   var userTheme = props != undefined && props != "" ? props.themeStatus : false;
 
   const HomeTab = () => {
