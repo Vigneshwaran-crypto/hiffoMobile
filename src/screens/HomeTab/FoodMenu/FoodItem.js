@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../../common/colors";
 import { textFontFace, textFontFaceLight, textFontFaceMedium, textFontFaceSemiBold } from "../../../common/styles";
 import EnTypo from 'react-native-vector-icons/Entypo'
+import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from "react-native-linear-gradient";
 
 
@@ -27,56 +28,65 @@ const FoodItem = ({item,index})=>{
             <Text style={styles.foodItemPrice} >{item.price}</Text>
   
   
-           {item.type == "add" ? (
-            <View style={styles.addFoodQuantityView}>
-
-              <TouchableOpacity style={[styles.foodItemAddButton,{backgroundColor:colors.greyC4}]} >
-                <EnTypo
-                name="minus"
-                size={25}
-                color={colors.black29}
-                />
-              </TouchableOpacity>
-
-                <Text style={styles.quantityText} >5</Text>
-
-
-              <TouchableOpacity style={styles.foodItemAddButton} >
-              <LinearGradient
-           colors={[colors.buttonGreen,colors.activeGreen]}
-           start={{x:0,y:0}}
-           end={{x:1,y:0}}
-           style={styles.foodItemAddButton}
-            >
-                <EnTypo
-                name="plus"
-                size={22}
-                color={colors.white}
-                />
-                </LinearGradient>
-              </TouchableOpacity>
-
-            </View>
-           ) : (
-            <View style={styles.addFoodQuantityView}>
+           <View style={styles.addFoodQuantityView}>
 
             <TouchableOpacity
             style={styles.itemAddButton}
             >
 
            <LinearGradient
-           colors={[colors.buttonGreen,colors.activeGreen]}
+           colors={[colors.subTextColor,colors.tanGrey]}
+           start={{x:1,y:0}}
+           end={{x:0,y:0}}
+           style={styles.addGradient}
+            >
+            <Text style={styles.addText}>Show</Text>
+           </LinearGradient>
+           </TouchableOpacity>
+
+
+           <TouchableOpacity
+            style={styles.itemAddButton}
+            >
+
+           <LinearGradient
+          colors={[colors.buttonGreen,colors.activeGreen]}
+          start={{x:0,y:0}}
+          end={{x:1,y:0}}
+           style={styles.addGradient}
+            >
+            <Text style={styles.addText}>Hide</Text>
+           </LinearGradient>
+           </TouchableOpacity>
+
+
+           <TouchableOpacity
+            style={styles.itemAddButton}
+            >
+
+           <LinearGradient
+           colors={[colors.subTextColor,colors.tanGrey]}
            start={{x:0,y:0}}
            end={{x:1,y:0}}
            style={styles.addGradient}
             >
-            <Text style={styles.addText}> <Text style={styles.plusText}>+ </Text>Add</Text>
+            <Text style={styles.addText}>Restock</Text>
            </LinearGradient>
            </TouchableOpacity>
 
+
+
+           <TouchableOpacity style={styles.itemRoundButton} >
+            <EnTypo name="link" size={20} color={colors.mildBg}/>
+           </TouchableOpacity>
+
+           <TouchableOpacity style={styles.itemRoundButton} >
+           <Feather name="trash-2" size={20} color={colors.mildBg}/>
+          </TouchableOpacity>
+
+
            </View>
 
-           )}
   
           </View>
 
@@ -132,38 +142,21 @@ const styles = StyleSheet.create({
       foodItemPrice:{
         color:colors.black,
         fontFamily:textFontFaceLight,
-        marginTop:5
+        marginTop:5,
+        width:"20%"
       },
       foodItemPriceView:{
         flexDirection:"row",
-        // borderWidth:1,
-        width:"60%",
+        width:"73%",
         justifyContent:"space-between",
-        alignItems:"center"
+        alignItems:"center",
+        // borderWidth:1
       },
       addFoodQuantityView:{
         flexDirection:"row",
         justifyContent:"center",
         alignItems:"center",
-        width:"70%",
-        paddingStart:30
-      },
-      foodItemAddButton:{
-        height:35,
-        width:35,
-        borderRadius:25,
-        alignItems:"center",
-        justifyContent:"center",
-
-        elevation:2,
-        backgroundColor:colors.transparent
-      },
-      quantityText:{
-        marginHorizontal:15,
-        fontFamily:textFontFaceLight,
-        color:colors.black,
-        fontSize:16,
-        marginTop:5
+        // borderWidth:1,
       },
       itemAddButton:{
         height:35,
@@ -171,16 +164,19 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         borderRadius:10,
 
-        elevation:5,
+        elevation:2,
         backgroundColor:colors.transparent,
         shadowColor:colors.black,
         shadowOpacity:20,
-        padding:0.1
+        padding:0.1,
+        width:"25%",
+        marginEnd:15
       },
         addGradient:{
         justifyContent:"center",
         alignItems:"center",
         borderRadius:10,
+        width:"100%"
     },
     plusText:{
         fontFamily:textFontFaceSemiBold,
@@ -189,9 +185,16 @@ const styles = StyleSheet.create({
       addText:{
         marginVertical:5,
         fontFamily:textFontFaceLight,
-        color:colors.white,
-        marginHorizontal:15,
-        marginEnd:19,
+        color:colors.mildBg,
+      },
+      itemRoundButton:{
+        height:32,
+        width:32,
+        borderRadius:17,
+        alignItems:"center",
+        justifyContent:"center",
+        marginEnd:10,
+        backgroundColor:colors.subTextColor
       }
 })
 

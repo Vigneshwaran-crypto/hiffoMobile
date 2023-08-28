@@ -1,12 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {  FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {  Dimensions, FlatList, Image, PixelRatio, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "../../../common/colors";
 import Header from "../../../components/DefaultComponents/Header";
 import { textFontFace, textFontFaceLight, textFontFaceMedium } from "../../../common/styles";
 import Feather from 'react-native-vector-icons/Feather'
 import FoodItem from "./FoodItem";
+import { LOG } from "../../../common/util";
 
+const {height , width} = Dimensions.get("window")
 
 const FoodMenu = () => {
   const navigation = useNavigation();
@@ -23,6 +25,10 @@ const FoodMenu = () => {
     {id:4,name:"Chapati and Salna",price:"150 ₹",quantity:"2 pcs",type:"add",imagePath:require('../../../../Assests/images/chapati.jpg')},
     {id:5,name:"South Indian Filter Coffee",price:"50 ₹",quantity:"60 ml",type:"add",imagePath:require('../../../../Assests/images/coffee.jpg')},
   ]
+
+  useEffect(()=>{
+    const ratio = PixelRatio.get();
+  },[])
 
   const foodCategoryRender  = ({item,index})=>{
     return (
@@ -71,17 +77,23 @@ const FoodMenu = () => {
       keyExtractor={(itm,ind)=> ind}
       horizontal={true}
       contentContainerStyle={styles.categoryListContainer}
+      showsHorizontalScrollIndicator={false}
       />
 
 
+<View style={styles.foodFlatListView} >
 {/* Food List flatList */}
 <FlatList
       data={foodList}
       renderItem={foodItemRenderer}
       keyExtractor={(itm,ind)=> ind}
-      contentContainerStyle={styles.foodListContainer}
-      // style={{marginBottom:200,marginTop:30}}
+      style={styles.foodFlatList}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.foodFlatList}
       />
+
+</View>
+
 </View>
 
 
@@ -99,7 +111,8 @@ const styles = StyleSheet.create({
     flex:1,
     width:"90%",
     alignSelf:"center",
-    marginTop:15
+    marginTop:15,
+    // marginBottom:118
   },
   foodTab:{
     flexDirection:"row",
@@ -142,7 +155,8 @@ backgroundColor:colors.thingrey
     marginHorizontal:8
   },
   categoryListContainer:{
-    marginTop:15,
+    // marginTop:15,
+    marginVertical:15
   },
   categoryParent:{
     borderWidth:1,
@@ -162,10 +176,12 @@ borderColor:colors.logoBlue
     fontSize:12,
     color:colors.black,
   },
-  foodListContainer:{
-  // marginTop:20,
+  foodFlatListView:{
+    height:"90%",
   },
-  
+  foodFlatList:{
+paddingBottom:120
+  }
 });
 
 export default FoodMenu;
