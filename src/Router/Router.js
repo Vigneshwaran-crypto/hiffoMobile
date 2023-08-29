@@ -1,27 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  BackHandler,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
-import Ionicon from "react-native-vector-icons/Ionicons";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-
 import { colors } from "../common/colors";
-import { textFontFace, textFontFaceMedium } from "../common/styles";
-
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from "@react-navigation/native";
+import { textFontFaceMedium } from "../common/styles";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //Auth screens
@@ -39,9 +22,7 @@ import Tables from "../screens/HomeTab/Tables/Tables";
 import Analytics from "../screens/HomeTab/Analytics/Analytics";
 import Users from "../screens/HomeTab/Users/Users";
 
-import { darkMode, getItem, LOG } from "../common/util";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Foundation from "react-native-vector-icons/Foundation";
 import { navigationRef } from "./RootNavigation";
 import CreateRest from "../screens/Auth/CreateRest";
 import CreateManagement from "../screens/Auth/CreateManagement";
@@ -50,8 +31,7 @@ const Route = (props) => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  
-  var userTheme = props != undefined && props != "" ? props.themeStatus : false;
+  // var userTheme = props != undefined && props != "" ? props.themeStatus : false;
 
   const HomeTab = () => {
     return (
@@ -126,7 +106,7 @@ const Route = (props) => {
           tabBarInactiveTintColor: colors.grey,
           tabBarStyle: {
             position: "absolute",
-            backgroundColor: userTheme ? colors.black : colors.white,
+            backgroundColor: colors.white,
           },
           tabBarShowLabel: false,
         })}
@@ -185,8 +165,6 @@ const Route = (props) => {
           component={Application}
           options={{ headerShown: false }}
         />
-
-       
 
         <Stack.Screen
           name="login"

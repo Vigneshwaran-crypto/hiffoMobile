@@ -7,31 +7,15 @@ import {
   StyleSheet,
   Text,
   View,
-  ImageBackground,
-  TouchableOpacity,
 } from "react-native";
 
 import { ProgressBar } from "react-native-paper";
-import {
-  textFontFaceLight,
-  textFontFaceMedium,
-  textFontFaceSemiBold,
-} from "../../common/styles";
-import { darkMode, getItem, LOG, removeItem, Toast } from "../../common/util";
-
+import { textFontFaceMedium, textFontFaceSemiBold } from "../../common/styles";
+import { getItem, LOG } from "../../common/util";
 import { PermissionsAndroid } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { Actions } from "react-native-router-flux";
-import { backPressHandler } from "../../common/backPressHandler";
-import { announcementColor, colors } from "../../common/colors";
+import { colors } from "../../common/colors";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authenticationVerify,
-  storeUserDetailsInRedux,
-} from "../../redux/Auth-Action";
 import { useNavigation } from "@react-navigation/native";
-import { setTheme } from "../../redux/Api-Action";
-import Route from "../../Router/Router";
 import { useNetInfo } from "@react-native-community/netinfo";
 import VersionCheck from "react-native-version-check";
 
@@ -49,10 +33,6 @@ const Application = (props) => {
     permissionsGranted: false,
   });
 
-  useEffect(() => {
-    LOG("net info in application :", netInfo);
-  }, []);
-
   // UseEffect hook will work only at initial render
   useEffect(() => {
     if (Platform.OS === "android") {
@@ -67,9 +47,7 @@ const Application = (props) => {
           result["android.permission.WRITE_EXTERNAL_STORAGE"] === "granted"
         ) {
           LOG("Permissions_granted");
-          // this.setState({
-          //   permissionsGranted: true,
-          // });
+
           setData({
             ...data,
             permissionsGranted: true,
@@ -87,6 +65,7 @@ const Application = (props) => {
         }
       });
     }
+
     // hardware back button handler
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -110,15 +89,6 @@ const Application = (props) => {
           navigation.navigate("login");
         }
       });
-
-      // network connection status check
-      // if (netInfo.isConnected) {
-
-      // } else {
-      //   LOG("network connection Status Null :" + netInfo.isConnected);
-      //   Toast("please check your connection");
-      //   navigation.navigate("intro");
-      // }
     }, 2000);
 
     return () => backHandler.remove();
@@ -176,7 +146,6 @@ const styles = StyleSheet.create({
   progressbarStyle: {
     marginHorizontal: 40,
     marginVertical: 80,
-    // backgroundColor: colors.mildGreen,
     backgroundColor: colors.logoGreen,
   },
   splashContent: {
@@ -189,7 +158,6 @@ const styles = StyleSheet.create({
     width: win.width * 0.8,
     resizeMode: "contain",
     borderWidth: 1,
-    // borderColor: colors.black,
   },
   headingText: {
     color: colors.black,
@@ -214,9 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 31,
     marginVertical: -18,
   },
-  subText: {
-    // fontFamily: textFontFaceLight,
-  },
+  subText: {},
   versionText: {
     alignSelf: "center",
     color: colors.black,
