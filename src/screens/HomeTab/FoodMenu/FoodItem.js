@@ -21,7 +21,11 @@ const { height, width } = Dimensions.get("window");
 
 const FoodItem = ({ item, index, activeTab }) => {
   return (
-    <TouchableOpacity style={styles.foodItemParent} key={index}>
+    <TouchableOpacity
+      style={styles.foodItemParent}
+      key={index}
+      activeOpacity={1}
+    >
       <View style={styles.itemImageView}>
         <Image style={styles.foodItemImage} source={item.imagePath} />
       </View>

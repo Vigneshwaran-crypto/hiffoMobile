@@ -4,6 +4,8 @@ import {
   Dimensions,
   FlatList,
   Image,
+  KeyboardAvoidingView,
+  Modal,
   PixelRatio,
   StyleSheet,
   Text,
@@ -13,11 +15,13 @@ import {
 } from "react-native";
 import { colors } from "../../../common/colors";
 import Header from "../../../components/DefaultComponents/Header";
-import { textFontFaceMedium } from "../../../common/styles";
+import { textFontFaceLight, textFontFaceMedium } from "../../../common/styles";
 import Feather from "react-native-vector-icons/Feather";
+import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Entypo from "react-native-vector-icons/Entypo";
 import FoodItem from "./FoodItem";
-import { LOG } from "../../../common/util";
-
+import { LOG, addOnList, foodList, scrWidth } from "../../../common/util";
+import LinearGradient from "react-native-linear-gradient";
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
@@ -28,6 +32,7 @@ const FoodMenu = () => {
     value: "Indian",
   });
   const [activeTab, setActiveTab] = useState(0);
+  const [showAddFood, setShowAddFood] = useState(false);
 
   const categoryList = [
     { id: 1, value: "Indian" },
@@ -38,82 +43,17 @@ const FoodMenu = () => {
     { id: 6, value: "+" },
   ];
 
-  const foodList = [
-    {
-      id: 1,
-      name: "Meals with indian chars",
-      price: "250 ₹",
-      quantity: "200 g",
-      type: "set",
-      imagePath: require("../../../../Assests/images/meals.jpg"),
-    },
-    {
-      id: 2,
-      name: "Muttom Kozhambu",
-      price: "200 ₹",
-      quantity: "200 g",
-      type: "set",
-      imagePath: require("../../../../Assests/images/mutton.jpg"),
-    },
-    {
-      id: 3,
-      name: "Sea Food",
-      price: "350 ₹",
-      quantity: "200 g",
-      type: "set",
-      imagePath: require("../../../../Assests/images/seaFood.jpg"),
-    },
-    {
-      id: 4,
-      name: "Chapati and Salna",
-      price: "150 ₹",
-      quantity: "2 pcs",
-      type: "add",
-      imagePath: require("../../../../Assests/images/chapati.jpg"),
-    },
-    {
-      id: 5,
-      name: "South Indian Filter Coffee",
-      price: "50 ₹",
-      quantity: "60 ml",
-      type: "add",
-      imagePath: require("../../../../Assests/images/coffee.jpg"),
-    },
-  ];
-
-  const addOnList = [
-    {
-      id: 1,
-      name: "Somosa with chutney",
-      price: "50 ₹",
-      quantity: "2 pcs",
-      type: "set",
-      imagePath: require("../../../../Assests/images/samosa.jpg"),
-    },
-    {
-      id: 2,
-      name: "Special pasta",
-      price: "70 ₹",
-      quantity: "4 pcs",
-      type: "set",
-      imagePath: require("../../../../Assests/images/pasta.jpg"),
-    },
-    {
-      id: 3,
-      name: "Gulobjamun",
-      price: "120 ₹",
-      quantity: "6 pcs",
-      type: "set",
-      imagePath: require("../../../../Assests/images/gulobjamun.jpg"),
-    },
-  ];
-
   useEffect(() => {
     const ratio = PixelRatio.get();
+    LOG("screen width in fMenu :", scrWidth);
   }, []);
 
   const topTabOnPress = (param) => {
     setActiveTab(param);
+  };
+
+  const onFloatingAddPress = () => {
+    setShowAddFood(true);
   };
 
   const foodCategoryRender = ({ item, index }) => {
@@ -228,8 +168,138 @@ const FoodMenu = () => {
               contentContainerStyle={styles.foodFlatList}
             />
           </View>
+
+          <View style={styles.bottomButtonsView}>
+            <TouchableOpacity style={styles.bottomButton}>
+              <MatIcons name="pencil" size={21} color={colors.black} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.bottomButton}
+              onPress={onFloatingAddPress}
+            >
+              <Entypo name="plus" size={24} color={colors.black} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.bottomButton}>
+              <MatIcons
+                name="trash-can-outline"
+                size={21}
+                color={colors.black}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
+
+      <Modal visible={showAddFood} animationType="slide" transparent={true}>
+        <TouchableOpacity
+          style={styles.modalParent}
+          activeOpacity={1}
+          onPress={() => setShowAddFood(false)}
+        >
+          <TouchableOpacity style={styles.modalContent}>
+            <View style={styles.modalWholeView}>
+              <Text style={styles.modalTopicText}>Add Ons</Text>
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Food name"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Price"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Quantity"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Parcel"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Ratings"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Parameter"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+
+              <View style={styles.modalBottomButtonsView}>
+                <TouchableOpacity style={styles.modalBottomButtons}>
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.activeGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.modalButtonGradient}
+                  >
+                    <Text style={styles.modalButtontext}>Save</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.modalBottomButtons}>
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.activeGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.modalButtonGradient}
+                  >
+                    <Text style={styles.modalButtontext}>Close</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
@@ -244,7 +314,6 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     marginTop: 15,
-    // marginBottom:118
   },
   foodTab: {
     flexDirection: "row",
@@ -285,7 +354,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   categoryListContainer: {
-    // marginTop:15,
     marginVertical: 15,
   },
   categoryParent: {
@@ -309,7 +377,81 @@ const styles = StyleSheet.create({
     height: "90%",
   },
   foodFlatList: {
-    paddingBottom: 120,
+    paddingBottom: 200,
+  },
+  bottomButtonsView: {
+    position: "absolute",
+    bottom: "14%",
+    alignSelf: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.greyF1,
+    borderRadius: 40,
+    width: width / 5,
+  },
+  bottomButton: {
+    borderWidth: 1,
+    height: 32,
+    width: 32,
+    borderRadius: 17,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 8,
+    marginVertical: 5,
+  },
+  modalParent: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    backgroundColor: colors.transparentGrey,
+  },
+  modalContent: {
+    height: "60%",
+    width: "70%",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+  },
+  modalWholeView: {
+    flex: 1,
+    margin: 15,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalTopicText: {
+    color: colors.activeGreen,
+    fontFamily: textFontFaceMedium,
+    fontSize: 23,
+    marginBottom: 30,
+  },
+  modalInputs: {
+    backgroundColor: colors.inputGrey,
+    color: colors.black,
+    paddingVertical: 10,
+    borderRadius: 5,
+    fontFamily: textFontFaceLight,
+    paddingStart: 10,
+    width: "80%",
+    marginVertical: 12,
+  },
+  modalBottomButtonsView: {
+    width: "80%",
+    flexDirection: "row",
+    marginTop: 15,
+  },
+  modalBottomButtons: {
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalButtonGradient: {
+    borderRadius: 156,
+    marginVertical: 10,
+    paddingVertical: 8,
+  },
+  modalButtontext: {
+    color: colors.white,
+    alignSelf: "center",
+    paddingBottom: 2,
   },
 });
 

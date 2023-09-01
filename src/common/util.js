@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert, BackHandler, Platform, ToastAndroid } from "react-native";
+import {
+  Alert,
+  BackHandler,
+  Dimensions,
+  Platform,
+  ToastAndroid,
+} from "react-native";
 import RnFs from "react-native-fs";
 import { isTesting, ServerUrl } from "./constants";
 import * as RootNavigation from "../Router/RootNavigation";
@@ -176,45 +182,73 @@ export const GetDateFormat2 = (value) => {
 export const getUniqueListBy = (arr, key) => {
   return [...new Map(arr.map((item) => [item[key], item])).values()];
 };
-export const lawnList = [
+
+export const foodList = [
   {
-    lawnId: 1,
-    userId: 5,
-    screenformId: 2,
-    formName: "Property 01",
-    recordStatus: null,
-    createdDate: "2023-03-30T16:59:01.000+00:00",
-    updatedDate: "2023-03-30T16:59:01.000+00:00",
-    pageNo: null,
+    id: 1,
+    name: "Meals with indian chars",
+    price: "250 ₹",
+    quantity: "200 g",
+    type: "set",
+    imagePath: require("../../Assests/images/meals.jpg"),
   },
   {
-    lawnId: 2,
-    userId: 5,
-    screenformId: 2,
-    formName: "Property 02",
-    recordStatus: null,
-    createdDate: "2023-03-30T17:01:26.000+00:00",
-    updatedDate: "2023-03-30T17:01:26.000+00:00",
-    pageNo: null,
+    id: 2,
+    name: "Muttom Kozhambu",
+    price: "200 ₹",
+    quantity: "200 g",
+    type: "set",
+    imagePath: require("../../Assests/images/mutton.jpg"),
   },
   {
-    lawnId: 3,
-    userId: 5,
-    screenformId: 3,
-    formName: "PackHouse 01",
-    recordStatus: null,
-    createdDate: "2023-03-30T17:02:41.000+00:00",
-    updatedDate: "2023-03-30T17:02:41.000+00:00",
-    pageNo: null,
+    id: 3,
+    name: "Sea Food",
+    price: "350 ₹",
+    quantity: "200 g",
+    type: "set",
+    imagePath: require("../../Assests/images/seaFood.jpg"),
   },
   {
-    lawnId: 4,
-    userId: 5,
-    screenformId: 3,
-    formName: "PackHouse 02",
-    recordStatus: null,
-    createdDate: "2023-03-30T17:02:49.000+00:00",
-    updatedDate: "2023-03-30T17:02:49.000+00:00",
-    pageNo: null,
+    id: 4,
+    name: "Chapati and Salna",
+    price: "150 ₹",
+    quantity: "2 pcs",
+    type: "add",
+    imagePath: require("../../Assests/images/chapati.jpg"),
+  },
+  {
+    id: 5,
+    name: "South Indian Filter Coffee",
+    price: "50 ₹",
+    quantity: "60 ml",
+    type: "add",
+    imagePath: require("../../Assests/images/coffee.jpg"),
+  },
+];
+
+export const addOnList = [
+  {
+    id: 1,
+    name: "Somosa with chutney",
+    price: "50 ₹",
+    quantity: "2 pcs",
+    type: "set",
+    imagePath: require("../../Assests/images/samosa.jpg"),
+  },
+  {
+    id: 2,
+    name: "Special pasta",
+    price: "70 ₹",
+    quantity: "4 pcs",
+    type: "set",
+    imagePath: require("../../Assests/images/pasta.jpg"),
+  },
+  {
+    id: 3,
+    name: "Gulobjamun",
+    price: "120 ₹",
+    quantity: "6 pcs",
+    type: "set",
+    imagePath: require("../../Assests/images/gulobjamun.jpg"),
   },
 ];

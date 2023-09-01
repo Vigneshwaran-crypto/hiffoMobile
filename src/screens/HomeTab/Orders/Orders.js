@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Dimensions,
   FlatList,
   Image,
   Modal,
@@ -13,7 +14,6 @@ import Feather from "react-native-vector-icons/Feather";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
-
 import { colors } from "../../../common/colors";
 import {
   textFontFaceLight,
@@ -22,6 +22,8 @@ import {
 } from "../../../common/styles";
 import orderList from "../../../../Assests/OrdereList.json";
 import LinearGradient from "react-native-linear-gradient";
+import Header from "../../../components/DefaultComponents/Header";
+const { height, width } = Dimensions.get("window");
 
 const Orders = () => {
   const [showAddBill, seShowAddBill] = useState(false);
@@ -66,22 +68,9 @@ const Orders = () => {
 
   return (
     <View style={styles.container}>
+      <Header title={"Adyar Anandha bahavan"} subText={"HID544789"} />
+
       <View style={styles.screenContent}>
-        <View style={styles.titleView}>
-          <Image
-            source={require("../../../../Assests/images/hiffoTitle.png")}
-            style={styles.titleImage}
-          />
-
-          <View>
-            <Text style={styles.hotelNameText}>
-              <FontAwesome5 name="hotel" color={colors.logoBlue} size={20} />{" "}
-              Adyar Anandha bahavan
-            </Text>
-            <Text style={styles.hotelBranchText}>Branch Name</Text>
-          </View>
-        </View>
-
         <View style={styles.searchParent}>
           <View style={styles.searchIconParent}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -98,78 +87,88 @@ const Orders = () => {
             </View>
           </View>
         </View>
-      </View>
 
-      <FlatList
-        data={orderList}
-        key={(item) => item.id}
-        renderItem={orderListItem}
-        style={styles.flatListStyle}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        numColumns={4}
-        horizontal={false}
-      />
+        <FlatList
+          data={orderList}
+          key={(item) => item.id}
+          renderItem={orderListItem}
+          style={styles.flatListStyle}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          numColumns={4}
+          horizontal={false}
+          contentContainerStyle={{
+            paddingBottom: 120,
+            justifyContent: "center",
+          }}
+        />
 
-      <View style={styles.bottomButtonsView}>
-        <TouchableOpacity style={styles.bottomButton}>
-          <MatIcons name="pencil" size={21} color={colors.black} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomButton} onPress={billPlusOnPress}>
-          <Entypo name="plus" size={24} color={colors.black} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.bottomButton}>
-          <MatIcons name="trash-can-outline" size={21} color={colors.black} />
-        </TouchableOpacity>
-      </View>
-
-      <Modal visible={showAddBill} animationType="fade" transparent={true}>
-        <TouchableOpacity style={styles.modalParent} onPress={parentModalPress}>
-          <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
-            <Text style={styles.modalTitle}>Create Bill</Text>
-
-            <TextInput
-              style={styles.modalMobileInput}
-              placeholder={"Mobile number"}
-              keyboardType={"decimal-pad"}
-            />
-
-            <Text style={styles.selectTableText}>Select your Table</Text>
-
-            <View style={styles.tableSelectView}>
-              <Image
-                source={require("../../../../Assests/images/table.png")}
-                style={styles.tableImage}
-              />
-            </View>
-
-            <View style={styles.decisionButtonView}>
-              <TouchableOpacity>
-                <LinearGradient
-                  colors={[colors.buttonGreen, colors.lightGreen]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.gradientButton}
-                >
-                  <Text style={styles.gradientText}>Create</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <LinearGradient
-                  colors={[colors.buttonGreen, colors.lightGreen]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.gradientButton}
-                >
-                  <Text style={styles.gradientText}>Close</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.bottomButtonsView}>
+          <TouchableOpacity style={styles.bottomButton}>
+            <MatIcons name="pencil" size={21} color={colors.black} />
           </TouchableOpacity>
-        </TouchableOpacity>
-      </Modal>
+          <TouchableOpacity
+            style={styles.bottomButton}
+            onPress={billPlusOnPress}
+          >
+            <Entypo name="plus" size={24} color={colors.black} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.bottomButton}>
+            <MatIcons name="trash-can-outline" size={21} color={colors.black} />
+          </TouchableOpacity>
+        </View>
+
+        <Modal visible={showAddBill} animationType="fade" transparent={true}>
+          <TouchableOpacity
+            style={styles.modalParent}
+            onPress={parentModalPress}
+          >
+            <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
+              <Text style={styles.modalTitle}>Create Bill</Text>
+
+              <TextInput
+                style={styles.modalMobileInput}
+                placeholder={"Mobile number"}
+                keyboardType={"decimal-pad"}
+              />
+
+              <Text style={styles.selectTableText}>Select your Table</Text>
+
+              <View style={styles.tableSelectView}>
+                <Image
+                  source={require("../../../../Assests/images/table.png")}
+                  style={styles.tableImage}
+                />
+              </View>
+
+              <View style={styles.decisionButtonView}>
+                <TouchableOpacity>
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.lightGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.gradientButton}
+                  >
+                    <Text style={styles.gradientText}>Create</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.lightGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.gradientButton}
+                  >
+                    <Text style={styles.gradientText}>Close</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
+      </View>
     </View>
   );
 };
@@ -177,43 +176,28 @@ const Orders = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   screenContent: {
-    marginHorizontal: 15,
-    marginVertical: 14,
-    alignSelf: "center",
-  },
-  flatListStyle: {
     flex: 1,
-    marginBottom: 50,
-    width: "90%",
+    width: "100%",
     alignSelf: "center",
+    marginTop: 15,
   },
   titleView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
+    marginVertical: 5,
   },
-  titleImage: {
-    resizeMode: "cover",
-    height: "100%",
-    width: "45%",
-    marginStart: -15,
+  flatListStyle: {
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 15,
   },
-  hotelNameText: {
-    color: colors.logoBlue,
-    fontFamily: textFontFaceMedium,
-    fontSize: 14,
-  },
-  hotelBranchText: {
-    alignSelf: "flex-end",
-    color: colors.logoBlue,
-    fontFamily: textFontFaceMedium,
-  },
+
   searchParent: {
     flexDirection: "row",
-    alignItems: "center",
     marginTop: 15,
+    width: "90%",
+    alignSelf: "center",
   },
 
   searchIconParent: {
@@ -266,7 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
-    width: "36%",
+    width: width / 5,
   },
   bottomButton: {
     borderWidth: 1,
@@ -279,8 +263,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   modalParent: {
-    // height: "100%",
-    // width: "100%",
     justifyContent: "center",
     backgroundColor: colors.transparentGrey,
     flex: 1,
