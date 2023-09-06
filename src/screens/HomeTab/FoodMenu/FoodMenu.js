@@ -20,7 +20,13 @@ import Feather from "react-native-vector-icons/Feather";
 import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import FoodItem from "./FoodItem";
-import { LOG, addOnList, foodList, scrWidth } from "../../../common/util";
+import {
+  LOG,
+  addFoodItems,
+  addOnList,
+  foodList,
+  scrWidth,
+} from "../../../common/util";
 import LinearGradient from "react-native-linear-gradient";
 const { height, width } = Dimensions.get("window");
 
@@ -56,6 +62,10 @@ const FoodMenu = () => {
     setShowAddFood(true);
   };
 
+  const modalCloseOnPress = () => {
+    setShowAddFood(false);
+  };
+
   const foodCategoryRender = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -75,6 +85,19 @@ const FoodMenu = () => {
       >
         <Text style={styles.categoryItemText}>{item.value}</Text>
       </TouchableOpacity>
+    );
+  };
+
+  const renderAddFoodInModal = ({ item, index }) => {
+    return (
+      <View style={styles.addFoodItemParent}>
+        <View style={styles.itemImageView}>
+          <Image
+            style={styles.foodItemImage}
+            source={require("../../../../Assests/images/nofood1.png")}
+          />
+        </View>
+      </View>
     );
   };
 
@@ -197,9 +220,22 @@ const FoodMenu = () => {
           activeOpacity={1}
           onPress={() => setShowAddFood(false)}
         >
-          <TouchableOpacity style={styles.modalContent}>
+          <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
             <View style={styles.modalWholeView}>
-              <Text style={styles.modalTopicText}>Add Ons</Text>
+              <Text style={styles.modalTopicText}>
+                {activeTab == 0 ? "Add Food Menu" : " Add Addons"}
+              </Text>
+
+              <View style={styles.addFoodListView}>
+                <FlatList
+                  data={[1, 2, 3, 4, 5]}
+                  renderItem={renderAddFoodInModal}
+                  keyExtractor={(itm, ind) => ind}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+
               <TextInput
                 style={styles.modalInputs}
                 placeholder={"Food name"}
@@ -274,14 +310,17 @@ const FoodMenu = () => {
               />
 
               <View style={styles.modalBottomButtonsView}>
-                <TouchableOpacity style={styles.modalBottomButtons}>
+                <TouchableOpacity
+                  style={styles.modalBottomButtons}
+                  onPress={modalCloseOnPress}
+                >
                   <LinearGradient
                     colors={[colors.buttonGreen, colors.activeGreen]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
                     style={styles.modalButtonGradient}
                   >
-                    <Text style={styles.modalButtontext}>Save</Text>
+                    <Text style={styles.modalButtontext}>Close</Text>
                   </LinearGradient>
                 </TouchableOpacity>
 
@@ -292,7 +331,7 @@ const FoodMenu = () => {
                     end={{ x: 1, y: 0 }}
                     style={styles.modalButtonGradient}
                   >
-                    <Text style={styles.modalButtontext}>Close</Text>
+                    <Text style={styles.modalButtontext}>Save</Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
@@ -388,7 +427,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
-    width: width / 5,
+    width: width * 0.2,
   },
   bottomButton: {
     borderWidth: 1,
@@ -407,22 +446,52 @@ const styles = StyleSheet.create({
     backgroundColor: colors.transparentGrey,
   },
   modalContent: {
-    height: "60%",
-    width: "70%",
+    height: "75%",
+    width: "85%",
     backgroundColor: colors.white,
     borderRadius: 15,
+    borderWidth: 1,
   },
   modalWholeView: {
     flex: 1,
     margin: 15,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   modalTopicText: {
     color: colors.activeGreen,
     fontFamily: textFontFaceMedium,
     fontSize: 23,
-    marginBottom: 30,
+    alignSelf: "center",
+  },
+  addFoodListView: {
+    height: "15%",
+    width: "90%",
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  addFoodItemParent: {
+    justifyContent: "center",
+    backgroundColor: colors.white,
+  },
+  itemImageView: {
+    elevation: 7,
+    shadowColor: colors.black,
+    shadowOpacity: 1,
+    backgroundColor: colors.white,
+    height: 77,
+    width: 77,
+    borderRadius: 40,
+    padding: 0.3,
+    marginHorizontal: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  foodItemImage: {
+    height: 110,
+    width: 110,
+    borderRadius: 60,
+    resizeMode: "center",
   },
   modalInputs: {
     backgroundColor: colors.inputGrey,

@@ -252,3 +252,12 @@ export const addOnList = [
     imagePath: require("../../Assests/images/gulobjamun.jpg"),
   },
 ];
+
+export const addFoodItems = [
+  require("../../Assests/images/gulobjamun.jpg"),
+  require("../../Assests/images/pasta.jpg"),
+  require("../../Assests/images/samosa.jpg"),
+  require("../../Assests/images/seaFood.jpg"),
+  require("../../Assests/images/meals.jpg"),
+  require("../../Assests/images/chapati.jpg"),
+];

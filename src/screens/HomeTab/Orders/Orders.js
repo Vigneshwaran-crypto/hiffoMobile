@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
-    width: width / 5,
+    width: width * 0.2,
   },
   bottomButton: {
     borderWidth: 1,
