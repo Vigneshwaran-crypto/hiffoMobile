@@ -2,6 +2,7 @@ import React from "react";
 import {
   Dimensions,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,12 +20,17 @@ import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 const { height, width } = Dimensions.get("window");
 
-const FoodItem = ({ item, index, activeTab }) => {
+const FoodItem = ({ item, index, activeTab, onItemPress }) => {
+  const onFoodItemPress = (item) => {
+    onItemPress(item);
+  };
+
   return (
     <TouchableOpacity
       style={styles.foodItemParent}
       key={index}
       activeOpacity={1}
+      onPress={onFoodItemPress.bind(this, item)}
     >
       <View style={styles.itemImageView}>
         <Image style={styles.foodItemImage} source={item.imagePath} />
@@ -37,6 +43,7 @@ const FoodItem = ({ item, index, activeTab }) => {
         <View style={styles.foodItemPriceView}>
           <Text style={styles.foodItemPrice}>{item.price}</Text>
 
+          {/* <ScrollView style={{ borderWidth: 1 }} horizontal={true}> */}
           <View style={styles.addFoodQuantityView}>
             <TouchableOpacity style={styles.itemAddButton}>
               <LinearGradient
@@ -89,6 +96,7 @@ const FoodItem = ({ item, index, activeTab }) => {
               <Feather name="trash-2" size={19} color={colors.mildBg} />
             </TouchableOpacity>
           </View>
+          {/* </ScrollView> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -179,7 +187,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     fontFamily: textFontFaceLight,
     color: colors.mildBg,
-    fontSize: 12,
+    fontSize: 11,
   },
   itemRoundButton: {
     height: 31,

@@ -39,6 +39,7 @@ const FoodMenu = () => {
   });
   const [activeTab, setActiveTab] = useState(0);
   const [showAddFood, setShowAddFood] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   const categoryList = [
     { id: 1, value: "Indian" },
@@ -60,10 +61,18 @@ const FoodMenu = () => {
 
   const onFloatingAddPress = () => {
     setShowAddFood(true);
+    setModalType("add");
   };
 
   const modalCloseOnPress = () => {
     setShowAddFood(false);
+    setModalType("add");
+  };
+
+  const onItemPress = (item) => {
+    LOG("clicked item :", item);
+    setModalType("addOn");
+    setShowAddFood(true);
   };
 
   const foodCategoryRender = ({ item, index }) => {
@@ -97,12 +106,27 @@ const FoodMenu = () => {
             source={require("../../../../Assests/images/nofood1.png")}
           />
         </View>
+        <Text
+          style={[
+            styles.slotText,
+            { display: modalType == "addOn" ? "flex" : "none" },
+          ]}
+        >
+          {"Slot " + item}
+        </Text>
       </View>
     );
   };
 
   const foodItemRenderer = ({ item, ind }) => {
-    return <FoodItem item={item} index={ind} activeTab={activeTab} />;
+    return (
+      <FoodItem
+        item={item}
+        index={ind}
+        activeTab={activeTab}
+        onItemPress={onItemPress}
+      />
+    );
   };
 
   return (
@@ -221,121 +245,138 @@ const FoodMenu = () => {
           onPress={() => setShowAddFood(false)}
         >
           <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
-            <View style={styles.modalWholeView}>
-              <Text style={styles.modalTopicText}>
-                {activeTab == 0 ? "Add Food Menu" : " Add Addons"}
-              </Text>
+            {modalType == "add" ? (
+              <View style={styles.modalWholeView}>
+                <Text style={styles.modalTopicText}>
+                  {activeTab == 0 ? "Add Food Menu" : " Add Addons"}
+                </Text>
 
-              <View style={styles.addFoodListView}>
-                <FlatList
-                  data={[1, 2, 3, 4, 5]}
-                  renderItem={renderAddFoodInModal}
-                  keyExtractor={(itm, ind) => ind}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
+                <View style={styles.addFoodListView}>
+                  <FlatList
+                    data={[1, 2, 3, 4, 5]}
+                    renderItem={renderAddFoodInModal}
+                    keyExtractor={(itm, ind) => ind}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  />
+                </View>
+
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Food name"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
                 />
-              </View>
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Price"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Quantity"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Parcel"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Ratings"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+                <TextInput
+                  style={styles.modalInputs}
+                  placeholder={"Parameter"}
+                  placeholderTextColor={colors.grey}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
 
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Food name"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Price"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Quantity"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Parcel"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Ratings"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Parameter"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-
-              <View style={styles.modalBottomButtonsView}>
-                <TouchableOpacity
-                  style={styles.modalBottomButtons}
-                  onPress={modalCloseOnPress}
-                >
-                  <LinearGradient
-                    colors={[colors.buttonGreen, colors.activeGreen]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.modalButtonGradient}
+                <View style={styles.modalBottomButtonsView}>
+                  <TouchableOpacity
+                    style={styles.modalBottomButtons}
+                    onPress={modalCloseOnPress}
                   >
-                    <Text style={styles.modalButtontext}>Close</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                    <LinearGradient
+                      colors={[colors.buttonGreen, colors.activeGreen]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.modalButtonGradient}
+                    >
+                      <Text style={styles.modalButtontext}>Close</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
 
-                <TouchableOpacity style={styles.modalBottomButtons}>
-                  <LinearGradient
-                    colors={[colors.buttonGreen, colors.activeGreen]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.modalButtonGradient}
-                  >
-                    <Text style={styles.modalButtontext}>Save</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                  <TouchableOpacity style={styles.modalBottomButtons}>
+                    <LinearGradient
+                      colors={[colors.buttonGreen, colors.activeGreen]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.modalButtonGradient}
+                    >
+                      <Text style={styles.modalButtontext}>Save</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            ) : (
+              <View style={styles.modalWholeView}>
+                <Text style={styles.modalTopicText}>Add On Slots</Text>
+
+                <View style={styles.addAddOnView}>
+                  <FlatList
+                    data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]}
+                    renderItem={renderAddFoodInModal}
+                    keyExtractor={(itm, ind) => ind}
+                    numColumns={2}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
+              </View>
+            )}
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
@@ -413,14 +454,14 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   foodFlatListView: {
-    height: "90%",
+    height: "87%",
   },
   foodFlatList: {
     paddingBottom: 200,
   },
   bottomButtonsView: {
     position: "absolute",
-    bottom: "14%",
+    bottom: "17%",
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
@@ -465,7 +506,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   addFoodListView: {
-    height: "15%",
+    height: "18%",
     width: "90%",
     marginVertical: 10,
     alignItems: "center",
@@ -473,6 +514,9 @@ const styles = StyleSheet.create({
   addFoodItemParent: {
     justifyContent: "center",
     backgroundColor: colors.white,
+    marginVertical: 8,
+    marginHorizontal: 5,
+    alignItems: "center",
   },
   itemImageView: {
     elevation: 7,
@@ -492,6 +536,10 @@ const styles = StyleSheet.create({
     width: 110,
     borderRadius: 60,
     resizeMode: "center",
+  },
+  slotText: {
+    fontFamily: textFontFaceLight,
+    marginVertical: 2,
   },
   modalInputs: {
     backgroundColor: colors.inputGrey,
@@ -521,6 +569,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
     paddingBottom: 2,
+  },
+  addAddOnView: {
+    alignSelf: "center",
+    flex: 1,
+    marginTop: 10,
   },
 });
 
