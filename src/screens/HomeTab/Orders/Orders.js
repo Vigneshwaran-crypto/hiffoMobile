@@ -88,6 +88,7 @@ const Orders = () => {
           </View>
         </View>
 
+        {/* Orders List */}
         <FlatList
           data={orderList}
           key={(item) => item.id}
@@ -103,6 +104,7 @@ const Orders = () => {
           }}
         />
 
+        {/* Floating Bottom Buttons */}
         <View style={styles.bottomButtonsView}>
           <TouchableOpacity style={styles.bottomButton}>
             <MatIcons name="pencil" size={21} color={colors.black} />
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+    height: height,
   },
   screenContent: {
     flex: 1,
@@ -243,7 +246,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonsView: {
     position: "absolute",
-    bottom: "8%",
+    bottom: height * 0.06,
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",

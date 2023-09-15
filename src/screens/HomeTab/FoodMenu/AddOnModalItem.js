@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -19,11 +19,28 @@ import EnTypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Checkbox } from "react-native-paper";
+import { LOG } from "../../../common/util";
+
 const { height, width } = Dimensions.get("window");
 
-const FoodItem = ({ item, index, activeTab, onItemPress }) => {
+const AddOnModalItem = ({
+  item,
+  index,
+  activeTab,
+  onItemPress,
+  type,
+  onCheckingItem,
+}) => {
+  const [isChecked, setIsChecked] = useState(false);
+
   const onFoodItemPress = (item) => {
     onItemPress(item);
+  };
+
+  const onCheckItem = () => {
+    setIsChecked(!isChecked);
+    onCheckingItem(item);
   };
 
   return (
@@ -35,14 +52,6 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
     >
       <View style={styles.itemImageView}>
         <Image style={styles.foodItemImage} source={item.imagePath} />
-        {/* <MaterialIcons
-          name="double-arrow"
-          color={colors.gradientColor}
-          size={20}
-          style={{
-            transform: [{ rotateX: "100deg" }],
-          }}
-        /> */}
       </View>
 
       <View style={styles.foodItemTexts}>
@@ -52,60 +61,43 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
         <View style={styles.foodItemPriceView}>
           <Text style={styles.foodItemPrice}>{item.price}</Text>
 
-          {/* <ScrollView style={{ borderWidth: 1 }} horizontal={true}> */}
           <View style={styles.addFoodQuantityView}>
-            <TouchableOpacity style={styles.itemAddButton}>
-              <LinearGradient
-                colors={[colors.subTextColor, colors.tanGrey]}
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0, y: 0 }}
-                style={styles.addGradient}
-              >
-                <Text style={styles.itemButtonsText}>Show</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            {type ? (
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity style={styles.itemAddButton}>
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.activeGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.addGradient}
+                  >
+                    <Text style={styles.itemButtonsText}>Edit</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles.itemAddButton}>
-              <LinearGradient
-                colors={[colors.buttonGreen, colors.activeGreen]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.addGradient}
-              >
-                <Text style={styles.itemButtonsText}>Hide</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.itemAddButton,
-                { display: activeTab == 0 ? "flex" : "none" },
-              ]}
-            >
-              <LinearGradient
-                colors={[colors.subTextColor, colors.tanGrey]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.addGradient}
-              >
-                <Text style={styles.itemButtonsText}>Restock</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.itemRoundButton,
-                { display: activeTab == 0 ? "flex" : "none" },
-              ]}
-            >
-              <EnTypo name="link" size={19} color={colors.mildBg} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.itemRoundButton}>
-              <Feather name="trash-2" size={19} color={colors.mildBg} />
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.itemAddButton}>
+                  <LinearGradient
+                    colors={[colors.subTextColor, colors.tanGrey]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.addGradient}
+                  >
+                    <Text style={styles.itemButtonsText}>Delete</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.checkBoxView}>
+                <Checkbox
+                  status={isChecked ? "checked" : "unchecked"}
+                  color={colors.activeGreen}
+                  uncheckedColor={colors.grey}
+                  onPress={onCheckItem}
+                  theme={{ dark: true }}
+                />
+              </View>
+            )}
           </View>
-          {/* </ScrollView> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -159,7 +151,7 @@ const styles = StyleSheet.create({
   },
   foodItemPriceView: {
     flexDirection: "row",
-    width: width * 0.7,
+    width: "80%",
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -207,6 +199,12 @@ const styles = StyleSheet.create({
     marginEnd: 10,
     backgroundColor: colors.subTextColor,
   },
+  checkBoxView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
 });
 
-export default FoodItem;
+export default AddOnModalItem;

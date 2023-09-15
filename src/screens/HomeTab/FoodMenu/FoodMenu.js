@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -15,7 +15,11 @@ import {
 } from "react-native";
 import { colors } from "../../../common/colors";
 import Header from "../../../components/DefaultComponents/Header";
-import { textFontFaceLight, textFontFaceMedium } from "../../../common/styles";
+import {
+  textFontFaceLight,
+  textFontFaceMedium,
+  textFontFaceSemiBold,
+} from "../../../common/styles";
 import Feather from "react-native-vector-icons/Feather";
 import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -28,6 +32,7 @@ import {
   scrWidth,
 } from "../../../common/util";
 import LinearGradient from "react-native-linear-gradient";
+import AddOnModalItem from "../FoodMenu/AddOnModalItem";
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
@@ -40,6 +45,10 @@ const FoodMenu = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [showAddFood, setShowAddFood] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [modalShowType, setModalShowType] = useState(false);
+  const [addOnList, setAddOnList] = useState([]);
+
+  let addingAddOnList = useRef([]);
 
   const categoryList = [
     { id: 1, value: "Indian" },
@@ -75,6 +84,20 @@ const FoodMenu = () => {
     setShowAddFood(true);
   };
 
+  const onCheckingItem = useCallback((item) => {
+    LOG("Clicked Item In Parent :", item);
+    addingAddOnList.current.push(item);
+  }, []);
+
+  const addAddOnPress = () => {
+    setModalShowType(!modalShowType);
+
+    if (modalShowType) {
+    } else {
+      setAddOnList(addingAddOnList.current);
+    }
+  };
+
   const foodCategoryRender = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -94,6 +117,23 @@ const FoodMenu = () => {
       >
         <Text style={styles.categoryItemText}>{item.value}</Text>
       </TouchableOpacity>
+    );
+  };
+
+  const showAddOnRender = ({ item, index }) => {
+    return <View key={index}></View>;
+  };
+
+  const addAddOnRenderItem = ({ item, index }) => {
+    return (
+      <AddOnModalItem
+        item={item}
+        index={index}
+        activeTab={activeTab}
+        type={modalShowType}
+        onItemPress={() => {}}
+        onCheckingItem={onCheckingItem}
+      />
     );
   };
 
@@ -118,11 +158,11 @@ const FoodMenu = () => {
     );
   };
 
-  const foodItemRenderer = ({ item, ind }) => {
+  const foodItemRenderer = ({ item, index }) => {
     return (
       <FoodItem
         item={item}
-        index={ind}
+        index={index}
         activeTab={activeTab}
         onItemPress={onItemPress}
       />
@@ -193,7 +233,11 @@ const FoodMenu = () => {
           </View>
         </View>
 
-        <View>
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
           {/* Food category list */}
           <FlatList
             data={categoryList}
@@ -216,6 +260,7 @@ const FoodMenu = () => {
             />
           </View>
 
+          {/* Floating Bottom Buttons */}
           <View style={styles.bottomButtonsView}>
             <TouchableOpacity style={styles.bottomButton}>
               <MatIcons name="pencil" size={21} color={colors.black} />
@@ -365,16 +410,32 @@ const FoodMenu = () => {
               <View style={styles.modalWholeView}>
                 <Text style={styles.modalTopicText}>Add On Slots</Text>
 
+                {/* {modalShowType == 1 ? ( */}
                 <View style={styles.addAddOnView}>
                   <FlatList
-                    data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]}
-                    renderItem={renderAddFoodInModal}
+                    data={modalShowType ? addOnList : foodList}
+                    renderItem={addAddOnRenderItem}
                     keyExtractor={(itm, ind) => ind}
-                    numColumns={2}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 30 }}
+                    ListFooterComponent={
+                      <View style={styles.modalListEmptyParent}>
+                        <TouchableOpacity
+                          style={styles.itemAddButton}
+                          onPress={addAddOnPress}
+                        >
+                          <Text style={styles.itemButtonsText}>
+                            {modalShowType ? "Add AddOns" : "Submit"}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    }
                   />
                 </View>
+                {/* ) : (
+                  <View style={styles.addAddOnView}></View>
+                )} */}
               </View>
             )}
           </TouchableOpacity>
@@ -388,12 +449,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+    height: height,
   },
   screenContent: {
     flex: 1,
     width: "90%",
     alignSelf: "center",
     marginTop: 15,
+    // borderWidth: 1,
   },
   foodTab: {
     flexDirection: "row",
@@ -457,11 +520,11 @@ const styles = StyleSheet.create({
     height: "87%",
   },
   foodFlatList: {
-    paddingBottom: 200,
+    paddingBottom: 160,
   },
   bottomButtonsView: {
     position: "absolute",
-    bottom: "17%",
+    bottom: height * 0.06,
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
@@ -574,6 +637,38 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flex: 1,
     marginTop: 10,
+  },
+  modalListEmptyParent: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: colors.itemBorderGrey,
+    marginTop: 15,
+    padding: 20,
+    paddingVertical: 28,
+    backgroundColor: colors.mildBg,
+    borderRadius: 25,
+    width: "100%",
+    height: "37%",
+    justifyContent: "center",
+    flex: 1,
+  },
+  itemAddButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    alignSelf: "center",
+
+    elevation: 20,
+    backgroundColor: colors.transparent,
+    shadowColor: colors.grey,
+    shadowOpacity: 0.1,
+    shadowOffset: { height: 2, width: 2 },
+  },
+  itemButtonsText: {
+    marginVertical: 5,
+    fontFamily: textFontFaceSemiBold,
+    color: colors.greyBC,
+    fontSize: 15,
   },
 });
 
