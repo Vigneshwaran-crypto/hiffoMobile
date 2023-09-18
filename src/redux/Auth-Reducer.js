@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
     case StaticValues.createAccount:
       LOG("create_Account_in_reducer :", action);
 
-      const hId = action.jsonData[0].D0;
+      const hId = action.jsonData[0];
 
       LOG("single hotel id :", hId);
 

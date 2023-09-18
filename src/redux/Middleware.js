@@ -176,10 +176,10 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             LOG("create_Account_in_middleware :", action);
             dispatchNext = true;
 
-            if (action.responseData.message == "msgcode0005") {
+            if (action.responseData.statuscode == "Scode0005") {
               Toast("Hiffo Id created successfully");
               RootNavigation.navigateScreen("login");
-            } else if (action.responseData.message == "msgcode0006") {
+            } else if (action.responseData.statuscode == "Scode0006") {
               Toast("Mobile number already exists");
             } else {
               Toast("Please try again");

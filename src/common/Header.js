@@ -20,40 +20,21 @@ const win = Dimensions.get("window");
 const Header = (props) => {
   const title = props.title;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userTheme = useSelector(({ api }) => api.getTheme);
-
-  // var titleLen = title.length;
-  // var trimedTitle = title.slice(0, 20) + "...";
-
-  useEffect(() => {
-    LOG("Title in header", title);
-    // LOG("title length in header", titleLen);
-    // LOG("trimed title in header", trimedTitle);
-  }, []);
 
   const backArrowOnPress = () => {
-    LOG("bak");
     navigation.goBack();
   };
   return (
     <View style={styles.headerContent}>
       <TouchableOpacity style={styles.backButton} onPress={backArrowOnPress}>
-        <Feather
-          name="chevron-left"
-          size={31}
-          color={userTheme ? colors.white : colors.black}
-        />
+        <Feather name="chevron-left" size={31} color={colors.black} />
       </TouchableOpacity>
 
       <View style={styles.headingView}>
         <Text
           adjustsFontSizeToFit={true}
           allowFontScaling={true}
-          style={[
-            styles.headerText,
-            { color: userTheme ? colors.white : colors.black },
-          ]}
+          style={styles.headerText}
         >
           {title}
         </Text>

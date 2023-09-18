@@ -26,6 +26,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { navigationRef } from "./RootNavigation";
 import CreateRest from "../screens/Auth/CreateRest";
 import CreateManagement from "../screens/Auth/CreateManagement";
+import LinkAddOn from "../screens/HomeTab/FoodMenu/LinkAddOn";
 
 const Route = (props) => {
   const Stack = createNativeStackNavigator();
@@ -211,6 +212,12 @@ const Route = (props) => {
         <Stack.Screen
           name="homeTab"
           component={HomeTab}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="linkAddOn"
+          component={LinkAddOn}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

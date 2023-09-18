@@ -19,11 +19,17 @@ import EnTypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
 const { height, width } = Dimensions.get("window");
 
 const FoodItem = ({ item, index, activeTab, onItemPress }) => {
+  const navigation = useNavigation();
   const onFoodItemPress = (item) => {
     onItemPress(item);
+  };
+
+  const onLinkPress = () => {
+    navigation.navigate("linkAddOn");
   };
 
   return (
@@ -35,14 +41,6 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
     >
       <View style={styles.itemImageView}>
         <Image style={styles.foodItemImage} source={item.imagePath} />
-        {/* <MaterialIcons
-          name="double-arrow"
-          color={colors.gradientColor}
-          size={20}
-          style={{
-            transform: [{ rotateX: "100deg" }],
-          }}
-        /> */}
       </View>
 
       <View style={styles.foodItemTexts}>
@@ -97,6 +95,7 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
                 styles.itemRoundButton,
                 { display: activeTab == 0 ? "flex" : "none" },
               ]}
+              onPress={onLinkPress}
             >
               <EnTypo name="link" size={19} color={colors.mildBg} />
             </TouchableOpacity>

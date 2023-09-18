@@ -90,7 +90,7 @@ const SignUp = (props) => {
 
       const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
 
-      // dispatch(createAccount(modalReq));
+      dispatch(createAccount(modalReq));
     }
   };
 

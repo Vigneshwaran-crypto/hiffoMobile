@@ -31,6 +31,7 @@ const AddOnModalItem = ({
   onItemPress,
   type,
   onCheckingItem,
+  onDecisionPress,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -64,7 +65,10 @@ const AddOnModalItem = ({
           <View style={styles.addFoodQuantityView}>
             {type ? (
               <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity style={styles.itemAddButton}>
+                <TouchableOpacity
+                  style={styles.itemAddButton}
+                  onPress={onDecisionPress.bind(this, 1, item)}
+                >
                   <LinearGradient
                     colors={[colors.buttonGreen, colors.activeGreen]}
                     start={{ x: 0, y: 0 }}
@@ -75,7 +79,10 @@ const AddOnModalItem = ({
                   </LinearGradient>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.itemAddButton}>
+                <TouchableOpacity
+                  style={styles.itemAddButton}
+                  onPress={onDecisionPress.bind(this, 2, item)}
+                >
                   <LinearGradient
                     colors={[colors.subTextColor, colors.tanGrey]}
                     start={{ x: 0, y: 0 }}
