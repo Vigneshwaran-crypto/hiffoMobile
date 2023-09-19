@@ -38,6 +38,8 @@ const VerifyOtp = (props) => {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
 
+  const title = props.route.params.title;
+
   const [pin1, setPin1] = useState(null);
   const [pin2, setPin2] = useState(null);
   const [pin3, setPin3] = useState(null);
@@ -66,7 +68,12 @@ const VerifyOtp = (props) => {
       };
       // dispatch(initSpinner());
       // dispatch(verifyOtpAction(verifyOtpRequest));
-      navigation.navigate("resetPassword");
+
+      if (title == "CREATE ACCOUNT") {
+        navigation.navigate("signUp");
+      } else {
+        navigation.navigate("resetPassword", { title: "VERIFY OTP" });
+      }
     } else {
       Toast("Please enter otp");
     }

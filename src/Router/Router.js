@@ -27,6 +27,7 @@ import { navigationRef } from "./RootNavigation";
 import CreateRest from "../screens/Auth/CreateRest";
 import CreateManagement from "../screens/Auth/CreateManagement";
 import LinkAddOn from "../screens/HomeTab/FoodMenu/LinkAddOn";
+import ConfirmSignUp from "../screens/Auth/ConfirmSignUp";
 
 const Route = (props) => {
   const Stack = createNativeStackNavigator();
@@ -182,6 +183,12 @@ const Route = (props) => {
         <Stack.Screen
           name="signUp"
           component={SignUp}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="confirmSignUp"
+          component={ConfirmSignUp}
           options={{ headerShown: false }}
         />
 

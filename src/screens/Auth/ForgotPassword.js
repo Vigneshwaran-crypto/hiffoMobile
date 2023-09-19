@@ -39,18 +39,21 @@ const win = Dimensions.get("window");
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
-  const dispatch = useDispatch();
   const [number, setNumber] = useState("");
+
+  const title = props.route.params.title;
 
   const forgotOnPress = () => {
     if (!number) {
       Toast("Please enter your number");
     } else {
-      navigation.navigate("verifyOtp");
+      navigation.navigate("verifyOtp", { title: title });
     }
     // if (email) {
     //   const isValidEmail = validateEmailAndPhone(email, "email");
@@ -73,6 +76,7 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
+    LOG("props value in FP :", props);
     const backHandle = BackHandler.addEventListener(
       "hardwareBackPress",
       backHardwarePress
@@ -89,7 +93,7 @@ const ForgotPassword = () => {
   return (
     <View style={styles.container}>
       <View style={styles.wholeView}>
-        <Header title={"FORGOT PASSWORD"} />
+        <Header title={title} />
 
         <View style={styles.forgotView}>
           <View style={styles.splashContent}>

@@ -70,6 +70,8 @@ const SignUp = (props) => {
   };
 
   const validateFields = () => {
+    navigation.navigate("resetPassword", { title: "SIGNUP", name: userName });
+
     if (!userName) {
       Toast("Please enter username");
     } else if (!password) {
@@ -88,9 +90,10 @@ const SignUp = (props) => {
         email: email,
       };
 
-      const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
+      // const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
 
-      dispatch(createAccount(modalReq));
+      // dispatch(createAccount(modalReq));
+      navigation.navigate("resetPassword", { title: "SIGNUP" });
     }
   };
 
@@ -103,46 +106,48 @@ const SignUp = (props) => {
           behavior="padding"
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          // contentContainerStyle={{ flex: 1, marginTop: 120 }}
         >
-          <View style={styles.splashContent}>
-            <Image
-              source={require("../../../Assests/images/hiffoDesk.png")}
-              style={styles.hiffoLogo}
-            />
-
-            <Text style={styles.mediumText}>CREATE ACCOUNT</Text>
-          </View>
-
-          {customSpinner ? (
-            <View style={styles.loaderView}>
-              <ActivityIndicator
-                size={"large"}
-                color={colors.buttonGreen}
-                animating={customSpinner}
-                style={styles.loaderStyle}
+          <View style={{ flex: 1, marginTop: 120 }}>
+            <View style={styles.splashContent}>
+              <Image
+                source={require("../../../Assests/images/hiffoDesk.png")}
+                style={styles.hiffoLogo}
               />
-            </View>
-          ) : null}
 
-          <View style={styles.authContent}>
-            <View style={styles.emailView}>
-              <TextInput
-                style={styles.tIStyle}
-                onChangeText={setUserName}
-                placeholder={"User name"}
-                placeholderTextColor={colors.grey}
-                value={userName}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
+              <Text style={styles.mediumText}>CREATE ACCOUNT</Text>
             </View>
 
-            <View style={styles.passwordView}>
+            {customSpinner ? (
+              <View style={styles.loaderView}>
+                <ActivityIndicator
+                  size={"large"}
+                  color={colors.buttonGreen}
+                  animating={customSpinner}
+                  style={styles.loaderStyle}
+                />
+              </View>
+            ) : null}
+
+            <View style={styles.authContent}>
+              <View style={styles.emailView}>
+                <TextInput
+                  style={styles.tIStyle}
+                  onChangeText={setUserName}
+                  placeholder={"User name"}
+                  placeholderTextColor={colors.grey}
+                  value={userName}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+              </View>
+
+              {/* <View style={styles.passwordView}>
               <TextInput
                 style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setPassword}
@@ -158,26 +163,26 @@ const SignUp = (props) => {
                 autoCompleteType="email"
                 secureTextEntry={true}
               />
-            </View>
+            </View> */}
 
-            <View style={styles.passwordView}>
-              <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setMail}
-                placeholder={"Email"}
-                placeholderTextColor={colors.grey}
-                value={email}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-            </View>
+              <View style={styles.passwordView}>
+                <TextInput
+                  style={[styles.tIStyle, { marginTop: -15 }]}
+                  onChangeText={setMail}
+                  placeholder={"Email"}
+                  placeholderTextColor={colors.grey}
+                  value={email}
+                  keyboardType={"ascii-capable"}
+                  underlineColorAndroid={colors.transparent}
+                  selectionColor={colors.baseBackground}
+                  textContentType="password"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                />
+              </View>
 
-            <View style={styles.passwordView}>
+              {/* <View style={styles.passwordView}>
               <TextInput
                 style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setMobileNo}
@@ -192,20 +197,21 @@ const SignUp = (props) => {
                 autoCorrect={false}
                 autoCompleteType="email"
               />
+            </View> */}
             </View>
-          </View>
 
-          <View style={styles.bottomContent}>
-            <TouchableOpacity onPress={validateFields}>
-              <LinearGradient
-                colors={[colors.buttonGreen, colors.activeGreen]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.logInButton}
-              >
-                <Text style={styles.logInText}>CREATE ACCOUNT</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <View style={styles.bottomContent}>
+              <TouchableOpacity onPress={validateFields}>
+                <LinearGradient
+                  colors={[colors.buttonGreen, colors.activeGreen]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.logInButton}
+                >
+                  <Text style={styles.logInText}>CREATE ACCOUNT</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -301,6 +307,7 @@ const styles = StyleSheet.create({
   bottomContent: {
     width: "73%",
     alignSelf: "center",
+    marginTop: 25,
   },
   logInButton: {
     justifyContent: "center",

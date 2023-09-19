@@ -29,68 +29,30 @@ import backPressHandler from "../../common/backPressHandler";
 import { LOG, validateEmailAndPhone } from "../../common/util";
 import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
-import { authenticationVerify } from "../../redux/Auth-Action";
+import { authenticationVerify, createAccount } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
+import Header from "../../common/Header";
 
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
 
-const { fontScale } = Dimensions.get("window");
-
-const LogIn = (props) => {
+const ConfirmSignUp = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
   const route = useRoute();
   const dispatch = useDispatch();
 
-  const [email, setMail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
-  const validateFields = () => {
-    navigation.navigate("createRest");
-
-    if (!email && !password) {
-      Toast("Please enter  email and password");
-    } else if (!email) {
-      Toast("Please enter your email");
-    } else if (!password) {
-      Toast("Please enter your password");
-    } else {
-      var isValidEmail = validateEmailAndPhone(email, "email");
-
-      if (true) {
-        // var encryptedPass = CryptoJS.MD5(password).toString();
-        // LOG("ENCRYPTED PASSWORD :", encryptedPass);
-        // var loginRequestData = {
-        //   email: email,
-        //   password: encryptedPass,
-        // };
-
-        const req = ``;
-
-        // dispatch(initSpinner());
-        // dispatch(authenticationVerify(loginRequestData));
-        Toast("Login Successfully");
-        navigation.navigate("createRest");
-      } else {
-        Toast("Please enter valid email");
-      }
-    }
-  };
-
-  const forgotPasswordClick = () => {
-    navigation.navigate("forgotPassword", { title: "FORGOT PASSWORD" });
-  };
-
-  const signUpOnPress = () => {
-    // navigation.navigate("signUp");
-    navigation.navigate("forgotPassword", { title: "CREATE ACCOUNT" });
-  };
+  const [email, setMail] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
 
   useEffect(() => {
-    // setMail("Vickytata619@gmail.com");
-    // setPassword("123456");
+    // setUserName("VigneshDemo");
+    // setPassword("pass123");
+    // setMail("vickyterrito@mailinator.com");
+    // setMobileNo("9876787655");
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -103,13 +65,40 @@ const LogIn = (props) => {
   }, []);
 
   const handleBackButtonClick = () => {
-    backPressHandler(route.name, false);
+    navigation.goBack();
     return true;
   };
 
+  const validateFields = () => {
+    if (!userName) {
+      Toast("Please enter username");
+    } else if (!password) {
+      Toast("Please enter password");
+    } else if (!email) {
+      Toast("Please enter email");
+    } else if (!mobileNo) {
+      Toast("Please enter mobile number");
+    } else {
+      // Toast("created successfully");
+
+      const req = {
+        username: userName,
+        password: password,
+        mobile_no: mobileNo,
+        email: email,
+      };
+
+      const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
+
+      dispatch(createAccount(modalReq));
+    }
+  };
+
   return (
-    <View style={styles.parentContainer}>
+    <View style={styles.container}>
       <View style={styles.container}>
+        <Header title={"confirmSignUp"} />
+
         <ScrollView
           behavior="padding"
           showsHorizontalScrollIndicator={false}
@@ -117,15 +106,11 @@ const LogIn = (props) => {
         >
           <View style={styles.splashContent}>
             <Image
-              source={require("../../../Assests/images/hiffo.png")}
+              source={require("../../../Assests/images/hiffoDesk.png")}
               style={styles.hiffoLogo}
             />
 
-            <Text style={styles.mediumText}>WELCOME TO HIFFO DESK</Text>
-            <Text style={styles.headingText}>
-              Let the peace meet the plates
-            </Text>
-            <Text style={styles.subText}>Login</Text>
+            <Text style={styles.mediumText}>CREATE ACCOUNT</Text>
           </View>
 
           {customSpinner ? (
@@ -143,10 +128,10 @@ const LogIn = (props) => {
             <View style={styles.emailView}>
               <TextInput
                 style={styles.tIStyle}
-                onChangeText={setMail}
-                placeholder={"Enter HID"}
+                onChangeText={setUserName}
+                placeholder={"User name"}
                 placeholderTextColor={colors.grey}
-                value={email}
+                value={userName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
@@ -159,7 +144,7 @@ const LogIn = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={styles.tIStyle}
+                style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setPassword}
                 placeholder={"Password"}
                 placeholderTextColor={colors.grey}
@@ -174,6 +159,40 @@ const LogIn = (props) => {
                 secureTextEntry={true}
               />
             </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle, { marginTop: -15 }]}
+                onChangeText={setMail}
+                placeholder={"Email"}
+                placeholderTextColor={colors.grey}
+                value={email}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle, { marginTop: -15 }]}
+                onChangeText={setMobileNo}
+                placeholder={"Mobile number"}
+                placeholderTextColor={colors.grey}
+                value={mobileNo}
+                keyboardType={"decimal-pad"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
           </View>
 
           <View style={styles.bottomContent}>
@@ -184,25 +203,9 @@ const LogIn = (props) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.logInButton}
               >
-                <Text style={styles.logInText}>LOGIN</Text>
+                <Text style={styles.logInText}>CREATE ACCOUNT</Text>
               </LinearGradient>
             </TouchableOpacity>
-
-            <TouchableOpacity activeOpacity={1} onPress={forgotPasswordClick}>
-              <Text style={styles.forgotText}>Forgot Password</Text>
-            </TouchableOpacity>
-
-            <View style={styles.bottomTextsView}>
-              <Text style={styles.termsText}>
-                By signing in you agree to Commons{" "}
-                <Text style={styles.linkText}>Terms & Conditions</Text> and{" "}
-                <Text style={styles.linkText}>Privacy Policy</Text>
-              </Text>
-
-              <TouchableOpacity onPress={signUpOnPress}>
-                <Text style={styles.signUpText}>First Time User ?</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </ScrollView>
       </View>
@@ -211,37 +214,35 @@ const LogIn = (props) => {
 };
 
 const styles = StyleSheet.create({
-  parentContainer: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
   tIStyle: {
     backgroundColor: colors.inputGrey,
+    flex: 1,
+    borderColor: colors.grey,
     color: colors.black,
+    padding: 10,
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
     // textAlign: "center",
-    paddingStart: 10,
   },
   splashContent: {
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-    marginTop: 50,
+    marginTop: 20,
+    width: "70%",
+    alignSelf: "center",
   },
   hiffoLogo: {
-    height: Dheight * 0.25,
-    width: Dwidth * 0.6,
+    height: Dheight * 0.2,
+    width: Dwidth * 0.8,
     resizeMode: "contain",
+    borderColor: colors.black,
   },
   container: {
+    flex: 1,
     justifyContent: "center",
     backgroundColor: colors.white,
-    width: "85%",
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
   },
   loaderView: {
     position: "absolute",
@@ -280,10 +281,11 @@ const styles = StyleSheet.create({
   authContent: {
     marginHorizontal: 25,
     marginVertical: 20,
-    justifyContent: "center",
+    width: "60%",
+    alignSelf: "center",
   },
   emailView: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
   passwordView: {
     marginVertical: 20,
@@ -296,7 +298,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.transparent,
   },
-  bottomContent: {},
+  bottomContent: {
+    width: "73%",
+    alignSelf: "center",
+  },
   logInButton: {
     justifyContent: "center",
     alignItems: "center",
@@ -337,11 +342,6 @@ const styles = StyleSheet.create({
     marginTop: 18,
     color: colors.logoBlue,
   },
-  bottomTextsView: {
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-  },
 });
 
-export default LogIn;
+export default ConfirmSignUp;
