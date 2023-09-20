@@ -178,7 +178,8 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
             if (action.responseData.statuscode == "Scode0005") {
               Toast("Hiffo Id created successfully");
-              RootNavigation.navigateScreen("login");
+              const data = action.responseData.data[0];
+              RootNavigation.navigateScreen("login", { hid: data });
             } else if (action.responseData.statuscode == "Scode0006") {
               Toast("Mobile number already exists");
             } else {

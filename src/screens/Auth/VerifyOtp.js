@@ -39,6 +39,7 @@ const VerifyOtp = (props) => {
   const [email, setEmail] = useState("");
 
   const title = props.route.params.title;
+  const number = props.route.params.number;
 
   const [pin1, setPin1] = useState(null);
   const [pin2, setPin2] = useState(null);
@@ -70,7 +71,7 @@ const VerifyOtp = (props) => {
       // dispatch(verifyOtpAction(verifyOtpRequest));
 
       if (title == "CREATE ACCOUNT") {
-        navigation.navigate("signUp");
+        navigation.navigate("signUp", { title: title, number: number });
       } else {
         navigation.navigate("resetPassword", { title: "VERIFY OTP" });
       }
@@ -86,20 +87,6 @@ const VerifyOtp = (props) => {
     // dispatch(initSpinner());
     // dispatch(sendOtpAction(otpRequest));
   };
-
-  useEffect(() => {
-    getItem("resetEmail")
-      .then((result) => {
-        const validData = JSON.parse(result);
-
-        LOG("get item email in verify otp ", validData.mailId);
-
-        setEmail(validData.mailId);
-      })
-      .catch((err) => {
-        LOG("error oocured while getting getItem", err);
-      });
-  }, []);
 
   useEffect(() => {
     const timerId = setInterval(() => {

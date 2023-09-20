@@ -25,7 +25,7 @@ import {
 } from "../../common/styles";
 import { getItem, LOG, Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
-import { resetPasswordAction } from "../../redux/Auth-Action";
+import { createAccount, resetPasswordAction } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
 const win = Dimensions.get("window");
 
@@ -37,10 +37,12 @@ const ResetPassword = (props) => {
 
   const [newPassword, setNewPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [email, setEmail] = useState("");
 
   const title = props.route.params.title;
+
   const name = props.route.params.name;
+  const number = props.route.params.number;
+  const email = props.route.params.email;
 
   const confirmOnPress = () => {
     if (!newPassword) {
@@ -55,28 +57,29 @@ const ResetPassword = (props) => {
           mailId: email,
           password: encryptedPass,
         };
-        // dispatch(initSpinner());
-        // dispatch(resetPasswordAction(resetPasswordReq));
-        Toast("Password changed successfully");
+
+        if (title == "SIGNUP") {
+          const req = {
+            username: name,
+            password: confirmPassword,
+            mobile_no: number,
+            email: email,
+          };
+
+          LOG("request before send:", req);
+
+          const modalReq = `username=${name}&password=${confirmPassword}&mobile_no=${number}&email=${email}`;
+          dispatch(createAccount(modalReq));
+        } else {
+          // dispatch(initSpinner());
+          // dispatch(resetPasswordAction(resetPasswordReq));
+          Toast("Password changed successfully");
+        }
       } else {
         Toast("Miss Matching Passwords");
       }
     }
   };
-
-  useEffect(() => {
-    getItem("resetEmail")
-      .then((result) => {
-        const validData = JSON.parse(result);
-
-        LOG("get item email in reset password ", validData.mailId);
-
-        setEmail(validData.mailId);
-      })
-      .catch((err) => {
-        LOG("err");
-      });
-  }, []);
 
   useEffect(() => {
     const backHandle = BackHandler.addEventListener(

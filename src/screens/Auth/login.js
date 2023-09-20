@@ -41,11 +41,19 @@ const LogIn = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
+  const hid = useSelector(({ auth }) => auth.hotelId.Hid);
   const route = useRoute();
   const dispatch = useDispatch();
 
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
+
+  // const hid = props.route.params?.hid;
+
+  useEffect(() => {
+    LOG("hid in logIN :", hid);
+    setMail(hid);
+  }, [hid]);
 
   const validateFields = () => {
     navigation.navigate("createRest");

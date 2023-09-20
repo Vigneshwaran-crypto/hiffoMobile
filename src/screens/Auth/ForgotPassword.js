@@ -49,11 +49,11 @@ const ForgotPassword = (props) => {
 
   const title = props.route.params.title;
 
-  const forgotOnPress = () => {
+  const senOnPress = () => {
     if (!number) {
       Toast("Please enter your number");
     } else {
-      navigation.navigate("verifyOtp", { title: title });
+      navigation.navigate("verifyOtp", { title: title, number: number });
     }
     // if (email) {
     //   const isValidEmail = validateEmailAndPhone(email, "email");
@@ -129,7 +129,7 @@ const ForgotPassword = (props) => {
             />
           </View>
 
-          <TouchableOpacity style={styles.buttonView} onPress={forgotOnPress}>
+          <TouchableOpacity style={styles.buttonView} onPress={senOnPress}>
             <LinearGradient
               colors={[colors.lightGreen, colors.activeGreen]}
               start={{ x: 0, y: 0 }}

@@ -43,10 +43,11 @@ const SignUp = (props) => {
   const route = useRoute();
   const dispatch = useDispatch();
 
+  const title = props.route.params.title;
+  const number = props.route.params.number;
+
   const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setMail] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
 
   useEffect(() => {
     // setUserName("VigneshDemo");
@@ -70,30 +71,35 @@ const SignUp = (props) => {
   };
 
   const validateFields = () => {
-    navigation.navigate("resetPassword", { title: "SIGNUP", name: userName });
+    navigation.navigate("resetPassword", {
+      title: "SIGNUP",
+      name: userName,
+      email: email,
+      number: number,
+    });
 
     if (!userName) {
       Toast("Please enter username");
-    } else if (!password) {
-      Toast("Please enter password");
     } else if (!email) {
       Toast("Please enter email");
-    } else if (!mobileNo) {
-      Toast("Please enter mobile number");
     } else {
       // Toast("created successfully");
 
       const req = {
         username: userName,
-        password: password,
-        mobile_no: mobileNo,
+        mobile_no: number,
         email: email,
       };
 
       // const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
 
       // dispatch(createAccount(modalReq));
-      navigation.navigate("resetPassword", { title: "SIGNUP" });
+      navigation.navigate("resetPassword", {
+        title: "SIGNUP",
+        name: userName,
+        number: number,
+        email: email,
+      });
     }
   };
 
@@ -147,24 +153,6 @@ const SignUp = (props) => {
                 />
               </View>
 
-              {/* <View style={styles.passwordView}>
-              <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setPassword}
-                placeholder={"Password"}
-                placeholderTextColor={colors.grey}
-                value={password}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-                secureTextEntry={true}
-              />
-            </View> */}
-
               <View style={styles.passwordView}>
                 <TextInput
                   style={[styles.tIStyle, { marginTop: -15 }]}
@@ -181,23 +169,6 @@ const SignUp = (props) => {
                   autoCompleteType="email"
                 />
               </View>
-
-              {/* <View style={styles.passwordView}>
-              <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setMobileNo}
-                placeholder={"Mobile number"}
-                placeholderTextColor={colors.grey}
-                value={mobileNo}
-                keyboardType={"decimal-pad"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-              />
-            </View> */}
             </View>
 
             <View style={styles.bottomContent}>
