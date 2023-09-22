@@ -13,32 +13,10 @@ import {
   RESET_REDUX_STORE,
   StaticValues,
 } from "../common/constants";
-import { stylesCommon } from "../common/styles";
 import { LOG, removeItem, storeItem, Toast } from "../common/util";
-import {
-  getAllFormmasterAct,
-  getUserFarmData,
-  resetStore,
-  stopSpinner,
-} from "./Api-Action";
+import { resetStore, stopSpinner } from "./Api-Action";
 import * as RootNavigation from "../Router/RootNavigation";
-import {
-  getBlockDetails,
-  getCommodityBasedVariety,
-  getCommodityList,
-  getHarvestDetails,
-  getPackhouseList,
-  getPickingPackingCount,
-  getPropertBasedCommodity,
-  getPropertyList,
-  getToiletPortableCount,
-} from "./FarmCheckList-Action";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import { Item } from "react-native-paper/lib/typescript/components/List/List";
-import { getAllAnswersMasterByParentId } from "./FarmCheckList-Action";
-import { StackActions } from "@react-navigation/native";
-import { getAccomadationYesCount } from "./Calibration-Action";
 const axios = require("axios").default;
 
 // Api middleware for Fetching User Details
@@ -68,9 +46,12 @@ export const apiMiddleware = (store) => (next) => (action) => {
         method = "get";
       }
 
+      const requestParams =
+        "?" + new URLSearchParams(action.jsonData).toString(); //converting jsonData to request params
+
       var config = {
         method: method,
-        url: action.requestUrl.trim(),
+        url: action.requestUrl.trim() + requestParams,
         // data: action.multiPart
         //   ? action.jsonData
         //   : JSON.stringify(action.jsonData),
@@ -78,7 +59,7 @@ export const apiMiddleware = (store) => (next) => (action) => {
       };
 
       LOG("request Type ==> " + action.requestType);
-      LOG("Axios Config =====>: " + JSON.stringify(config));
+      LOG("Axios Config =====>: ", config);
 
       // Axios is used in this application to make api calls
       axios(config, { timeout: 2 })
@@ -190,37 +171,40 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
           case StaticValues.loginRequest:
             LOG("LOGIN REQUEST IN MIDDLEWARE :", action);
 
-            if (action.responseData.data.loginStatus == "SUCCESS") {
+            if (action.responseData.statuscode == "Scode0010") {
               LOG("AUTHENTICATION PASSED");
+              dispatchNext = true;
+              const token = action.responseData.data[0].Token;
 
-              HTTP.AuthHeader.Authorization =
-                "Bearer " + action.responseData.data.token;
-              HTTP.FormDataHeader.Authorization =
-                "Bearer " + action.responseData.data.token;
+              HTTP.AuthHeader.Authorization = token;
+              HTTP.FormDataHeader.Authorization = token;
 
               var validCredential = JSON.stringify(action.requestData);
               storeItem("credential", validCredential);
 
-              RootNavigation.navigateScreen("login");
+              RootNavigation.navigateScreen("createRest");
             } else {
               Toast("Incorrect credentials");
 
-              RootNavigation.navigateScreen("login");
+              // RootNavigation.navigateScreen("login");
 
-              store.dispatch(stopSpinner());
+              // store.dispatch(stopSpinner());
             }
 
             dispatchNext = true;
             break;
 
           case StaticValues.sentOtp:
-            LOG("SEND OTP IN MIDDLEWARE ", action.responseData);
+            LOG("SEND_OTP_IN_MIDDLEWARE :", action);
 
-            if (action.responseData.status == 1) {
-              Toast("Please check your email");
-              RootNavigation.navigateScreen("verifyOtp");
+            if (action.responseData.statuscode == "scode0001") {
+              Toast("OTP sent successfully");
+
+              const otp = action.responseData.data[0].Otp.toString();
+              Toast(`Yout OTP IS : ${otp}`);
+              RootNavigation.navigateScreen("verifyOtp", action.extraData);
               dispatchNext = true;
-              store.dispatch(stopSpinner());
+              // store.dispatch(stopSpinner());
             } else {
               Toast("Please try again");
             }
@@ -228,17 +212,16 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             break;
 
           case StaticValues.verifyOtp:
-            LOG("VERIFY OTP IN MIDDLEWARE ", action);
-            if (action.responseData.status == 1) {
-              if (action.responseData.data) {
-                LOG("OTP VERIFIED SUCCESSFULLY ");
-                RootNavigation.navigateScreen("resetPassword");
-                dispatchNext = true;
-                store.dispatch(stopSpinner());
+            LOG("VERIFY_OTP_IN_MIDDLEWARE ", action);
+            if (action.responseData.statuscode == "Scode0002") {
+              dispatchNext = true;
+              if (action.extraData.title == "CREATE ACCOUNT") {
+                RootNavigation.navigateScreen("signUp", action.extraData);
               } else {
-                Toast("Please enter valid otp");
+                navigation.navigate("resetPassword", action.extraData);
               }
             } else {
+              Toast("Please enter valid otp");
             }
 
             break;

@@ -31,7 +31,7 @@ export const createAccount = (jsonData) => {
   return (dispatch) => {
     dispatch({
       type: GET_API_DATA,
-      requestUrl: HTTP.CREATE_ACCOUNT + jsonData,
+      requestUrl: HTTP.CREATE_ACCOUNT,
       requestType: StaticValues.createAccount,
       noAuth: true,
       jsonData: jsonData,
@@ -48,12 +48,13 @@ export const authenticationVerify = (jsonData) => {
       jsonData: jsonData,
       requestUrl: HTTP.LOGIN_REQUEST,
       requestType: StaticValues.loginRequest,
+      stopSpinner: true,
       noAuth: true,
     });
   };
 };
 
-export const sendOtpAction = (jsonData) => {
+export const sendOtpAction = (jsonData, extra) => {
   LOG("SEND OTP IN ACTION" + jsonData);
   return (dispatch) => {
     dispatch({
@@ -61,13 +62,14 @@ export const sendOtpAction = (jsonData) => {
       jsonData: jsonData,
       requestUrl: HTTP.SEND_OTP_URL,
       requestType: StaticValues.sentOtp,
+      extraData: extra,
       stopSpinner: true,
-      // noAuth: true,
+      noAuth: true,
     });
   };
 };
 
-export const verifyOtpAction = (jsonData) => {
+export const verifyOtpAction = (jsonData, extra) => {
   LOG("VERIFY OTP IN ACTION" + jsonData);
   return (dispatch) => {
     dispatch({
@@ -75,6 +77,7 @@ export const verifyOtpAction = (jsonData) => {
       jsonData: jsonData,
       requestUrl: HTTP.VERIFY_OTP_URL,
       requestType: StaticValues.verifyOtp,
+      extraData: extra,
       stopSpinner: true,
       noAuth: true,
     });

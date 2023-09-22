@@ -48,10 +48,10 @@ export const AuthToken = "Bearer ";
 export const HTTP = {
   // Urls'
 
-  CREATE_ACCOUNT: ServerUrl + "signup?",
-  LOGIN_REQUEST: ServerUrl + "signin?",
-  SEND_OTP_URL: ServerUrl + "otpgenerator?",
-  VERIFY_OTP_URL: ServerUrl + "otpverifier?",
+  CREATE_ACCOUNT: ServerUrl + "signup",
+  LOGIN_REQUEST: ServerUrl + "signin",
+  SEND_OTP_URL: ServerUrl + "otpgenerator",
+  VERIFY_OTP_URL: ServerUrl + "otpverifier",
   RESET_PASSWORD_URL: ServerUrl + "auth/mobilePasswordChanged",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",

@@ -58,23 +58,32 @@ const VerifyOtp = (props) => {
   const [time, setTime] = useState(60);
   const timerRef = useRef(time);
 
+  useEffect(() => {
+    LOG("props value in verify screen :", props);
+  }, []);
+
   const verifyOnPress = () => {
-    if (pin1 && pin2 && pin3 && pin4) {
-      const validOtp = pin1 + pin2 + pin3 + pin4;
+    if (pin1 && pin2 && pin3 && pin4 && pin5 && pin6) {
+      const validOtp = pin1 + pin2 + pin3 + pin4 + pin5 + pin6;
       LOG("valid Otp :", validOtp);
 
       const verifyOtpRequest = {
         otp: validOtp,
-        mailId: email,
+        mobile_no: number,
       };
-      // dispatch(initSpinner());
-      // dispatch(verifyOtpAction(verifyOtpRequest));
 
-      if (title == "CREATE ACCOUNT") {
-        navigation.navigate("signUp", { title: title, number: number });
-      } else {
-        navigation.navigate("resetPassword", { title: "VERIFY OTP" });
-      }
+      const extraData = { title, number };
+
+      // http://hiffo.in/otpverifier?mobile_no=9585777939&otp=398019&hid=HID846719
+
+      dispatch(initSpinner());
+      dispatch(verifyOtpAction(verifyOtpRequest, extraData));
+
+      // if (title == "CREATE ACCOUNT") {
+      //   navigation.navigate("signUp", { title: title, number: number });
+      // } else {
+      //   navigation.navigate("resetPassword", { title: "VERIFY OTP" });
+      // }
     } else {
       Toast("Please enter otp");
     }

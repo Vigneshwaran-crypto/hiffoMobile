@@ -56,37 +56,30 @@ const LogIn = (props) => {
   }, [hid]);
 
   const validateFields = () => {
-    navigation.navigate("createRest");
+    // navigation.navigate("createRest");
 
     if (!email && !password) {
-      Toast("Please enter  email and password");
+      Toast("Please enter  hid and password");
     } else if (!email) {
-      Toast("Please enter your email");
+      Toast("Please enter your hid");
     } else if (!password) {
       Toast("Please enter your password");
     } else {
-      var isValidEmail = validateEmailAndPhone(email, "email");
+      // http://hiffo.in/signin?hid=HID846719&password=qwerty
 
-      if (true) {
-        // var encryptedPass = CryptoJS.MD5(password).toString();
-        // LOG("ENCRYPTED PASSWORD :", encryptedPass);
-        // var loginRequestData = {
-        //   email: email,
-        //   password: encryptedPass,
-        // };
+      const logInReq = {
+        hid: email,
+        password: password,
+      };
 
-        const req = ``;
-
-        // dispatch(initSpinner());
-        // dispatch(authenticationVerify(loginRequestData));
-        Toast("Login Successfully");
-        navigation.navigate("createRest");
-      } else {
-        Toast("Please enter valid email");
-      }
+      dispatch(initSpinner());
+      dispatch(authenticationVerify(logInReq));
+      // Toast("Login Successfully");
+      // navigation.navigate("createRest");
     }
   };
 
+  // We use forgot password component for Both uses
   const forgotPasswordClick = () => {
     navigation.navigate("forgotPassword", { title: "FORGOT PASSWORD" });
   };

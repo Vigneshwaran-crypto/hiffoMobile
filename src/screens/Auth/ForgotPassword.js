@@ -36,8 +36,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const win = Dimensions.get("window");
 
-const Dheight = Dimensions.get("window").height;
-const Dwidth = Dimensions.get("window").width;
+const { height, width } = Dimensions.get("window");
 
 const ForgotPassword = (props) => {
   const navigation = useNavigation();
@@ -53,26 +52,22 @@ const ForgotPassword = (props) => {
     if (!number) {
       Toast("Please enter your number");
     } else {
-      navigation.navigate("verifyOtp", { title: title, number: number });
-    }
-    // if (email) {
-    //   const isValidEmail = validateEmailAndPhone(email, "email");
+      // navigation.navigate("verifyOtp", { title: title, number: number });
 
-    //   if (isValidEmail) {
-    //     LOG("userEmail valid", email);
-    //     const otpRequest = {
-    //       mailId: email,
-    //     };
-    //     dispatch(initSpinner());
-    //     dispatch(sendOtpAction(otpRequest));
-    //     const storeMail = JSON.stringify(otpRequest);
-    //     storeItem("resetEmail", storeMail);
-    //   } else {
-    //     Toast("Please enter valid email");
-    //   }
-    // } else {
-    //   Toast("Please enter your email");
-    // }
+      const otpReq = `mobile_no=${number}`;
+      const extra = { title: title, number: number };
+
+      const reqModal = {
+        mobile_no: number,
+      };
+
+      const queryModal = "?" + new URLSearchParams(reqModal).toString();
+
+      LOG("Changed query Prams :", queryModal);
+
+      dispatch(initSpinner());
+      dispatch(sendOtpAction(reqModal, extra));
+    }
   };
 
   useEffect(() => {
@@ -228,8 +223,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   hiffoLogo: {
-    height: Dheight * 0.27,
-    width: Dwidth * 0.8,
+    height: height * 0.27,
+    width: width * 0.8,
     resizeMode: "contain",
     marginVertical: 10,
   },

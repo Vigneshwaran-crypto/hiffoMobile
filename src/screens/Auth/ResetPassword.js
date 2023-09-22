@@ -69,7 +69,7 @@ const ResetPassword = (props) => {
           LOG("request before send:", req);
 
           const modalReq = `username=${name}&password=${confirmPassword}&mobile_no=${number}&email=${email}`;
-          dispatch(createAccount(modalReq));
+          dispatch(createAccount(req));
         } else {
           // dispatch(initSpinner());
           // dispatch(resetPasswordAction(resetPasswordReq));

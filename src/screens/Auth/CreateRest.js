@@ -32,6 +32,7 @@ import CryptoJS from "crypto-js";
 import { authenticationVerify } from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
 import Header from "../../common/Header";
+import { HTTP } from "../../common/constants";
 
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
@@ -49,6 +50,8 @@ const CreateRest = (props) => {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
+    LOG("AUth Header In CreateRes :", HTTP.AuthHeader);
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackButtonClick
