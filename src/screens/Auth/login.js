@@ -56,7 +56,7 @@ const LogIn = (props) => {
   }, [hid]);
 
   const validateFields = () => {
-    // navigation.navigate("createRest");
+    navigation.navigate("createRest");
 
     if (!email && !password) {
       Toast("Please enter  hid and password");

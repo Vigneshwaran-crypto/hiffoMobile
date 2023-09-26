@@ -129,7 +129,7 @@ const CreateRest = (props) => {
               <TextInput
                 style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setMail}
-                placeholder={"Email"}
+                placeholder={"Street Name"}
                 placeholderTextColor={colors.grey}
                 value={email}
                 keyboardType={"ascii-capable"}
@@ -146,7 +146,7 @@ const CreateRest = (props) => {
               <TextInput
                 style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setTotalSeat}
-                placeholder={"Total seat"}
+                placeholder={"City"}
                 placeholderTextColor={colors.grey}
                 value={totalSeat}
                 keyboardType={"number-pad"}
@@ -162,7 +162,43 @@ const CreateRest = (props) => {
               <TextInput
                 style={[styles.tIStyle, { marginTop: -15 }]}
                 onChangeText={setAddress}
-                placeholder={"Address"}
+                placeholder={"District"}
+                placeholderTextColor={colors.grey}
+                value={address}
+                keyboardType={"default"}
+                multiline={true}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle, { marginTop: -15 }]}
+                onChangeText={setAddress}
+                placeholder={"State"}
+                placeholderTextColor={colors.grey}
+                value={address}
+                keyboardType={"default"}
+                multiline={true}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+              />
+            </View>
+
+            <View style={styles.passwordView}>
+              <TextInput
+                style={[styles.tIStyle, { marginTop: -15 }]}
+                onChangeText={setAddress}
+                placeholder={"Pincode"}
                 placeholderTextColor={colors.grey}
                 value={address}
                 keyboardType={"default"}

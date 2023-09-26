@@ -54,6 +54,8 @@ export const HTTP = {
   VERIFY_OTP_URL: ServerUrl + "otpverifier",
   RESET_PASSWORD_URL: ServerUrl + "auth/mobilePasswordChanged",
 
+  CREATE_RESTAURANT: ServerUrl + "createrestaurant",
+
   EDIT_PROFILE: ServerUrl + "api/editUser",
   PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload
 
