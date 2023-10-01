@@ -45,9 +45,11 @@ const CreateRest = (props) => {
   const dispatch = useDispatch();
 
   const [resName, setRestName] = useState("");
-  const [email, setMail] = useState("");
-  const [totalSeat, setTotalSeat] = useState("");
-  const [address, setAddress] = useState("");
+  const [stName, setStName] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [state, setState] = useState("");
+  const [pinCode, setPinCode] = useState("");
 
   useEffect(() => {
     LOG("AUth Header In CreateRes :", HTTP.AuthHeader);
@@ -68,20 +70,24 @@ const CreateRest = (props) => {
   };
 
   const validateFields = () => {
-    navigation.navigate("createManagement");
+    // navigation.navigate("createManagement");
 
-    // if (!resName) {
-    //   Toast("Please enter restaurant");
-    // } else if (!email) {
-    //   Toast("Please enter email");
-    // } else if (!totalSeat) {
-    //   Toast("Please enter total seat");
-    // } else if (!address) {
-    //   Toast("Please enter address");
-    // } else {
-    //   Toast("created successfully");
-    //   //   navigation.navigate("createManagement");
-    // }
+    if (!resName) {
+      Toast("Please enter restaurant name");
+    } else if (!stName) {
+      Toast("Please enter street name");
+    } else if (!city) {
+      Toast("Please enter your city");
+    } else if (!district) {
+      Toast("Please enter your district");
+    } else if (!state) {
+      Toast("Please enter your state");
+    } else if (!pinCode) {
+      Toast("Please enter your pincode");
+    } else {
+      // navigation.navigate("createManagement");
+      Toast("Restaurant Created successfully");
+    }
   };
 
   return (
@@ -112,7 +118,7 @@ const CreateRest = (props) => {
               <TextInput
                 style={styles.tIStyle}
                 onChangeText={setRestName}
-                placeholder={"Restaurant name"}
+                placeholder={"Restaurant Name"}
                 placeholderTextColor={colors.grey}
                 value={resName}
                 keyboardType={"ascii-capable"}
@@ -127,11 +133,11 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setMail}
+                style={styles.tIStyle}
+                onChangeText={setStName}
                 placeholder={"Street Name"}
                 placeholderTextColor={colors.grey}
-                value={email}
+                value={stName}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
@@ -144,12 +150,12 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setTotalSeat}
+                style={styles.tIStyle}
+                onChangeText={setCity}
                 placeholder={"City"}
+                keyboardType={"default"}
                 placeholderTextColor={colors.grey}
-                value={totalSeat}
-                keyboardType={"number-pad"}
+                value={city}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
                 autoCapitalize="none"
@@ -160,11 +166,11 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setAddress}
+                style={styles.tIStyle}
+                onChangeText={setDistrict}
                 placeholder={"District"}
                 placeholderTextColor={colors.grey}
-                value={address}
+                value={district}
                 keyboardType={"default"}
                 multiline={true}
                 underlineColorAndroid={colors.transparent}
@@ -178,11 +184,11 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setAddress}
+                style={styles.tIStyle}
+                onChangeText={setState}
                 placeholder={"State"}
                 placeholderTextColor={colors.grey}
-                value={address}
+                value={state}
                 keyboardType={"default"}
                 multiline={true}
                 underlineColorAndroid={colors.transparent}
@@ -196,12 +202,12 @@ const CreateRest = (props) => {
 
             <View style={styles.passwordView}>
               <TextInput
-                style={[styles.tIStyle, { marginTop: -15 }]}
-                onChangeText={setAddress}
+                style={styles.tIStyle}
+                onChangeText={setPinCode}
                 placeholder={"Pincode"}
                 placeholderTextColor={colors.grey}
-                value={address}
-                keyboardType={"default"}
+                value={pinCode}
+                keyboardType={"number-pad"}
                 multiline={true}
                 underlineColorAndroid={colors.transparent}
                 selectionColor={colors.baseBackground}
@@ -241,7 +247,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 5,
     fontFamily: textFontFaceLight,
-    // textAlign: "center",
+    marginTop: -10,
   },
   splashContent: {
     justifyContent: "center",
