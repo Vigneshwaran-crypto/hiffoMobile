@@ -18,6 +18,8 @@ export const StaticValues = {
   sentOtp: "sentOtp",
   verifyOtp: "verifyOtp",
   resetPassword: "resetPassword",
+  createRestaurant: "createRestaurant",
+  generateHid: "generateHid",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -55,6 +57,7 @@ export const HTTP = {
   RESET_PASSWORD_URL: ServerUrl + "auth/mobilePasswordChanged",
 
   CREATE_RESTAURANT: ServerUrl + "createrestaurant",
+  HID_GENERATOR: ServerUrl + "hidgenerator",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",
   PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload

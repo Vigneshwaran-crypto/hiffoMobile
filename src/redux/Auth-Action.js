@@ -35,7 +35,7 @@ export const createAccount = (jsonData) => {
       requestType: StaticValues.createAccount,
       noAuth: true,
       jsonData: jsonData,
-      get: true,
+      // get: true,
     });
   };
 };
@@ -77,6 +77,36 @@ export const verifyOtpAction = (jsonData, extra) => {
       jsonData: jsonData,
       requestUrl: HTTP.VERIFY_OTP_URL,
       requestType: StaticValues.verifyOtp,
+      extraData: extra,
+      stopSpinner: true,
+      noAuth: true,
+    });
+  };
+};
+
+export const generateHid = (jsonData, extra) => {
+  LOG("GENERATE_HID_IN_ACTION" + jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      jsonData: jsonData,
+      requestUrl: HTTP.HID_GENERATOR,
+      requestType: StaticValues.generateHid,
+      extraData: extra,
+      stopSpinner: true,
+      noAuth: true,
+    });
+  };
+};
+
+export const createRestaurant = (jsonData, extra) => {
+  LOG("Create_Restaurant_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      jsonData: jsonData,
+      requestUrl: HTTP.CREATE_RESTAURANT,
+      requestType: StaticValues.createRestaurant,
       extraData: extra,
       stopSpinner: true,
       noAuth: true,

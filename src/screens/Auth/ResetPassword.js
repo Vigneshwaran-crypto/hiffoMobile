@@ -43,6 +43,11 @@ const ResetPassword = (props) => {
   const name = props.route.params.name;
   const number = props.route.params.number;
   const email = props.route.params.email;
+  const hid = props.route.params.hid;
+
+  useEffect(() => {
+    LOG("props Value in resetPass :", props);
+  }, []);
 
   const confirmOnPress = () => {
     if (!newPassword) {
@@ -64,6 +69,7 @@ const ResetPassword = (props) => {
             password: confirmPassword,
             mobile_no: number,
             email: email,
+            hid: hid,
           };
 
           LOG("request before send:", req);
@@ -111,7 +117,9 @@ const ResetPassword = (props) => {
             />
 
             <Text style={styles.mediumText}>
-              {title == "SIGNUP" ? "Hi " + name : "CREATE PASSWORD"}
+              {title == "SIGNUP"
+                ? "Hi " + name + "Your HID is : " + hid
+                : "CREATE PASSWORD"}
             </Text>
             <Text style={styles.headingText}>Create your password here !</Text>
           </View>

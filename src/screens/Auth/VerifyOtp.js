@@ -78,15 +78,16 @@ const VerifyOtp = (props) => {
 
       dispatch(initSpinner());
       dispatch(verifyOtpAction(verifyOtpRequest, extraData));
-
-      // if (title == "CREATE ACCOUNT") {
-      //   navigation.navigate("signUp", { title: title, number: number });
-      // } else {
-      //   navigation.navigate("resetPassword", { title: "VERIFY OTP" });
-      // }
     } else {
       Toast("Please enter otp");
     }
+
+    // if (title == "CREATE ACCOUNT") {
+    //   // navigation.navigate("signUp", { title: title, number: number });
+    //   navigation.navigate("createManagement");
+    // } else {
+    //   // navigation.navigate("resetPassword", { title: "VERIFY OTP" });
+    // }
   };
 
   const resendOnPress = () => {

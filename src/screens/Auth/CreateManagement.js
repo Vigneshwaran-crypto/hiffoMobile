@@ -35,7 +35,8 @@ const CreateManagement = () => {
   ];
 
   const createManage = () => {
-    navigation.navigate("homeTab");
+    // navigation.navigate("homeTab");
+    navigation.navigate("createRest");
   };
 
   const renderItem = ({ item }) => {
@@ -101,8 +102,10 @@ const CreateManagement = () => {
           />
         </View>
 
-        <Animated.View style={{ opacity: fadInButton, position: "absolute",width: "100%", }}>
-          <TouchableOpacity onPress={createManage} >
+        <Animated.View
+          style={{ opacity: fadInButton, position: "absolute", width: "100%" }}
+        >
+          <TouchableOpacity onPress={createManage}>
             <LinearGradient
               colors={[colors.buttonGreen, colors.activeGreen]}
               start={{ x: 0, y: 0 }}

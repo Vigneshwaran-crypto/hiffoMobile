@@ -41,7 +41,7 @@ const LogIn = (props) => {
   const navigation = useNavigation();
   const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
-  const hid = useSelector(({ auth }) => auth.hotelId.Hid);
+  const hid = useSelector(({ auth }) => auth.hotelId);
   const route = useRoute();
   const dispatch = useDispatch();
 

@@ -29,7 +29,10 @@ import backPressHandler from "../../common/backPressHandler";
 import { LOG, validateEmailAndPhone } from "../../common/util";
 import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
-import { authenticationVerify } from "../../redux/Auth-Action";
+import {
+  authenticationVerify,
+  createRestaurant,
+} from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
 import Header from "../../common/Header";
 import { HTTP } from "../../common/constants";
@@ -72,6 +75,8 @@ const CreateRest = (props) => {
   const validateFields = () => {
     // navigation.navigate("createManagement");
 
+    // https://hiffo.in/createrestaurant?hid=HID238848&hotelname=PVR%20Mall&street_road_name=north%20street&area_city=chennai&district=chennai&state=tamilnadu&pincode=605759&token=q68395891B7L4279
+
     if (!resName) {
       Toast("Please enter restaurant name");
     } else if (!stName) {
@@ -87,6 +92,18 @@ const CreateRest = (props) => {
     } else {
       // navigation.navigate("createManagement");
       Toast("Restaurant Created successfully");
+
+      const req = {
+        // hid: HID238848,
+        hotelname: resName,
+        street_road_name: stName,
+        area_city: city,
+        district: district,
+        state: state,
+        pincode: pinCode,
+      };
+
+      dispatch(createRestaurant(req));
     }
   };
 

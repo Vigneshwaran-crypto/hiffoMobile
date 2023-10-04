@@ -14,8 +14,9 @@ import {
   StaticValues,
 } from "../common/constants";
 import { LOG, removeItem, storeItem, Toast } from "../common/util";
-import { resetStore, stopSpinner } from "./Api-Action";
+import { initSpinner, resetStore, stopSpinner } from "./Api-Action";
 import * as RootNavigation from "../Router/RootNavigation";
+import { authenticationVerify } from "./Auth-Action";
 
 const axios = require("axios").default;
 
@@ -160,7 +161,15 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "Scode0005") {
               Toast("Hiffo Id created successfully");
               const data = action.responseData.data[0];
-              RootNavigation.navigateScreen("login", { hid: data });
+              // RootNavigation.navigateScreen("login", { hid: data });
+
+              const logInReq = {
+                hid: action.requestData.hid,
+                password: action.requestData.password,
+              };
+
+              store.dispatch(initSpinner());
+              store.dispatch(authenticationVerify(logInReq));
             } else if (action.responseData.statuscode == "Scode0006") {
               Toast("Mobile number already exists");
             } else {
@@ -217,6 +226,10 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               dispatchNext = true;
               if (action.extraData.title == "CREATE ACCOUNT") {
                 RootNavigation.navigateScreen("signUp", action.extraData);
+                // RootNavigation.navigateScreen(
+                //   "createManagement",
+                //   action.extraData
+                // );
               } else {
                 navigation.navigate("resetPassword", action.extraData);
               }
@@ -237,6 +250,19 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               Toast("Please try again");
             }
 
+            break;
+
+          case StaticValues.generateHid:
+            LOG("generate_hid_in_middleware :", action);
+            RootNavigation.navigateScreen("resetPassword", {
+              ...action.extraData,
+              hid: action.responseData,
+            });
+            break;
+
+          case StaticValues.createRestaurant:
+            LOG("createRestaurant_in_middleware :", action);
+            dispatchNext = true;
             break;
 
           case GET_PROVIDER_DETAIL:

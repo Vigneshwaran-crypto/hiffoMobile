@@ -49,6 +49,8 @@ const ForgotPassword = (props) => {
   const title = props.route.params.title;
 
   const senOnPress = () => {
+    // navigation.navigate("verifyOtp", { title: title, number: number });
+
     if (!number) {
       Toast("Please enter your number");
     } else {

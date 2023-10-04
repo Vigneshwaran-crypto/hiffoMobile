@@ -29,7 +29,11 @@ import backPressHandler from "../../common/backPressHandler";
 import { LOG, validateEmailAndPhone } from "../../common/util";
 import { Toast } from "../../common/util";
 import CryptoJS from "crypto-js";
-import { authenticationVerify, createAccount } from "../../redux/Auth-Action";
+import {
+  authenticationVerify,
+  createAccount,
+  generateHid,
+} from "../../redux/Auth-Action";
 import { initSpinner } from "../../redux/Api-Action";
 import Header from "../../common/Header";
 
@@ -71,12 +75,12 @@ const SignUp = (props) => {
   };
 
   const validateFields = () => {
-    navigation.navigate("resetPassword", {
-      title: "SIGNUP",
-      name: userName,
-      email: email,
-      number: number,
-    });
+    // navigation.navigate("resetPassword", {
+    //   title: "SIGNUP",
+    //   name: userName,
+    //   email: email,
+    //   number: number,
+    // });
 
     if (!userName) {
       Toast("Please enter username");
@@ -93,13 +97,24 @@ const SignUp = (props) => {
 
       // const modalReq = `username=${userName}&password=${password}&mobile_no=${mobileNo}&email=${email}`;
 
-      // dispatch(createAccount(modalReq));
-      navigation.navigate("resetPassword", {
-        title: "SIGNUP",
-        name: userName,
-        number: number,
-        email: email,
-      });
+      dispatch(
+        generateHid(
+          {},
+          {
+            title: "SIGNUP",
+            name: userName,
+            number: number,
+            email: email,
+          }
+        )
+      );
+
+      // navigation.navigate("resetPassword", {
+      //   title: "SIGNUP",
+      //   name: userName,
+      //   number: number,
+      //   email: email,
+      // });
     }
   };
 

@@ -32,6 +32,13 @@ const reducer = (state = initialState, action) => {
         hotelId: hId,
       });
 
+    case StaticValues.generateHid:
+      LOG("generateHid_in_reducer :", action);
+
+      return Object.assign({}, state, {
+        hotelId: action.jsonData,
+      });
+
     case StaticValues.loginRequest:
       LOG("LOGIN REQUEST IN REDUCER :", action.jsonData);
       return Object.assign({}, state, {
