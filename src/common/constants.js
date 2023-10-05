@@ -44,7 +44,7 @@ export const GET_PROVIDER_DETAIL = "GET_PROVIDER_DETAIL";
 export const CUSTOM_SPINNER_ENABLE = "CUSTOM_SPINNER_ENABLE";
 export const CUSTOM_SPINNER_DISABLE = "CUSTOM_SPINNER_DISABLE";
 
-export const AuthToken = "Bearer ";
+export const AuthToken = "";
 
 //HTTP request headers and urls
 export const HTTP = {

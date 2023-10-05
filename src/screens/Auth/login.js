@@ -52,8 +52,9 @@ const LogIn = (props) => {
 
   useEffect(() => {
     LOG("hid in logIN :", hid);
-    setMail(hid);
-  }, [hid]);
+    setMail("HID880589");
+    setPassword("helto");
+  }, []);
 
   const validateFields = () => {
     navigation.navigate("createRest");

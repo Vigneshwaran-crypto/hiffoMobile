@@ -191,6 +191,12 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               var validCredential = JSON.stringify(action.requestData);
               storeItem("credential", validCredential);
 
+              // showMessage({
+              //   message: "Login Successfully",
+              //   description: "Welcome to hiffo",
+              //   animated: true,
+              //   type: "success",
+              // });
               RootNavigation.navigateScreen("createRest");
             } else {
               Toast("Incorrect credentials");

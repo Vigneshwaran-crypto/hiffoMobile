@@ -36,6 +36,7 @@ import {
 import { initSpinner } from "../../redux/Api-Action";
 import Header from "../../common/Header";
 import { HTTP } from "../../common/constants";
+import { showMessage } from "react-native-flash-message";
 
 const Dheight = Dimensions.get("window").height;
 const Dwidth = Dimensions.get("window").width;
@@ -55,7 +56,20 @@ const CreateRest = (props) => {
   const [pinCode, setPinCode] = useState("");
 
   useEffect(() => {
-    LOG("AUth Header In CreateRes :", HTTP.AuthHeader);
+    showMessage({
+      message: "Logged In Successfully",
+      description: "Welcome To HiffoDesk",
+      animated: true,
+      duration: 3000,
+      floating: true,
+      textStyle: { textAlign: "center" },
+      style: {
+        alignItems: "center",
+        backgroundColor: colors.buttonGreen,
+        elevation: 10,
+        shadowColor: colors.black,
+      },
+    });
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
