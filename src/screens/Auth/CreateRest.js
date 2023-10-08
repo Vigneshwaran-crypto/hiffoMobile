@@ -43,8 +43,9 @@ const Dwidth = Dimensions.get("window").width;
 
 const CreateRest = (props) => {
   const navigation = useNavigation();
-  const userTheme = useSelector(({ api }) => api.getTheme);
   const customSpinner = useSelector(({ api }) => api.customSpinner);
+  const hotelDetails = useSelector(({ auth }) => auth.loginResponse);
+
   const route = useRoute();
   const dispatch = useDispatch();
 
@@ -56,20 +57,16 @@ const CreateRest = (props) => {
   const [pinCode, setPinCode] = useState("");
 
   useEffect(() => {
-    showMessage({
-      message: "Logged In Successfully",
-      description: "Welcome To HiffoDesk",
-      animated: true,
-      duration: 3000,
-      floating: true,
-      textStyle: { textAlign: "center" },
-      style: {
-        alignItems: "center",
-        backgroundColor: colors.buttonGreen,
-        elevation: 10,
-        shadowColor: colors.black,
-      },
-    });
+    LOG("hid in create Rest :", hotelDetails);
+  }, [hotelDetails]);
+
+  useEffect(() => {
+    setRestName("Durga Bhavan");
+    setStName("TH Road");
+    setCity("Thiruvottiyur");
+    setDistrict("Chennai");
+    setState("Tamilnadu");
+    setPinCode("600019");
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -105,16 +102,16 @@ const CreateRest = (props) => {
       Toast("Please enter your pincode");
     } else {
       // navigation.navigate("createManagement");
-      Toast("Restaurant Created successfully");
 
       const req = {
-        // hid: HID238848,
+        hid: hotelDetails.hid,
         hotelname: resName,
         street_road_name: stName,
         area_city: city,
         district: district,
         state: state,
         pincode: pinCode,
+        token: hotelDetails.token,
       };
 
       dispatch(createRestaurant(req));

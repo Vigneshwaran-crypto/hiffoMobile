@@ -394,6 +394,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 2,
   },
+  loaderStyle: {
+    position: "absolute",
+    elevation: 10,
+    zIndex: 10,
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 150,
+  },
 });
 
 export default VerifyOtp;

@@ -17,6 +17,7 @@ import { LOG, removeItem, storeItem, Toast } from "../common/util";
 import { initSpinner, resetStore, stopSpinner } from "./Api-Action";
 import * as RootNavigation from "../Router/RootNavigation";
 import { authenticationVerify } from "./Auth-Action";
+import { colors } from "../common/colors";
 
 const axios = require("axios").default;
 
@@ -191,13 +192,25 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               var validCredential = JSON.stringify(action.requestData);
               storeItem("credential", validCredential);
 
-              // showMessage({
-              //   message: "Login Successfully",
-              //   description: "Welcome to hiffo",
-              //   animated: true,
-              //   type: "success",
-              // });
-              RootNavigation.navigateScreen("createRest");
+              showMessage({
+                message: "Logged In Successfully",
+                description: "Welcome To HiffoDesk",
+                animated: true,
+                duration: 3000,
+                floating: true,
+                textStyle: { textAlign: "center" },
+                style: {
+                  alignItems: "center",
+                  backgroundColor: colors.buttonGreen,
+                  elevation: 10,
+                  shadowColor: colors.black,
+                },
+              });
+              // RootNavigation.navigateScreen("createRest");
+              RootNavigation.navigateScreen("createManagement");
+            } else if (action.responseData.statuscode == "Scode0009") {
+              dispatchNext = true;
+              RootNavigation.navigateScreen("homeTab");
             } else {
               Toast("Incorrect credentials");
 
@@ -268,7 +281,12 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
           case StaticValues.createRestaurant:
             LOG("createRestaurant_in_middleware :", action);
-            dispatchNext = true;
+
+            if (action.responseData.statuscode == "Scode0014") {
+              Toast("Restaurant Created successfully");
+              dispatchNext = true;
+              RootNavigation.navigateScreen("homeTab");
+            }
             break;
 
           case GET_PROVIDER_DETAIL:

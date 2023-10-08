@@ -109,7 +109,6 @@ export const createRestaurant = (jsonData, extra) => {
       requestType: StaticValues.createRestaurant,
       extraData: extra,
       stopSpinner: true,
-      noAuth: true,
     });
   };
 };

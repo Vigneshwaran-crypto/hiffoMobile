@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -23,10 +23,17 @@ import {
 import orderList from "../../../../Assests/OrdereList.json";
 import LinearGradient from "react-native-linear-gradient";
 import Header from "../../../components/DefaultComponents/Header";
+import { useSelector } from "react-redux";
+import { LOG } from "../../../common/util";
 const { height, width } = Dimensions.get("window");
 
 const Orders = () => {
+  const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
   const [showAddBill, seShowAddBill] = useState(false);
+
+  useEffect(() => {
+    LOG("HOtel Details in Orders :", hotelDetails);
+  }, []);
 
   const billPlusOnPress = () => {
     seShowAddBill(true);

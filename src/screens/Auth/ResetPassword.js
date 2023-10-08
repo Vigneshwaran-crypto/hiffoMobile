@@ -118,7 +118,7 @@ const ResetPassword = (props) => {
 
             <Text style={styles.mediumText}>
               {title == "SIGNUP"
-                ? "Hi " + name + "Your HID is : " + hid
+                ? "Hi " + name + " Your HID is : " + hid
                 : "CREATE PASSWORD"}
             </Text>
             <Text style={styles.headingText}>Create your password here !</Text>

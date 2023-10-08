@@ -145,8 +145,8 @@ const ForgotPassword = (props) => {
 const styles = StyleSheet.create({
   loaderStyle: {
     alignSelf: "center",
+    marginTop: 55,
   },
-
   container: {
     flex: 1,
     backgroundColor: colors.white,

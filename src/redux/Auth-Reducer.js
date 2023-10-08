@@ -13,6 +13,8 @@ const initialState = {
   getVerifyOtpResponse: {},
   getResetPasswordResponse: {},
   hotelId: {},
+  hotelDetails: {},
+  createdRest: {},
 };
 const reducer = (state = initialState, action) => {
   LOG("<<<<== Auth Reducerr ==>>>> ");
@@ -23,11 +25,8 @@ const reducer = (state = initialState, action) => {
 
     case StaticValues.createAccount:
       LOG("create_Account_in_reducer :", action);
-
       const hId = action.jsonData[0];
-
       LOG("single hotel id :", hId);
-
       return Object.assign({}, state, {
         hotelId: hId,
       });
@@ -41,8 +40,13 @@ const reducer = (state = initialState, action) => {
 
     case StaticValues.loginRequest:
       LOG("LOGIN REQUEST IN REDUCER :", action.jsonData);
+      const token = action.jsonData[0].Token;
+      const hid = action.requestData.hid;
+      const clearData = { hid, token };
+      const allRes = action.jsonData[0];
       return Object.assign({}, state, {
-        loginResponse: action.jsonData,
+        loginResponse: clearData,
+        hotelDetails: allRes,
       });
 
     case StaticValues.sentOtp:
@@ -61,6 +65,12 @@ const reducer = (state = initialState, action) => {
       LOG("RESETPASSWORD IN REDUCER ", action);
       return Object.assign({}, state, {
         getResetPasswordResponse: action,
+      });
+
+    case StaticValues.createRestaurant:
+      LOG("createRestaurant_in_reducer :", action);
+      return Object.assign({}, state, {
+        createdRest: {},
       });
 
     case GET_PROVIDER_DETAIL:
