@@ -46,13 +46,25 @@ export const setTheme = (theme) => {
   };
 };
 
-export const getAllFoods = (jsonData) => {
+export const getAllFoods = (jsonData, extra) => {
   LOG("getAllFoods_in_action :", jsonData);
   return (dispatch) => {
     dispatch({
       type: GET_API_DATA,
-      requestType: StaticValues.getAllFoods,
+      jsonData: jsonData,
       requestUrl: HTTP.GET_ALL_FOODS,
+      requestType: StaticValues.getAllFoods,
+    });
+  };
+};
+
+export const createMenu = (jsonData) => {
+  LOG("createMenu_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.createMenu,
+      requestUrl: HTTP.CREATE_MENU,
       jsonData: jsonData,
     });
   };

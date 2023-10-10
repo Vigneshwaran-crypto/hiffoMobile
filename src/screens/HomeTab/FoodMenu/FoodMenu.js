@@ -26,6 +26,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FoodItem from "./FoodItem";
 import {
   LOG,
+  Toast,
   addFoodItems,
   addOnList,
   foodList,
@@ -34,6 +35,7 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import AddOnModalItem from "../FoodMenu/AddOnModalItem";
 import { useDispatch, useSelector } from "react-redux";
+import { createMenu, getAllFoods } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
@@ -50,13 +52,19 @@ const FoodMenu = () => {
   const [modalType, setModalType] = useState("");
   const [modalShowType, setModalShowType] = useState(false);
 
+  const [foodName, setFoodName] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [foodType, setFoodType] = useState("");
+  const [description, setDesc] = useState("");
+
   const categoryList = [
+    { id: 0, value: "+" },
     { id: 1, value: "Indian" },
     { id: 2, value: "Chinese" },
     { id: 3, value: "Italian" },
     { id: 4, value: "Sea food" },
     { id: 5, value: "Chats" },
-    { id: 6, value: "+" },
   ];
 
   useEffect(() => {
@@ -85,6 +93,38 @@ const FoodMenu = () => {
   const modalCloseOnPress = () => {
     setShowAddFood(false);
     setModalType("add");
+  };
+
+  const onCreateMenuSave = () => {
+    if (!foodName) {
+      Toast("Please enter food name");
+    } else if (!price) {
+      Toast("Please enter price");
+    } else if (!quantity) {
+      Toast("Please enter quantity");
+    } else if (!foodType) {
+      Toast("Please enter food type");
+    } else if (!description) {
+      Toast("Please enter description");
+    } else {
+      const req = {
+        hid: hotelDetails.HotelId,
+        category: categoryFocus.value,
+        foodname: foodName,
+        unit: quantity,
+        rate: price,
+        img1: "",
+        img2: "",
+        img3: "",
+        description: description,
+        displaytime: "",
+        ctype: foodType,
+        token: hotelDetails.token,
+      };
+
+      dispatch(createMenu(req));
+      setShowAddFood(false);
+    }
   };
 
   const onItemPress = (item) => {};
@@ -290,6 +330,8 @@ const FoodMenu = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
+                onChangeText={setFoodName}
+                value={foodName}
               />
               <TextInput
                 style={styles.modalInputs}
@@ -302,6 +344,8 @@ const FoodMenu = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
+                onChangeText={setPrice}
+                value={price}
               />
               <TextInput
                 style={styles.modalInputs}
@@ -314,10 +358,12 @@ const FoodMenu = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
+                onChangeText={setQuantity}
+                value={quantity}
               />
               <TextInput
                 style={styles.modalInputs}
-                placeholder={"Parcel"}
+                placeholder={"Veg or Non-veg"}
                 placeholderTextColor={colors.grey}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -326,10 +372,12 @@ const FoodMenu = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
+                onChangeText={setFoodType}
+                value={foodType}
               />
               <TextInput
                 style={styles.modalInputs}
-                placeholder={"Ratings"}
+                placeholder={"Description"}
                 placeholderTextColor={colors.grey}
                 keyboardType={"ascii-capable"}
                 underlineColorAndroid={colors.transparent}
@@ -338,18 +386,8 @@ const FoodMenu = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
-              />
-              <TextInput
-                style={styles.modalInputs}
-                placeholder={"Parameter"}
-                placeholderTextColor={colors.grey}
-                keyboardType={"ascii-capable"}
-                underlineColorAndroid={colors.transparent}
-                selectionColor={colors.baseBackground}
-                textContentType="emailAddress"
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
+                onChangeText={setDesc}
+                value={description}
               />
 
               <View style={styles.modalBottomButtonsView}>
@@ -367,7 +405,10 @@ const FoodMenu = () => {
                   </LinearGradient>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.modalBottomButtons}>
+                <TouchableOpacity
+                  style={styles.modalBottomButtons}
+                  onPress={onCreateMenuSave}
+                >
                   <LinearGradient
                     colors={[colors.buttonGreen, colors.activeGreen]}
                     start={{ x: 0, y: 0 }}

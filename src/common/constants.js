@@ -22,6 +22,7 @@ export const StaticValues = {
   generateHid: "generateHid",
 
   getAllFoods: "getAllFoods",
+  createMenu: "createMenu",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -60,10 +61,11 @@ export const HTTP = {
 
   CREATE_RESTAURANT: ServerUrl + "createrestaurant",
   HID_GENERATOR: ServerUrl + "hidgenerator",
+  GET_ALL_FOODS: ServerUrl + "foodfetcher",
+  CREATE_MENU: ServerUrl + "createmenu",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",
   PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload
-  GET_ALL_FOODS: ServerUrl + "foodfetcher",
 
   // Header For Api Call Without Authorization.
   HEADERS: {

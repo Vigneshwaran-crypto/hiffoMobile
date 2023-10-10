@@ -289,6 +289,21 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             }
             break;
 
+          case StaticValues.getAllFoods:
+            LOG("getAllFoods_in_middleware :", action);
+            dispatchNext = true;
+            break;
+
+          case StaticValues.createMenu:
+            LOG("createMenu_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0017") {
+              dispatchNext = true;
+              Toast("Food Created Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
           case GET_PROVIDER_DETAIL:
             console.log(
               "************* INSIDE MIDDLEWARE GET_PROVIDER_DETAIL13 *********************"
