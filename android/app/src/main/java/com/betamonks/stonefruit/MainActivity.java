@@ -1,4 +1,4 @@
-package com.betamonks.stonefruit;
+package com.neby.hiffodesk;
 
 import com.facebook.react.ReactActivity;
 

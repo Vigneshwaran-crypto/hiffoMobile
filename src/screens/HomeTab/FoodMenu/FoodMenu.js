@@ -33,10 +33,13 @@ import {
 } from "../../../common/util";
 import LinearGradient from "react-native-linear-gradient";
 import AddOnModalItem from "../FoodMenu/AddOnModalItem";
+import { useDispatch, useSelector } from "react-redux";
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
 
   const [categoryFocus, setCategoryFocus] = useState({
     id: 1,
@@ -58,8 +61,17 @@ const FoodMenu = () => {
 
   useEffect(() => {
     const ratio = PixelRatio.get();
-    LOG("screen width in fMenu :", scrWidth);
-  }, []);
+    LOG("hotelDetails in fMenu :", hotelDetails);
+
+    if (hotelDetails.token) {
+      const req = {
+        hid: hotelDetails.HotelId,
+        token: hotelDetails.token,
+      };
+
+      dispatch(getAllFoods(req));
+    }
+  }, [hotelDetails]);
 
   const topTabOnPress = (param) => {
     setActiveTab(param);

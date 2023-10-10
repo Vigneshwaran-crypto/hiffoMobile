@@ -20,10 +20,8 @@ const initialState = {
   getProfileData: [],
   getProfileImageData: "",
   getAllFormData: [],
-  getUserFarmData: [],
   getViewFarmData: [],
   getUpdatedFarmData: [],
-  getFarmCheckListForms: [],
   savedDropDownOption: {},
   notificationList: [],
 };
@@ -32,7 +30,6 @@ const initialState = {
 const Reducers = (state = initialState, action) => {
   LOG("<<<<== APP API REDUCER ==>>>> ");
   LOG("Action Type: " + action.type);
-  // LOG('Action State: ' + state);
   switch (action.type) {
     case RECEIVED_API_DATA:
       LOG("RECEIVED API DATA");
@@ -81,83 +78,10 @@ const Reducers = (state = initialState, action) => {
         getTheme: action.jsonData,
       });
 
-    case StaticValues.editProfile:
-      LOG("EDIT PROFILE IN REDUCER :", action.jsonData);
-      return Object.assign({}, state, {
-        getProfileData: action.jsonData,
-      });
-
-    // case StaticValues.profilePhotoUpload:
-    //   LOG("PROFILE PHOTO UPLOAD IN REDUCER :", action.jsonData);
-    //   return Object.assign({}, state, {
-    //     getProfileImageData: action.jsonData,
-    //   });
-
-    case StaticValues.getAllFormmaster:
-      LOG("getAllFormmaster :", action.jsonData);
-      if (action.jsonData.formMasterList) {
-        return Object.assign({}, state, {
-          getAllFormData: action.jsonData.formMasterList,
-        });
-      } else {
-        return state;
-      }
-
-    case StaticValues.addFormData:
-      LOG("ADD FARM DATA IN REDUCER :", action);
-      return Object.assign({}, state, {
-        getUserFarmData: action.jsonData,
-      });
-      break;
-
     case StaticValues.viewFarmData:
       LOG("VIEW USER FARM DATA IN REDUCER ", action);
       return Object.assign({}, state, {
         getViewFarmData: action.jsonData.farmdata,
-      });
-
-    case StaticValues.updateFarmData:
-      LOG("UPDATED FARM IN REDUCER", action.jsonData);
-      return Object.assign({}, state, {
-        getViewFarmData: action.jsonData,
-      });
-
-    case StaticValues.farmCheckListForms:
-      LOG("FARM CHECK lIST FORM IN REDUCER :", action);
-      return Object.assign({}, state, {
-        getFarmCheckListForms: action.jsonData,
-      });
-
-    case StaticValues.dropDownSaveOptions:
-      LOG("dropDownSaveOptions in REDUCER :", action.jsonData);
-      LOG("view all farm data in dropDown Reducer :", getAllFormData);
-      return Object.assign({}, state, {
-        savedDropDownOption: action.jsonData,
-      });
-
-    case StaticValues.getNotifications:
-      LOG("Get_notifications_in_reducer :", action);
-      return Object.assign({}, state, {
-        notificationList: action.jsonData.notificationList,
-      });
-
-    case StaticValues.deleteNotification:
-      LOG("delete_notifications_in_reducer :", action);
-
-      const delNotifyId = action.requestData.notifyid;
-      LOG("notify delete uniq id :", delNotifyId);
-
-      const prevNotifyList = state.notificationList;
-      LOG("previous Notification List :", prevNotifyList);
-
-      const newNotifyList = prevNotifyList.filter((itm, ind) => {
-        return itm.id != delNotifyId;
-      });
-
-      LOG("changed New notifyList List", newNotifyList);
-
-      return Object.assign({}, state, {
-        notificationList: newNotifyList,
       });
 
     default:

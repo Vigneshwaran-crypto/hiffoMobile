@@ -1,4 +1,4 @@
-package com.betamonks.stonefruit;
+package com.neby.hiffodesk;
 
 import android.app.Application;
 import android.content.Context;
