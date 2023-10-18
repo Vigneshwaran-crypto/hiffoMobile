@@ -48,8 +48,8 @@ const LogIn = (props) => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    setMail("HID880589");
-    setPassword("helto");
+    setMail("HID366375");
+    setPassword("12345");
   }, []);
 
   const validateFields = () => {
@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 2,
     elevation: 5,
+    marginTop: 55,
   },
   loaderStyle: {
     alignSelf: "center",

@@ -17,13 +17,8 @@ const initialState = {
   apiError: false,
   customSpinner: false,
   getTheme: false,
-  getProfileData: [],
-  getProfileImageData: "",
-  getAllFormData: [],
-  getViewFarmData: [],
-  getUpdatedFarmData: [],
-  savedDropDownOption: {},
-  notificationList: [],
+
+  allFoods: [],
 };
 
 //API-REDUCER NETWORK CALLS WILL BE HANDLED HERE
@@ -78,10 +73,21 @@ const Reducers = (state = initialState, action) => {
         getTheme: action.jsonData,
       });
 
-    case StaticValues.viewFarmData:
-      LOG("VIEW USER FARM DATA IN REDUCER ", action);
+    case StaticValues.getAllFoods:
+      LOG("getAllFoods_in_reducer :", action);
       return Object.assign({}, state, {
-        getViewFarmData: action.jsonData.farmdata,
+        allFoods: action.jsonData,
+      });
+
+    case StaticValues.createMenu:
+      LOG("createMenu_in_reducer :", action);
+      let currentFoods = state.allFoods;
+      const addedFood = action.jsonData[0];
+
+      const reqData = action.requestData;
+      currentFoods.push(reqData);
+      return Object.assign({}, state, {
+        allFoods: currentFoods,
       });
 
     default:

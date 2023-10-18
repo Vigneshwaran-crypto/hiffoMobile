@@ -65,9 +65,9 @@ const ResetPassword = (props) => {
 
         if (title == "SIGNUP") {
           const req = {
-            username: name,
+            userName: name,
             password: confirmPassword,
-            mobile_no: number,
+            mobileNo: number,
             email: email,
             hid: hid,
           };

@@ -40,15 +40,15 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
       onPress={onFoodItemPress.bind(this, item)}
     >
       <View style={styles.itemImageView}>
-        <Image style={styles.foodItemImage} source={item.imagePath} />
+        {/* <Image style={styles.foodItemImage} source={item.imagePath} /> */}
       </View>
 
       <View style={styles.foodItemTexts}>
-        <Text style={styles.foodName}>{item.name}</Text>
-        <Text style={styles.foodItemQuantity}>{item.quantity}</Text>
+        <Text style={styles.foodName}>{item.foodName}</Text>
+        <Text style={styles.foodItemQuantity}>{item.unit}</Text>
 
         <View style={styles.foodItemPriceView}>
-          <Text style={styles.foodItemPrice}>{item.price}</Text>
+          <Text style={styles.foodItemPrice}>{item.rate}</Text>
 
           {/* <ScrollView style={{ borderWidth: 1 }} horizontal={true}> */}
           <View style={styles.addFoodQuantityView}>

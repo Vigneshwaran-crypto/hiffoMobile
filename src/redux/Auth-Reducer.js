@@ -39,8 +39,8 @@ const reducer = (state = initialState, action) => {
       });
 
     case StaticValues.loginRequest:
-      LOG("LOGIN REQUEST IN REDUCER :", action.jsonData);
-      const token = action.jsonData[0].Token;
+      LOG("LOGIN REQUEST IN REDUCER :", action);
+      const token = action.jsonData[0].token;
       const hid = action.requestData.hid;
       const clearData = { hid, token };
       const allRes = action.jsonData[0];

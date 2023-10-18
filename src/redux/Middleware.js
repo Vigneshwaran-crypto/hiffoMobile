@@ -184,7 +184,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "Scode0010") {
               LOG("AUTHENTICATION PASSED");
               dispatchNext = true;
-              const token = action.responseData.data[0].Token;
+              const token = action.responseData.data[0].token;
 
               HTTP.AuthHeader.Authorization = token;
               HTTP.FormDataHeader.Authorization = token;
@@ -228,7 +228,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "scode0001") {
               Toast("OTP sent successfully");
 
-              const otp = action.responseData.data[0].Otp.toString();
+              const otp = action.responseData.data[0].otp.toString();
               Toast(`Yout OTP IS : ${otp}`);
               RootNavigation.navigateScreen("verifyOtp", action.extraData);
               dispatchNext = true;
@@ -291,7 +291,12 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
           case StaticValues.getAllFoods:
             LOG("getAllFoods_in_middleware :", action);
-            dispatchNext = true;
+
+            if (action.responseData.statuscode == "Scode0059") {
+              dispatchNext = true;
+            } else {
+              Toast("Something went wrong");
+            }
             break;
 
           case StaticValues.createMenu:

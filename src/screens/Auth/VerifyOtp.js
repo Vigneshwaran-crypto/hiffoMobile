@@ -69,7 +69,7 @@ const VerifyOtp = (props) => {
 
       const verifyOtpRequest = {
         otp: validOtp,
-        mobile_no: number,
+        mobileNo: number,
       };
 
       const extraData = { title, number };

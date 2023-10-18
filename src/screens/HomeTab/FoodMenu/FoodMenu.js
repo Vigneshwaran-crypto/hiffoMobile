@@ -42,6 +42,7 @@ const FoodMenu = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
+  const allFoods = useSelector(({ api }) => api.allFoods);
 
   const [categoryFocus, setCategoryFocus] = useState({
     id: 1,
@@ -73,13 +74,17 @@ const FoodMenu = () => {
 
     if (hotelDetails.token) {
       const req = {
-        hid: hotelDetails.HotelId,
+        hid: hotelDetails.hotelId,
         token: hotelDetails.token,
       };
 
       dispatch(getAllFoods(req));
     }
   }, [hotelDetails]);
+
+  useEffect(() => {
+    LOG("All foods in food menu :", allFoods);
+  }, [allFoods]);
 
   const topTabOnPress = (param) => {
     setActiveTab(param);
@@ -108,17 +113,17 @@ const FoodMenu = () => {
       Toast("Please enter description");
     } else {
       const req = {
-        hid: hotelDetails.HotelId,
+        hid: hotelDetails.hotelId,
         category: categoryFocus.value,
-        foodname: foodName,
+        foodName: foodName,
         unit: quantity,
         rate: price,
         img1: "",
         img2: "",
         img3: "",
         description: description,
-        displaytime: "",
-        ctype: foodType,
+        displayTime: "",
+        cType: foodType,
         token: hotelDetails.token,
       };
 
@@ -265,12 +270,18 @@ const FoodMenu = () => {
           <View style={styles.foodFlatListView}>
             {/* Food List flatList */}
             <FlatList
-              data={activeTab == 0 ? foodList : addOnList}
+              // data={activeTab == 0 ? foodList : addOnList}
+              data={activeTab == 0 ? allFoods : allFoods}
               renderItem={foodItemRenderer}
               keyExtractor={(itm, ind) => ind}
               style={styles.foodFlatList}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.foodFlatList}
+              ListEmptyComponent={
+                <Text style={styles.noItemsIndicatorText}>
+                  No Foods To Show
+                </Text>
+              }
             />
           </View>
 
@@ -297,6 +308,7 @@ const FoodMenu = () => {
         </View>
       </View>
 
+      {/* Add Food Modal */}
       <Modal visible={showAddFood} animationType="slide" transparent={true}>
         <TouchableOpacity
           style={styles.modalParent}
@@ -503,6 +515,11 @@ const styles = StyleSheet.create({
   },
   foodFlatList: {
     paddingBottom: 160,
+  },
+  noItemsIndicatorText: {
+    alignSelf: "center",
+    fontFamily: textFontFaceLight,
+    fontSize: 13,
   },
   bottomButtonsView: {
     position: "absolute",

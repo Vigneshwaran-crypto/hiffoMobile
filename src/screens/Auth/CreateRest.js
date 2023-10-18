@@ -105,12 +105,12 @@ const CreateRest = (props) => {
 
       const req = {
         hid: hotelDetails.hid,
-        hotelname: resName,
-        street_road_name: stName,
-        area_city: city,
+        hotelName: resName,
+        streetRoadName: stName,
+        areaCity: city,
         district: district,
         state: state,
-        pincode: pinCode,
+        pinCode: pinCode,
         token: hotelDetails.token,
       };
 

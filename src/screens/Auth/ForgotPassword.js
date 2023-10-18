@@ -60,7 +60,7 @@ const ForgotPassword = (props) => {
       const extra = { title: title, number: number };
 
       const reqModal = {
-        mobile_no: number,
+        mobileNo: number,
       };
 
       const queryModal = "?" + new URLSearchParams(reqModal).toString();

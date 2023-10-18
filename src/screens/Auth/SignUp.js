@@ -90,8 +90,8 @@ const SignUp = (props) => {
       // Toast("created successfully");
 
       const req = {
-        username: userName,
-        mobile_no: number,
+        userName: userName,
+        mobileNo: number,
         email: email,
       };
 
