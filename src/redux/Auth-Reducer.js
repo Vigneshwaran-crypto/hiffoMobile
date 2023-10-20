@@ -43,7 +43,11 @@ const reducer = (state = initialState, action) => {
       const token = action.jsonData[0].token;
       const hid = action.requestData.hid;
       const clearData = { hid, token };
-      const allRes = action.jsonData[0];
+      let allRes = action.jsonData[0];
+
+      allRes.hotelId = hid;
+      allRes.token = token;
+
       return Object.assign({}, state, {
         loginResponse: clearData,
         hotelDetails: allRes,

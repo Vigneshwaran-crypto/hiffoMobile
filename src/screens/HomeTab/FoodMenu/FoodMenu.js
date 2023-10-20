@@ -273,7 +273,8 @@ const FoodMenu = () => {
               // data={activeTab == 0 ? foodList : addOnList}
               data={activeTab == 0 ? allFoods : allFoods}
               renderItem={foodItemRenderer}
-              keyExtractor={(itm, ind) => ind}
+              keyExtractor={({ item, index }) => index}
+              key={({ item, index }) => index}
               style={styles.foodFlatList}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.foodFlatList}

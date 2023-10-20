@@ -82,10 +82,9 @@ const Reducers = (state = initialState, action) => {
     case StaticValues.createMenu:
       LOG("createMenu_in_reducer :", action);
       let currentFoods = state.allFoods;
-      const addedFood = action.jsonData[0];
-
       const reqData = action.requestData;
       currentFoods.push(reqData);
+      LOG("food after added :", currentFoods);
       return Object.assign({}, state, {
         allFoods: currentFoods,
       });
