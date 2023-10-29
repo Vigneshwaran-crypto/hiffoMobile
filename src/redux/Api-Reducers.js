@@ -76,18 +76,54 @@ const Reducers = (state = initialState, action) => {
     case StaticValues.getAllFoods:
       LOG("getAllFoods_in_reducer :", action);
       return Object.assign({}, state, {
-        allFoods: action.jsonData,
+        allFoods: action.jsonData.indian,
       });
 
     case StaticValues.createMenu:
       LOG("createMenu_in_reducer :", action);
       let currentFoods = state.allFoods;
-      const reqData = action.requestData;
-      currentFoods.push(reqData);
+      const addedFood = action.jsonData;
+      const allFood = currentFoods.concat(addedFood);
       LOG("food after added :", currentFoods);
       return Object.assign({}, state, {
-        allFoods: currentFoods,
+        allFoods: allFood,
       });
+
+    case StaticValues.editMenu:
+      LOG("editMenu_in_reducer :", action);
+      let nonEditedFood = state.allFoods;
+      const editedFood = action.jsonData[0];
+
+      const afterEdited = nonEditedFood.map((item) => {
+        if (item.foodId == editedFood.foodId) {
+          return Object.assign(item, editedFood);
+        } else {
+          return item;
+        }
+      });
+
+      return Object.assign({}, state, {
+        allFoods: afterEdited,
+      });
+
+    case StaticValues.deleteFood:
+      LOG("deleteFood_in_reducer :", action);
+      const foodData = action.requestData;
+      let prevFoodList = state.allFoods;
+      const newFoodList = prevFoodList.filter((itm) => {
+        return foodData.foodId != itm.foodId;
+      });
+      return Object.assign({}, state, {
+        allFoods: newFoodList,
+      });
+
+    case StaticValues.createAddOn:
+      LOG("createAddOn_in_reducer :", action);
+      return Object.assign({}, state, {});
+
+    case StaticValues.deleteAddOn:
+      LOG("deleteAddOn_in_reducer :", action);
+      return Object.assign({}, state, {});
 
     default:
       LOG("APP API REDUCER Default");

@@ -190,6 +190,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               HTTP.FormDataHeader.Authorization = token;
 
               var validCredential = JSON.stringify(action.requestData);
+              LOG("user Data before save :", validCredential);
               storeItem("credential", validCredential);
 
               showMessage({
@@ -304,6 +305,46 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "Scode0017") {
               dispatchNext = true;
               Toast("Food Created Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
+          case StaticValues.editMenu:
+            LOG("editMenu_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0050") {
+              dispatchNext = true;
+              Toast("Food Changed Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
+          case StaticValues.deleteFood:
+            LOG("deleteFood_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0045") {
+              dispatchNext = true;
+              Toast("Food Deleted Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
+          case StaticValues.createAddOn:
+            LOG("createAddOn_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0038") {
+              dispatchNext = true;
+              Toast("AddOn Created Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
+          case StaticValues.deleteAddOn:
+            LOG("deleteAddOn_in_middleware :", action);
+            if (action.responseData.statuscode == "") {
+              dispatchNext = true;
+              Toast("AddOn Deleted Successfully");
             } else {
               Toast("Please Try Again");
             }

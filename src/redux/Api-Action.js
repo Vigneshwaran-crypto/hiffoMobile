@@ -69,3 +69,50 @@ export const createMenu = (jsonData) => {
     });
   };
 };
+
+export const editMenu = (jsonData) => {
+  LOG("editMenu_in_Action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.editMenu,
+      requestUrl: HTTP.EDIT_MENU,
+      jsonData: jsonData,
+    });
+  };
+};
+
+export const deleteMenu = (jsonData) => {
+  LOG("deleteMenu_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.deleteFood,
+      requestUrl: HTTP.DELETE_MENU,
+      jsonData: jsonData,
+    });
+  };
+};
+
+export const createAddOn = (jsonData) => {
+  LOG("createAddOn_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.createAddOn,
+      requestUrl: HTTP.CREATE_ADD_ON,
+      jsonData: jsonData,
+    });
+  };
+};
+export const deleteAddOn = (jsonData) => {
+  LOG("deleteAddOn_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.deleteAddOn,
+      requestUrl: HTTP.DELETE_ADD_ON,
+      jsonData: jsonData,
+    });
+  };
+};

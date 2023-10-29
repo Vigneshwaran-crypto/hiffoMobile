@@ -261,3 +261,12 @@ export const addFoodItems = [
   require("../../Assests/images/meals.jpg"),
   require("../../Assests/images/chapati.jpg"),
 ];
+
+export const categoryList = [
+  { id: 0, value: "+" },
+  { id: 1, value: "Indian" },
+  { id: 2, value: "Chinese" },
+  { id: 3, value: "Italian" },
+  { id: 4, value: "Sea food" },
+  { id: 5, value: "Chats" },
+];

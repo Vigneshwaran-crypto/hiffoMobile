@@ -29,13 +29,19 @@ import {
   Toast,
   addFoodItems,
   addOnList,
+  categoryList,
   foodList,
   scrWidth,
 } from "../../../common/util";
 import LinearGradient from "react-native-linear-gradient";
 import AddOnModalItem from "../FoodMenu/AddOnModalItem";
 import { useDispatch, useSelector } from "react-redux";
-import { createMenu, getAllFoods } from "../../../redux/Api-Action";
+import {
+  createAddOn,
+  createMenu,
+  editMenu,
+  getAllFoods,
+} from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
@@ -49,9 +55,11 @@ const FoodMenu = () => {
     value: "Indian",
   });
   const [activeTab, setActiveTab] = useState(0);
-  const [showAddFood, setShowAddFood] = useState(false);
+  const [showFoodModal, setShowFoodModal] = useState("");
   const [modalType, setModalType] = useState("");
-  const [modalShowType, setModalShowType] = useState(false);
+
+  // 0 for addMenu , 1 for EditMenu , 2 for AddAddOn , 3 for editAddOn
+  let modalNeed = useRef(null).current;
 
   const [foodName, setFoodName] = useState("");
   const [price, setPrice] = useState("");
@@ -59,16 +67,21 @@ const FoodMenu = () => {
   const [foodType, setFoodType] = useState("");
   const [description, setDesc] = useState("");
 
-  const categoryList = [
-    { id: 0, value: "+" },
-    { id: 1, value: "Indian" },
-    { id: 2, value: "Chinese" },
-    { id: 3, value: "Italian" },
-    { id: 4, value: "Sea food" },
-    { id: 5, value: "Chats" },
-  ];
+  const [foodItem, setFoodItem] = useState({});
+
+  let foodId = useRef(0);
+
+  const foodModalTitle =
+    showFoodModal == "af"
+      ? "Add Food"
+      : showFoodModal == "ef"
+      ? "Edit Food"
+      : showFoodModal == "aa"
+      ? "Add AddOn"
+      : "Edit AddOn";
 
   useEffect(() => {
+    LOG("modal need :" + modalNeed);
     const ratio = PixelRatio.get();
     LOG("hotelDetails in fMenu :", hotelDetails);
 
@@ -84,20 +97,28 @@ const FoodMenu = () => {
 
   useEffect(() => {
     LOG("All foods in food menu :", allFoods);
+    setFoodName("Dosa");
+    setPrice("20");
+    setQuantity("5");
+    setFoodType("veg");
+    setDesc("Nice food ever");
   }, [allFoods]);
 
   const topTabOnPress = (param) => {
     setActiveTab(param);
   };
 
+  //af means addFood , ef means edit food , aa means addAddOn , ea means editAddOn
   const onFloatingAddPress = () => {
-    setShowAddFood(true);
-    setModalType("add");
+    if (activeTab == 0) {
+      setShowFoodModal("af");
+    } else {
+      setShowFoodModal("aa");
+    }
   };
 
   const modalCloseOnPress = () => {
-    setShowAddFood(false);
-    setModalType("add");
+    setShowFoodModal("");
   };
 
   const onCreateMenuSave = () => {
@@ -112,27 +133,86 @@ const FoodMenu = () => {
     } else if (!description) {
       Toast("Please enter description");
     } else {
-      const req = {
-        hid: hotelDetails.hotelId,
-        category: categoryFocus.value,
-        foodName: foodName,
-        unit: quantity,
-        rate: price,
-        img1: "",
-        img2: "",
-        img3: "",
-        description: description,
-        displayTime: "",
-        cType: foodType,
-        token: hotelDetails.token,
-      };
-
-      dispatch(createMenu(req));
-      setShowAddFood(false);
+      //Add Food menu
+      if (activeTab == 0) {
+        if (showFoodModal == "af") {
+          const req = {
+            hid: hotelDetails.hotelId,
+            category: categoryFocus.value,
+            foodName: foodName,
+            unit: quantity,
+            rate: price,
+            img1: "",
+            img2: "",
+            img3: "",
+            description: description,
+            displayTime: "",
+            cType: foodType,
+            token: hotelDetails.token,
+          };
+          dispatch(createMenu(req));
+        } else {
+          const req = {
+            hid: hotelDetails.hotelId,
+            foodId: foodId.current,
+            category: categoryFocus.value,
+            foodName: foodName,
+            unit: quantity,
+            rate: price,
+            description: description,
+            displayTime: "",
+            cType: foodType,
+            token: hotelDetails.token,
+          };
+          dispatch(editMenu(req));
+        }
+      } else {
+        //Add AddOn
+        if (showFoodModal == "aa") {
+          const req = {
+            hid: hotelDetails.hotelId,
+            category: categoryFocus.value,
+            foodName: foodName,
+            unit: quantity,
+            rate: price,
+            img1: "",
+            img2: "",
+            img3: "",
+            description: description,
+            displayTime: "",
+            cType: foodType,
+            token: hotelDetails.token,
+          };
+          dispatch(createAddOn(req));
+        } else {
+        }
+      }
     }
+
+    setShowFoodModal(""); // for closing the modal after done operation
   };
 
-  const onItemPress = (item) => {};
+  const onItemPress = (item) => {
+    LOG("onItemPress Item :", item);
+  };
+
+  const onEditPress = (item) => {
+    LOG("editOnPress Item :", item);
+    if (activeTab == 0) {
+      setShowFoodModal("ef"); //edit food menu
+    } else {
+      setShowFoodModal("ea"); // edit add On
+    }
+
+    setFoodName(item.foodName);
+    setPrice(item.rate);
+    setQuantity(item.unit);
+    setFoodType(item.cType);
+    setDesc(item.description);
+
+    // setFoodItem(item)
+    foodId.current = item.foodId;
+  };
 
   const foodCategoryRender = ({ item, index }) => {
     return (
@@ -184,6 +264,7 @@ const FoodMenu = () => {
         index={index}
         activeTab={activeTab}
         onItemPress={onItemPress}
+        editOnPress={onEditPress}
       />
     );
   };
@@ -273,8 +354,8 @@ const FoodMenu = () => {
               // data={activeTab == 0 ? foodList : addOnList}
               data={activeTab == 0 ? allFoods : allFoods}
               renderItem={foodItemRenderer}
-              keyExtractor={({ item, index }) => index}
-              key={({ item, index }) => index}
+              keyExtractor={(item, index) => index}
+              key={({ item }) => item.foodId}
               style={styles.foodFlatList}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.foodFlatList}
@@ -310,17 +391,19 @@ const FoodMenu = () => {
       </View>
 
       {/* Add Food Modal */}
-      <Modal visible={showAddFood} animationType="slide" transparent={true}>
+      <Modal
+        visible={showFoodModal.length != 0 ? true : false}
+        animationType="slide"
+        transparent={true}
+      >
         <TouchableOpacity
           style={styles.modalParent}
           activeOpacity={1}
-          onPress={() => setShowAddFood(false)}
+          onPress={() => setShowFoodModal("")}
         >
           <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
             <View style={styles.modalWholeView}>
-              <Text style={styles.modalTopicText}>
-                {activeTab == 0 ? "Add Food Menu" : " Add Addons"}
-              </Text>
+              <Text style={styles.modalTopicText}>{foodModalTitle}</Text>
 
               <View style={styles.addFoodListView}>
                 <FlatList

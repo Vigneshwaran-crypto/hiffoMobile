@@ -20,9 +20,15 @@ import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
+import { LOG } from "../../../common/util";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteMenu } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
-const FoodItem = ({ item, index, activeTab, onItemPress }) => {
+const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
+  const dispatch = useDispatch();
+  const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
+
   const navigation = useNavigation();
   const onFoodItemPress = (item) => {
     onItemPress(item);
@@ -30,6 +36,21 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
 
   const onLinkPress = () => {
     navigation.navigate("linkAddOn");
+  };
+
+  const itemDeleteOnPress = (itm) => {
+    LOG("item gonna be deleted clicked :", itm);
+    const req = {
+      hid: hotelDetails.hotelId,
+      token: hotelDetails.token,
+      foodId: itm.foodId,
+    };
+
+    dispatch(deleteMenu(req));
+  };
+
+  const onEditPress = (item) => {
+    editOnPress(item);
   };
 
   return (
@@ -63,7 +84,10 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
               </LinearGradient>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.itemAddButton}>
+            <TouchableOpacity
+              style={styles.itemAddButton}
+              onPress={onEditPress.bind(this, item)}
+            >
               <LinearGradient
                 colors={[colors.buttonGreen, colors.activeGreen]}
                 start={{ x: 0, y: 0 }}
@@ -100,7 +124,10 @@ const FoodItem = ({ item, index, activeTab, onItemPress }) => {
               <EnTypo name="link" size={19} color={colors.mildBg} />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.itemRoundButton}>
+            <TouchableOpacity
+              style={styles.itemRoundButton}
+              onPress={itemDeleteOnPress.bind(this, item)}
+            >
               <Feather name="trash-2" size={19} color={colors.mildBg} />
             </TouchableOpacity>
           </View>

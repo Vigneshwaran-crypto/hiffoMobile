@@ -23,6 +23,11 @@ export const StaticValues = {
 
   getAllFoods: "getAllFoods",
   createMenu: "createMenu",
+  editMenu: "editMenu",
+  deleteFood: "deleteFood",
+  createAddOn: "createAddOn",
+  editAddOn: "editAddOn",
+  deleteAddOn: "deleteAddOn",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -63,6 +68,11 @@ export const HTTP = {
   HID_GENERATOR: ServerUrl + "hidgenerator",
   GET_ALL_FOODS: ServerUrl + "foodfetcher",
   CREATE_MENU: ServerUrl + "createmenu",
+  EDIT_MENU: ServerUrl + "editfoodmenu",
+  DELETE_MENU: ServerUrl + "deletefooditem",
+  CREATE_ADD_ON: ServerUrl + "createaddonsitem",
+  EDIT_ADD_ON: ServerUrl + "editfoodaddons",
+  DELETE_ADD_ON: ServerUrl + "deletefoodaddons",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",
   PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload
