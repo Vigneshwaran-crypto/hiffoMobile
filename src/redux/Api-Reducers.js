@@ -76,17 +76,28 @@ const Reducers = (state = initialState, action) => {
     case StaticValues.getAllFoods:
       LOG("getAllFoods_in_reducer :", action);
       return Object.assign({}, state, {
-        allFoods: action.jsonData.indian,
+        allFoods: action.jsonData,
       });
 
     case StaticValues.createMenu:
       LOG("createMenu_in_reducer :", action);
       let currentFoods = state.allFoods;
-      const addedFood = action.jsonData;
-      const allFood = currentFoods.concat(addedFood);
-      LOG("food after added :", currentFoods);
+      const addedFood = action.jsonData[0];
+
+      //Your an legend in coding by
+      const addedFoodByCategory = currentFoods[addedFood.category].concat([
+        addedFood,
+      ]);
+
+      currentFoods[addedFood.category] = addedFoodByCategory;
+      // currentFoods[addedFood.category] = Object.assign({}, addedFoodByCategory);
+
+      LOG("your added food by category :", currentFoods);
+
+      const properAddedFood = currentFoods;
+
       return Object.assign({}, state, {
-        allFoods: allFood,
+        allFoods: properAddedFood,
       });
 
     case StaticValues.editMenu:
@@ -94,16 +105,29 @@ const Reducers = (state = initialState, action) => {
       let nonEditedFood = state.allFoods;
       const editedFood = action.jsonData[0];
 
-      const afterEdited = nonEditedFood.map((item) => {
-        if (item.foodId == editedFood.foodId) {
-          return Object.assign(item, editedFood);
-        } else {
-          return item;
+      LOG(
+        "changed data list according the category :",
+        nonEditedFood[editedFood.category]
+      );
+
+      const editedFoodByCategory = nonEditedFood[editedFood.category].map(
+        (item) => {
+          if (item.foodId == editedFood.foodId) {
+            return Object.assign(item, editedFood);
+          } else {
+            return item;
+          }
         }
-      });
+      );
+
+      nonEditedFood[editedFood.category] = editedFoodByCategory;
+
+      LOG("edited Food by category :", editedFoodByCategory);
+
+      const properEditedFood = nonEditedFood;
 
       return Object.assign({}, state, {
-        allFoods: afterEdited,
+        allFoods: properEditedFood,
       });
 
     case StaticValues.deleteFood:

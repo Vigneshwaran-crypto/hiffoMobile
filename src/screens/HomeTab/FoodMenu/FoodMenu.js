@@ -50,6 +50,8 @@ const FoodMenu = () => {
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
   const allFoods = useSelector(({ api }) => api.allFoods);
 
+  const [wholeFood, setWholeFood] = useState([]);
+
   const [categoryFocus, setCategoryFocus] = useState({
     id: 1,
     value: "Indian",
@@ -79,6 +81,10 @@ const FoodMenu = () => {
       : showFoodModal == "aa"
       ? "Add AddOn"
       : "Edit AddOn";
+
+  useEffect(() => {
+    setWholeFood(allFoods);
+  }, [allFoods]);
 
   useEffect(() => {
     LOG("modal need :" + modalNeed);
@@ -138,7 +144,7 @@ const FoodMenu = () => {
         if (showFoodModal == "af") {
           const req = {
             hid: hotelDetails.hotelId,
-            category: categoryFocus.value,
+            category: categoryFocus.value.toLocaleLowerCase(),
             foodName: foodName,
             unit: quantity,
             rate: price,
@@ -155,7 +161,7 @@ const FoodMenu = () => {
           const req = {
             hid: hotelDetails.hotelId,
             foodId: foodId.current,
-            category: categoryFocus.value,
+            category: categoryFocus.value.toLocaleLowerCase(),
             foodName: foodName,
             unit: quantity,
             rate: price,
@@ -171,7 +177,7 @@ const FoodMenu = () => {
         if (showFoodModal == "aa") {
           const req = {
             hid: hotelDetails.hotelId,
-            category: categoryFocus.value,
+            category: categoryFocus.value.toLocaleLowerCase(),
             foodName: foodName,
             unit: quantity,
             rate: price,
@@ -352,7 +358,13 @@ const FoodMenu = () => {
             {/* Food List flatList */}
             <FlatList
               // data={activeTab == 0 ? foodList : addOnList}
-              data={activeTab == 0 ? allFoods : allFoods}
+              data={
+                activeTab == 0
+                  ? wholeFood[categoryFocus.value.toLocaleLowerCase()]
+                  : allFoods
+              }
+              extraData={wholeFood[categoryFocus.value.toLocaleLowerCase()]}
+              legacyImplementation={true}
               renderItem={foodItemRenderer}
               keyExtractor={(item, index) => index}
               key={({ item }) => item.foodId}
