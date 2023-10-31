@@ -75,7 +75,6 @@ export const apiMiddleware = (store) => (next) => (action) => {
           LOG("---------------->Response Data<----------------------" + status);
           LOG("request Type ==>" + action.requestType);
           LOG("Axios Response  >>:" + JSON.stringify(responseData));
-
           next({
             type: API_DATA_RECEIVED,
             responseData: responseData[0],
@@ -374,6 +373,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             type: action.requestType,
             jsonData: action.responseData.data,
             requestData: action.requestData,
+            extraData: action.extraData,
           });
         }
       }

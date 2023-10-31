@@ -82,7 +82,7 @@ export const editMenu = (jsonData) => {
   };
 };
 
-export const deleteMenu = (jsonData) => {
+export const deleteMenu = (jsonData, extra) => {
   LOG("deleteMenu_in_action :", jsonData);
   return (dispatch) => {
     dispatch({
@@ -90,6 +90,7 @@ export const deleteMenu = (jsonData) => {
       requestType: StaticValues.deleteFood,
       requestUrl: HTTP.DELETE_MENU,
       jsonData: jsonData,
+      extraData: extra,
     });
   };
 };

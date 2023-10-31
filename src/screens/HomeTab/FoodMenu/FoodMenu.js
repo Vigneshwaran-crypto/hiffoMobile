@@ -49,8 +49,9 @@ const FoodMenu = () => {
   const dispatch = useDispatch();
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
   const allFoods = useSelector(({ api }) => api.allFoods);
+  const counter = useSelector(({ api }) => api.counter);
 
-  const [wholeFood, setWholeFood] = useState([]);
+  const [wholeFood, setWholeFood] = useState(allFoods);
 
   const [categoryFocus, setCategoryFocus] = useState({
     id: 1,
@@ -83,8 +84,10 @@ const FoodMenu = () => {
       : "Edit AddOn";
 
   useEffect(() => {
-    setWholeFood(allFoods);
-  }, [allFoods]);
+    LOG("allFoods in foodMenu while changing :", allFoods);
+    LOG("counter value while change :", counter);
+    setWholeFood(allFoods); // rerendering to show updated data in the list item
+  }, [allFoods, counter]);
 
   useEffect(() => {
     LOG("modal need :" + modalNeed);
@@ -263,17 +266,15 @@ const FoodMenu = () => {
     );
   };
 
-  const foodItemRenderer = ({ item, index }) => {
-    return (
-      <FoodItem
-        item={item}
-        index={index}
-        activeTab={activeTab}
-        onItemPress={onItemPress}
-        editOnPress={onEditPress}
-      />
-    );
-  };
+  const foodItemRenderer = ({ item, index }) => (
+    <FoodItem
+      item={item}
+      index={index}
+      activeTab={activeTab}
+      onItemPress={onItemPress}
+      editOnPress={onEditPress}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -347,7 +348,9 @@ const FoodMenu = () => {
           {/* Food category list */}
           <FlatList
             data={categoryList}
+            extraData={categoryList}
             renderItem={foodCategoryRender}
+            key={({ item }) => item.id}
             keyExtractor={(itm, ind) => ind}
             horizontal={true}
             contentContainerStyle={styles.categoryListContainer}

@@ -46,7 +46,12 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
       foodId: itm.foodId,
     };
 
-    dispatch(deleteMenu(req));
+    const extra = {
+      cat: itm.category,
+      id: itm.foodId,
+    };
+
+    dispatch(deleteMenu(req, extra));
   };
 
   const onEditPress = (item) => {

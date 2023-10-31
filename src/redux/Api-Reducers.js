@@ -19,6 +19,7 @@ const initialState = {
   getTheme: false,
 
   allFoods: [],
+  counter: 0,
 };
 
 //API-REDUCER NETWORK CALLS WILL BE HANDLED HERE
@@ -93,22 +94,18 @@ const Reducers = (state = initialState, action) => {
       // currentFoods[addedFood.category] = Object.assign({}, addedFoodByCategory);
 
       LOG("your added food by category :", currentFoods);
-
       const properAddedFood = currentFoods;
+      const countAdd = state.counter + 1;
 
       return Object.assign({}, state, {
         allFoods: properAddedFood,
+        counter: countAdd,
       });
 
     case StaticValues.editMenu:
       LOG("editMenu_in_reducer :", action);
       let nonEditedFood = state.allFoods;
       const editedFood = action.jsonData[0];
-
-      LOG(
-        "changed data list according the category :",
-        nonEditedFood[editedFood.category]
-      );
 
       const editedFoodByCategory = nonEditedFood[editedFood.category].map(
         (item) => {
@@ -121,24 +118,33 @@ const Reducers = (state = initialState, action) => {
       );
 
       nonEditedFood[editedFood.category] = editedFoodByCategory;
+      LOG("edited Food by category :", nonEditedFood);
 
-      LOG("edited Food by category :", editedFoodByCategory);
-
+      const count = state.counter + 1;
       const properEditedFood = nonEditedFood;
 
       return Object.assign({}, state, {
         allFoods: properEditedFood,
+        counter: count,
       });
 
     case StaticValues.deleteFood:
       LOG("deleteFood_in_reducer :", action);
-      const foodData = action.requestData;
       let prevFoodList = state.allFoods;
-      const newFoodList = prevFoodList.filter((itm) => {
-        return foodData.foodId != itm.foodId;
+      const countDel = state.counter + 1;
+
+      const id = action.extraData.id;
+      const category = action.extraData.cat.toLocaleLowerCase();
+
+      const newFoodList = prevFoodList[category].filter((itm) => {
+        return id != itm.foodId;
       });
+
+      prevFoodList[category] = newFoodList;
+
       return Object.assign({}, state, {
-        allFoods: newFoodList,
+        allFoods: prevFoodList,
+        counter: countDel,
       });
 
     case StaticValues.createAddOn:
