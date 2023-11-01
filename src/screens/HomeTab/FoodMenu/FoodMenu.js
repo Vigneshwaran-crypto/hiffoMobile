@@ -39,7 +39,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createAddOn,
   createMenu,
+  editAddOn,
   editMenu,
+  getAllAddOn,
   getAllFoods,
 } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
@@ -49,9 +51,12 @@ const FoodMenu = () => {
   const dispatch = useDispatch();
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
   const allFoods = useSelector(({ api }) => api.allFoods);
+  const allAddOns = useSelector(({ api }) => api.allAddOns);
+
   const counter = useSelector(({ api }) => api.counter);
 
   const [wholeFood, setWholeFood] = useState(allFoods);
+  const [wholeAddOn, setWholeAddOn] = useState(allAddOns);
 
   const [categoryFocus, setCategoryFocus] = useState({
     id: 1,
@@ -86,8 +91,13 @@ const FoodMenu = () => {
   useEffect(() => {
     LOG("allFoods in foodMenu while changing :", allFoods);
     LOG("counter value while change :", counter);
-    setWholeFood(allFoods); // rerendering to show updated data in the list item
-  }, [allFoods, counter]);
+
+    if (activeTab == 0) {
+      setWholeFood(allFoods); // rerendering to show updated data in the list item
+    } else {
+      setWholeAddOn(allAddOns);
+    }
+  }, [allFoods, allAddOns, counter]);
 
   useEffect(() => {
     LOG("modal need :" + modalNeed);
@@ -101,6 +111,7 @@ const FoodMenu = () => {
       };
 
       dispatch(getAllFoods(req));
+      dispatch(getAllAddOn(req));
     }
   }, [hotelDetails]);
 
@@ -181,19 +192,27 @@ const FoodMenu = () => {
           const req = {
             hid: hotelDetails.hotelId,
             category: categoryFocus.value.toLocaleLowerCase(),
-            foodName: foodName,
+            addonsName: foodName,
             unit: quantity,
             rate: price,
-            img1: "",
-            img2: "",
-            img3: "",
-            description: description,
-            displayTime: "",
+            // description: description,
             cType: foodType,
             token: hotelDetails.token,
           };
           dispatch(createAddOn(req));
         } else {
+          const req = {
+            hid: hotelDetails.hotelId,
+            category: categoryFocus.value.toLocaleLowerCase(),
+            addonsName: foodName,
+            unit: quantity,
+            rate: price,
+            // description: description,
+            cType: foodType,
+            token: hotelDetails.token,
+            addonsId: foodId.current,
+          };
+          dispatch(editAddOn(req));
         }
       }
     }
@@ -209,18 +228,18 @@ const FoodMenu = () => {
     LOG("editOnPress Item :", item);
     if (activeTab == 0) {
       setShowFoodModal("ef"); //edit food menu
+      setFoodName(item.foodName);
+      foodId.current = item.foodId;
     } else {
       setShowFoodModal("ea"); // edit add On
+      setFoodName(item.addonsName);
+      foodId.current = item.addonsId;
     }
 
-    setFoodName(item.foodName);
     setPrice(item.rate);
     setQuantity(item.unit);
     setFoodType(item.cType);
     setDesc(item.description);
-
-    // setFoodItem(item)
-    foodId.current = item.foodId;
   };
 
   const foodCategoryRender = ({ item, index }) => {
@@ -364,7 +383,7 @@ const FoodMenu = () => {
               data={
                 activeTab == 0
                   ? wholeFood[categoryFocus.value.toLocaleLowerCase()]
-                  : allFoods
+                  : wholeAddOn
               }
               extraData={wholeFood[categoryFocus.value.toLocaleLowerCase()]}
               legacyImplementation={true}
@@ -487,7 +506,15 @@ const FoodMenu = () => {
                 value={foodType}
               />
               <TextInput
-                style={styles.modalInputs}
+                style={[
+                  styles.modalInputs,
+                  {
+                    display:
+                      showFoodModal == "af" || showFoodModal == "ef"
+                        ? "flex"
+                        : "none",
+                  },
+                ]}
                 placeholder={"Description"}
                 placeholderTextColor={colors.grey}
                 keyboardType={"ascii-capable"}

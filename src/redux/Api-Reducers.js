@@ -19,6 +19,7 @@ const initialState = {
   getTheme: false,
 
   allFoods: [],
+  allAddOns: [],
   counter: 0,
 };
 
@@ -147,9 +148,23 @@ const Reducers = (state = initialState, action) => {
         counter: countDel,
       });
 
+    case StaticValues.getAllAddOn:
+      LOG("getAllAddOn_in_reducer :", action);
+      return Object.assign({}, state, {
+        allAddOns: action.jsonData,
+      });
+
     case StaticValues.createAddOn:
       LOG("createAddOn_in_reducer :", action);
-      return Object.assign({}, state, {});
+      const preAddOn = state.allAddOns;
+      const newAddedAddOn = preAddOn.concat(action.jsonData);
+
+      const countAddOn = state.counter + 1;
+
+      return Object.assign({}, state, {
+        allAddOns: newAddedAddOn,
+        counter: countAddOn,
+      });
 
     case StaticValues.deleteAddOn:
       LOG("deleteAddOn_in_reducer :", action);

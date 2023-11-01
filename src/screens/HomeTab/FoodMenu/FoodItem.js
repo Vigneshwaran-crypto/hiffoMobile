@@ -70,7 +70,9 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
       </View>
 
       <View style={styles.foodItemTexts}>
-        <Text style={styles.foodName}>{item.foodName}</Text>
+        <Text style={styles.foodName}>
+          {activeTab == 0 ? item.foodName : item.addonsName}
+        </Text>
         <Text style={styles.foodItemQuantity}>{item.unit}</Text>
 
         <View style={styles.foodItemPriceView}>

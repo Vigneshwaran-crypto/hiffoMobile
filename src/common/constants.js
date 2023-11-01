@@ -25,6 +25,8 @@ export const StaticValues = {
   createMenu: "createMenu",
   editMenu: "editMenu",
   deleteFood: "deleteFood",
+
+  getAllAddOn: "getAllAddOn",
   createAddOn: "createAddOn",
   editAddOn: "editAddOn",
   deleteAddOn: "deleteAddOn",
@@ -66,10 +68,13 @@ export const HTTP = {
 
   CREATE_RESTAURANT: ServerUrl + "createrestaurant",
   HID_GENERATOR: ServerUrl + "hidgenerator",
+
   GET_ALL_FOODS: ServerUrl + "foodfetcher",
   CREATE_MENU: ServerUrl + "createmenu",
   EDIT_MENU: ServerUrl + "editfoodmenu",
   DELETE_MENU: ServerUrl + "deletefooditem",
+
+  GET_ALL_ADDON: ServerUrl + "addonsfetcher",
   CREATE_ADD_ON: ServerUrl + "createaddonsitem",
   EDIT_ADD_ON: ServerUrl + "editfoodaddons",
   DELETE_ADD_ON: ServerUrl + "deletefoodaddons",

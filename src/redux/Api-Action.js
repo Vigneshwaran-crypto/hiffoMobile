@@ -95,6 +95,18 @@ export const deleteMenu = (jsonData, extra) => {
   };
 };
 
+export const getAllAddOn = (jsonData) => {
+  LOG("getAllAddOn_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.getAllAddOn,
+      requestUrl: HTTP.GET_ALL_ADDON,
+      jsonData: jsonData,
+    });
+  };
+};
+
 export const createAddOn = (jsonData) => {
   LOG("createAddOn_in_action :", jsonData);
   return (dispatch) => {
@@ -106,6 +118,19 @@ export const createAddOn = (jsonData) => {
     });
   };
 };
+
+export const editAddOn = (jsonData) => {
+  LOG("editAddOn_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.editAddOn,
+      requestUrl: HTTP.EDIT_ADD_ON,
+      jsonData: jsonData,
+    });
+  };
+};
+
 export const deleteAddOn = (jsonData) => {
   LOG("deleteAddOn_in_action :", jsonData);
   return (dispatch) => {
