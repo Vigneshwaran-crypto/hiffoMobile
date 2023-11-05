@@ -166,9 +166,43 @@ const Reducers = (state = initialState, action) => {
         counter: countAddOn,
       });
 
+    case StaticValues.editAddOn:
+      LOG("editAddOn_in_reducer :", action);
+
+      const changedData = action.jsonData[0];
+
+      const allAddOns = state.allAddOns;
+
+      const editedAddOnList = allAddOns.map((item) => {
+        if (item.addonsId == changedData.addonsId) {
+          return Object.assign(item, changedData);
+        } else {
+          return item;
+        }
+      });
+
+      const countEA = state.counter + 1;
+
+      return Object.assign({}, state, {
+        allAddOns: editedAddOnList,
+        counter: countEA,
+      });
+
     case StaticValues.deleteAddOn:
       LOG("deleteAddOn_in_reducer :", action);
-      return Object.assign({}, state, {});
+
+      const fullAddOns = state.allAddOns;
+      const delCount = state.counter + 1;
+      const addOnId = action.requestData.addonsId;
+
+      const clearedAddOnList = fullAddOns.filter((itm) => {
+        return itm.addonsId != addOnId;
+      });
+
+      return Object.assign({}, state, {
+        allAddOns: clearedAddOnList,
+        counter: delCount,
+      });
 
     default:
       LOG("APP API REDUCER Default");

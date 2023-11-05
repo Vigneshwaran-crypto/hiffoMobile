@@ -189,7 +189,6 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               HTTP.FormDataHeader.Authorization = token;
 
               var validCredential = JSON.stringify(action.requestData);
-              LOG("user Data before save :", validCredential);
               storeItem("credential", validCredential);
 
               showMessage({
@@ -210,13 +209,11 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
               RootNavigation.navigateScreen("createManagement");
             } else if (action.responseData.statuscode == "Scode0009") {
               dispatchNext = true;
+              var validCredential = JSON.stringify(action.requestData);
+              storeItem("credential", validCredential);
               RootNavigation.navigateScreen("homeTab");
             } else {
               Toast("Incorrect credentials");
-
-              // RootNavigation.navigateScreen("login");
-
-              // store.dispatch(stopSpinner());
             }
 
             dispatchNext = true;
@@ -339,9 +336,20 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             }
             break;
 
+          case StaticValues.editAddOn:
+            LOG("editAddOn_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0052") {
+              dispatchNext = true;
+              Toast("AddOn Edited Successfully");
+            } else {
+              Toast("Please Try Again");
+            }
+            break;
+
           case StaticValues.deleteAddOn:
             LOG("deleteAddOn_in_middleware :", action);
-            if (action.responseData.statuscode == "") {
+
+            if (action.responseData.statuscode == "Scode0048") {
               dispatchNext = true;
               Toast("AddOn Deleted Successfully");
             } else {

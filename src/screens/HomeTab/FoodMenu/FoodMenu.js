@@ -97,7 +97,7 @@ const FoodMenu = () => {
     } else {
       setWholeAddOn(allAddOns);
     }
-  }, [allFoods, allAddOns, counter]);
+  }, [allFoods, allAddOns, counter, activeTab]);
 
   useEffect(() => {
     LOG("modal need :" + modalNeed);
@@ -150,7 +150,7 @@ const FoodMenu = () => {
       Toast("Please enter quantity");
     } else if (!foodType) {
       Toast("Please enter food type");
-    } else if (!description) {
+    } else if (activeTab == 0 && !description) {
       Toast("Please enter description");
     } else {
       //Add Food menu
@@ -203,11 +203,10 @@ const FoodMenu = () => {
         } else {
           const req = {
             hid: hotelDetails.hotelId,
-            category: categoryFocus.value.toLocaleLowerCase(),
+            // category: categoryFocus.value.toLocaleLowerCase(),
             addonsName: foodName,
             unit: quantity,
             rate: price,
-            // description: description,
             cType: foodType,
             token: hotelDetails.token,
             addonsId: foodId.current,
@@ -374,12 +373,14 @@ const FoodMenu = () => {
             horizontal={true}
             contentContainerStyle={styles.categoryListContainer}
             showsHorizontalScrollIndicator={false}
+            style={{
+              display: activeTab == 0 ? "flex" : "none",
+            }}
           />
 
           <View style={styles.foodFlatListView}>
             {/* Food List flatList */}
             <FlatList
-              // data={activeTab == 0 ? foodList : addOnList}
               data={
                 activeTab == 0
                   ? wholeFood[categoryFocus.value.toLocaleLowerCase()]

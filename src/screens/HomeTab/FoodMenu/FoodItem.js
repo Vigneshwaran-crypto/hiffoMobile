@@ -22,7 +22,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import { LOG } from "../../../common/util";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMenu } from "../../../redux/Api-Action";
+import { deleteAddOn, deleteMenu } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
 const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
@@ -40,18 +40,28 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
 
   const itemDeleteOnPress = (itm) => {
     LOG("item gonna be deleted clicked :", itm);
-    const req = {
-      hid: hotelDetails.hotelId,
-      token: hotelDetails.token,
-      foodId: itm.foodId,
-    };
 
-    const extra = {
-      cat: itm.category,
-      id: itm.foodId,
-    };
+    if (activeTab == 0) {
+      const req = {
+        hid: hotelDetails.hotelId,
+        token: hotelDetails.token,
+        foodId: itm.foodId,
+      };
 
-    dispatch(deleteMenu(req, extra));
+      const extra = {
+        cat: itm.category,
+        id: foodId,
+      };
+
+      dispatch(deleteMenu(req, extra));
+    } else {
+      const req = {
+        hid: hotelDetails.hotelId,
+        token: hotelDetails.token,
+        addonsId: itm.addonsId,
+      };
+      dispatch(deleteAddOn(req));
+    }
   };
 
   const onEditPress = (item) => {

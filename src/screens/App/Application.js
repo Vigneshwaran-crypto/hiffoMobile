@@ -81,17 +81,21 @@ const Application = (props) => {
       });
       // navigation.navigate("intro");
 
-      getItem("credential").then((value) => {
-        LOG("got user data from session :", value);
-        if (value) {
-          var gotCredent = JSON.parse(value);
-          LOG("GOT VALUE IN TESTING :", gotCredent);
-          Dispatch(authenticationVerify(gotCredent));
-          // navigation.navigate("login");
-        } else {
-          navigation.navigate("login");
-        }
-      });
+      getItem("credential")
+        .then((value) => {
+          LOG("got user data from session :" + value);
+          if (value) {
+            var gotCredent = JSON.parse(value);
+            LOG("GOT VALUE IN TESTING :", gotCredent);
+            Dispatch(authenticationVerify(gotCredent));
+            // navigation.navigate("login");
+          } else {
+            navigation.navigate("login");
+          }
+        })
+        .catch((err) => {
+          LOG("catch in getting credential :", err);
+        });
     }, 2000);
 
     return () => backHandler.remove();
