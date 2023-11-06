@@ -50,7 +50,7 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
 
       const extra = {
         cat: itm.category,
-        id: foodId,
+        id: itm.foodId,
       };
 
       dispatch(deleteMenu(req, extra));

@@ -89,6 +89,28 @@ const FoodMenu = () => {
       : "Edit AddOn";
 
   useEffect(() => {
+    //Play Ground :
+
+    const obj = {
+      india: "10",
+      chennai: "5",
+      china: "8",
+      italy: "4",
+    };
+
+    const name = "india";
+
+    const objKeys = Object.keys(obj);
+    LOG("your object keys :", objKeys);
+
+    const isContain = objKeys.find((item) => item == name);
+
+    LOG("is Really contain :" + isContain);
+
+    const curKey = Object.keys({});
+  }, []);
+
+  useEffect(() => {
     LOG("allFoods in foodMenu while changing :", allFoods);
     LOG("counter value while change :", counter);
 

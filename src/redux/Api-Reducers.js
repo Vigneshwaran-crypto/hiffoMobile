@@ -18,7 +18,7 @@ const initialState = {
   customSpinner: false,
   getTheme: false,
 
-  allFoods: [],
+  allFoods: {},
   allAddOns: [],
   counter: 0,
 };
@@ -85,16 +85,24 @@ const Reducers = (state = initialState, action) => {
       LOG("createMenu_in_reducer :", action);
       let currentFoods = state.allFoods;
       const addedFood = action.jsonData[0];
+      LOG("current all foods :", currentFoods);
 
-      //Your an legend in coding by
-      const addedFoodByCategory = currentFoods[addedFood.category].concat([
-        addedFood,
-      ]);
+      //Your an legend in coding by The Vigneshwaran
 
-      currentFoods[addedFood.category] = addedFoodByCategory;
-      // currentFoods[addedFood.category] = Object.assign({}, addedFoodByCategory);
+      const currentKeys = Object.keys(currentFoods);
+      const isContain = currentKeys.find((item) => item == addedFood.category);
 
+      //Checking The Keys are here or Not for adding the values in the same key
+      if (currentKeys.length == 0 || isContain == undefined) {
+        currentFoods[addedFood.category] = [addedFood];
+      } else {
+        const addedFoodByCategory = currentFoods[addedFood.category].concat([
+          addedFood,
+        ]);
+        currentFoods[addedFood.category] = addedFoodByCategory;
+      }
       LOG("your added food by category :", currentFoods);
+
       const properAddedFood = currentFoods;
       const countAdd = state.counter + 1;
 
