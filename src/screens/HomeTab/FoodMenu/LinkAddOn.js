@@ -11,11 +11,17 @@ import { LOG, foodList } from "../../../common/util";
 import { colors } from "../../../common/colors";
 import { textFontFaceSemiBold } from "../../../common/styles";
 import Header from "../../../common/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { linkAddOn } from "../../../redux/Api-Action";
 
 const LinkAddOn = () => {
+  const dispatch = useDispatch();
   const [modalShowType, setModalShowType] = useState(false);
   const [addOnList, setAddOnList] = useState([]);
   let addingAddOnList = useRef([]);
+
+  const allAddOns = useSelector(({ api }) => api.allAddOns);
+  const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
 
   const addAddOnPress = () => {
     setModalShowType(!modalShowType);
@@ -29,6 +35,14 @@ const LinkAddOn = () => {
   const onCheckingItem = useCallback((item) => {
     LOG("Clicked Item In Parent :", item);
     addingAddOnList.current.push(item);
+
+    const req = {
+      hid: hotelDetails.hotelId,
+      token: hotelDetails.token,
+      foodId: item.addonsId,
+    };
+
+    dispatch(linkAddOn(req));
   }, []);
 
   const onDecisionPress = (is, item) => {
@@ -61,7 +75,7 @@ const LinkAddOn = () => {
       <View style={styles.screenContent}>
         <View style={styles.addAddOnView}>
           <FlatList
-            data={modalShowType ? addOnList : foodList}
+            data={allAddOns}
             renderItem={addAddOnRenderItem}
             keyExtractor={(itm, ind) => ind}
             showsHorizontalScrollIndicator={false}

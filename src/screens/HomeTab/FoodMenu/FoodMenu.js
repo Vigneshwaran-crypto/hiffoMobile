@@ -327,7 +327,6 @@ const FoodMenu = () => {
               style={[
                 styles.tabButton,
                 {
-                  marginEnd: 5,
                   borderColor:
                     activeTab == 0 ? colors.activeGreen : colors.greyBC,
                 },
@@ -345,6 +344,9 @@ const FoodMenu = () => {
                 Food Menu
               </Text>
             </TouchableOpacity>
+
+            {/* separator */}
+            <View style={styles.tabButtonSep} />
 
             <TouchableOpacity
               style={[
@@ -369,6 +371,9 @@ const FoodMenu = () => {
             </TouchableOpacity>
           </View>
 
+          {/* separator */}
+          <View style={styles.tabButtonSep} />
+
           <View style={styles.searchView}>
             <TextInput placeholder="Search" style={styles.searchInput} />
             <Feather
@@ -380,25 +385,28 @@ const FoodMenu = () => {
           </View>
         </View>
 
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
+        <View style={styles.listsContainer}>
           {/* Food category list */}
-          <FlatList
-            data={categoryList}
-            extraData={categoryList}
-            renderItem={foodCategoryRender}
-            key={({ item }) => item.id}
-            keyExtractor={(itm, ind) => ind}
-            horizontal={true}
-            contentContainerStyle={styles.categoryListContainer}
-            showsHorizontalScrollIndicator={false}
-            style={{
-              display: activeTab == 0 ? "flex" : "none",
-            }}
-          />
+          <View
+            style={[
+              styles.categoryFlatListView,
+              {
+                display: activeTab == 0 ? "flex" : "none",
+              },
+            ]}
+          >
+            <FlatList
+              data={categoryList}
+              extraData={categoryList}
+              renderItem={foodCategoryRender}
+              key={({ item }) => item.id}
+              keyExtractor={(itm, ind) => ind}
+              horizontal={true}
+              contentContainerStyle={styles.categoryListContainer}
+              showsHorizontalScrollIndicator={false}
+              style={styles.categoryList}
+            />
+          </View>
 
           <View style={styles.foodFlatListView}>
             {/* Food List flatList */}
@@ -592,38 +600,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    height: height,
   },
   screenContent: {
     flex: 1,
-    width: "90%",
     alignSelf: "center",
-    marginTop: 15,
-    // borderWidth: 1,
+    marginHorizontal: 15,
   },
   foodTab: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 15,
+    // borderWidth: 1,
+    padding: 8,
   },
   foodTabContainer: {
     flexDirection: "row",
-    width: "50%",
-  },
-  tabButton: {
-    borderWidth: 1,
-    width: "45%",
-    alignItems: "center",
-    borderRadius: 8,
-    paddingVertical: 5,
-  },
-  tabButtonText: {
-    fontFamily: textFontFaceMedium,
-    fontSize: 12,
-    marginTop: 3,
+    flex: 1,
   },
   searchView: {
-    width: "45%",
     borderWidth: 1,
     borderColor: colors.greyBC,
     borderRadius: 8,
@@ -631,7 +625,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.thingrey,
+    flex: 1,
   },
+  tabButton: {
+    borderWidth: 1,
+    alignItems: "center",
+    borderRadius: 8,
+    paddingVertical: 5,
+    flex: 1,
+  },
+  tabButtonSep: {
+    flex: 0.1,
+  },
+  tabButtonText: {
+    fontFamily: textFontFaceMedium,
+    fontSize: 12,
+    marginTop: 3,
+  },
+
   searchInput: {
     paddingVertical: 3,
     flex: 1,
@@ -639,8 +650,22 @@ const styles = StyleSheet.create({
   searchIcon: {
     marginHorizontal: 8,
   },
+  listsContainer: {
+    flex: 1,
+  },
+  categoryFlatListView: {
+    flex: 0.11,
+  },
+  categoryList: {},
   categoryListContainer: {
-    marginVertical: 15,
+    marginVertical: 5,
+    alignSelf: "center",
+  },
+  foodFlatListView: {
+    flex: 1,
+  },
+  foodFlatList: {
+    paddingBottom: 120,
   },
   categoryParent: {
     borderWidth: 1,
@@ -659,12 +684,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.black,
   },
-  foodFlatListView: {
-    height: "87%",
-  },
-  foodFlatList: {
-    paddingBottom: 160,
-  },
+
   noItemsIndicatorText: {
     alignSelf: "center",
     fontFamily: textFontFaceLight,

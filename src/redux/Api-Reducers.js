@@ -86,12 +86,9 @@ const Reducers = (state = initialState, action) => {
       let currentFoods = state.allFoods;
       const addedFood = action.jsonData[0];
       LOG("current all foods :", currentFoods);
-
-      //Your an legend in coding by The Vigneshwaran
-
+      //Creating a new life  #Vigneshwaran
       const currentKeys = Object.keys(currentFoods);
       const isContain = currentKeys.find((item) => item == addedFood.category);
-
       //Checking The Keys are here or Not for adding the values in the same key
       if (currentKeys.length == 0 || isContain == undefined) {
         currentFoods[addedFood.category] = [addedFood];
@@ -102,10 +99,8 @@ const Reducers = (state = initialState, action) => {
         currentFoods[addedFood.category] = addedFoodByCategory;
       }
       LOG("your added food by category :", currentFoods);
-
       const properAddedFood = currentFoods;
       const countAdd = state.counter + 1;
-
       return Object.assign({}, state, {
         allFoods: properAddedFood,
         counter: countAdd,
@@ -141,16 +136,13 @@ const Reducers = (state = initialState, action) => {
       LOG("deleteFood_in_reducer :", action);
       let prevFoodList = state.allFoods;
       const countDel = state.counter + 1;
-
       const id = action.extraData.id;
       const category = action.extraData.cat.toLocaleLowerCase();
-
       const newFoodList = prevFoodList[category].filter((itm) => {
         return id != itm.foodId;
       });
 
       prevFoodList[category] = newFoodList;
-
       return Object.assign({}, state, {
         allFoods: prevFoodList,
         counter: countDel,
@@ -166,9 +158,7 @@ const Reducers = (state = initialState, action) => {
       LOG("createAddOn_in_reducer :", action);
       const preAddOn = state.allAddOns;
       const newAddedAddOn = preAddOn.concat(action.jsonData);
-
       const countAddOn = state.counter + 1;
-
       return Object.assign({}, state, {
         allAddOns: newAddedAddOn,
         counter: countAddOn,
@@ -176,11 +166,8 @@ const Reducers = (state = initialState, action) => {
 
     case StaticValues.editAddOn:
       LOG("editAddOn_in_reducer :", action);
-
       const changedData = action.jsonData[0];
-
       const allAddOns = state.allAddOns;
-
       const editedAddOnList = allAddOns.map((item) => {
         if (item.addonsId == changedData.addonsId) {
           return Object.assign(item, changedData);
@@ -188,7 +175,6 @@ const Reducers = (state = initialState, action) => {
           return item;
         }
       });
-
       const countEA = state.counter + 1;
 
       return Object.assign({}, state, {
@@ -210,6 +196,13 @@ const Reducers = (state = initialState, action) => {
       return Object.assign({}, state, {
         allAddOns: clearedAddOnList,
         counter: delCount,
+      });
+
+    case StaticValues.linkAddOn:
+      LOG("linkAddOn_in_reducer :", action);
+      return Object.assign({}, state, {
+        // allAddOns: ,
+        // counter: ,
       });
 
     default:

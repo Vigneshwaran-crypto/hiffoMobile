@@ -348,7 +348,6 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
           case StaticValues.deleteAddOn:
             LOG("deleteAddOn_in_middleware :", action);
-
             if (action.responseData.statuscode == "Scode0048") {
               dispatchNext = true;
               Toast("AddOn Deleted Successfully");
@@ -357,14 +356,8 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             }
             break;
 
-          case GET_PROVIDER_DETAIL:
-            console.log(
-              "************* INSIDE MIDDLEWARE GET_PROVIDER_DETAIL13 *********************"
-            );
-            console.log(action.requestData);
-            console.log(action.responseData);
-            console.log(action.responseData.email);
-            RootNavigation.navigateScreen("clientlist", { userName: "Lucy" });
+          case StaticValues.linkAddOn:
+            LOG("linkAddOn_in_middleware :", action);
             dispatchNext = true;
             break;
 

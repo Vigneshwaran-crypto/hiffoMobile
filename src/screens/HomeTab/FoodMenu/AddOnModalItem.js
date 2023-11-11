@@ -52,15 +52,15 @@ const AddOnModalItem = ({
       onPress={onFoodItemPress.bind(this, item)}
     >
       <View style={styles.itemImageView}>
-        <Image style={styles.foodItemImage} source={item.imagePath} />
+        {/* <Image style={styles.foodItemImage} source={item.imagePath} /> */}
       </View>
 
       <View style={styles.foodItemTexts}>
-        <Text style={styles.foodName}>{item.name}</Text>
-        <Text style={styles.foodItemQuantity}>{item.quantity}</Text>
+        <Text style={styles.foodName}>{item.addonsName}</Text>
+        <Text style={styles.foodItemQuantity}>{item.unit}</Text>
 
         <View style={styles.foodItemPriceView}>
-          <Text style={styles.foodItemPrice}>{item.price}</Text>
+          <Text style={styles.foodItemPrice}>{item.rate}</Text>
 
           <View style={styles.addFoodQuantityView}>
             {type ? (

@@ -30,6 +30,8 @@ export const StaticValues = {
   createAddOn: "createAddOn",
   editAddOn: "editAddOn",
   deleteAddOn: "deleteAddOn",
+
+  linkAddOn: "linkAddOn",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -78,6 +80,8 @@ export const HTTP = {
   CREATE_ADD_ON: ServerUrl + "createaddonsitem",
   EDIT_ADD_ON: ServerUrl + "editfoodaddons",
   DELETE_ADD_ON: ServerUrl + "deletefoodaddons",
+
+  LINK_ADD_ON: ServerUrl + "linkaddonstofood",
 
   EDIT_PROFILE: ServerUrl + "api/editUser",
   PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload

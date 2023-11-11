@@ -142,3 +142,15 @@ export const deleteAddOn = (jsonData) => {
     });
   };
 };
+
+export const linkAddOn = (jsonData) => {
+  LOG("linkAddOn_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.linkAddOn,
+      requestUrl: HTTP.LINK_ADD_ON,
+      jsonData: jsonData,
+    });
+  };
+};
