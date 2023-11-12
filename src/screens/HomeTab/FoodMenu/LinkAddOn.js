@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -7,42 +7,52 @@ import {
   View,
 } from "react-native";
 import AddOnModalItem from "./AddOnModalItem";
-import { LOG, foodList } from "../../../common/util";
+import { LOG, Toast, foodList } from "../../../common/util";
 import { colors } from "../../../common/colors";
 import { textFontFaceSemiBold } from "../../../common/styles";
 import Header from "../../../common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { linkAddOn } from "../../../redux/Api-Action";
 
-const LinkAddOn = () => {
+const LinkAddOn = (props) => {
   const dispatch = useDispatch();
   const [modalShowType, setModalShowType] = useState(false);
   const [addOnList, setAddOnList] = useState([]);
   let addingAddOnList = useRef([]);
 
+  const foodItem = props.route.params.item;
+
   const allAddOns = useSelector(({ api }) => api.allAddOns);
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
 
-  const addAddOnPress = () => {
-    setModalShowType(!modalShowType);
+  useEffect(() => {
+    LOG("clicked food item :", foodItem);
+  }, []);
 
-    if (modalShowType) {
-    } else {
-      setAddOnList(addingAddOnList.current);
-    }
+  const addAddOnPress = () => {
+    LOG("current addOn List :", addOnList);
+
+    const addonsIdsList = addingAddOnList.current.map((item) => {
+      return item.addonsId;
+    });
+    LOG("splitted item with values :", addonsIdsList);
+    let addonsIdsObj = {};
+
+    addonsIdsList.forEach((itm, ind) => {
+      //adding every addOn with it ids
+      addonsIdsObj[`addonsId${ind + 1}`] = itm;
+    });
+    addonsIdsObj.hid = hotelDetails.hotelId;
+    addonsIdsObj.token = hotelDetails.token;
+    addonsIdsObj.foodId = foodItem.foodId;
+
+    LOG("changed array into object :", addonsIdsObj);
+
+    dispatch(linkAddOn(addonsIdsObj));
   };
 
   const onCheckingItem = useCallback((item) => {
-    LOG("Clicked Item In Parent :", item);
     addingAddOnList.current.push(item);
-
-    const req = {
-      hid: hotelDetails.hotelId,
-      token: hotelDetails.token,
-      foodId: item.addonsId,
-    };
-
-    dispatch(linkAddOn(req));
   }, []);
 
   const onDecisionPress = (is, item) => {
@@ -60,10 +70,10 @@ const LinkAddOn = () => {
         item={item}
         index={index}
         activeTab={1}
-        type={modalShowType}
         onItemPress={() => {}}
         onCheckingItem={onCheckingItem}
         onDecisionPress={onDecisionPress}
+        checkedList={addingAddOnList.current}
       />
     );
   };
@@ -88,7 +98,8 @@ const LinkAddOn = () => {
                   onPress={addAddOnPress}
                 >
                   <Text style={styles.itemButtonsText}>
-                    {modalShowType ? "Add AddOns" : "Submit"}
+                    {/* {modalShowType ? "Add AddOns" : "Submit"} */}
+                    Add AddOns
                   </Text>
                 </TouchableOpacity>
               </View>

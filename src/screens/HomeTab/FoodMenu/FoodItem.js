@@ -35,11 +35,11 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
   };
 
   const onLinkPress = () => {
-    navigation.navigate("linkAddOn");
+    navigation.navigate("linkAddOn", { item });
   };
 
   const itemDeleteOnPress = (itm) => {
-    LOG("item gonna be deleted clicked :", itm);
+    LOG("item gonna be deleted clicked :");
 
     if (activeTab == 0) {
       const req = {

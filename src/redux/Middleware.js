@@ -358,7 +358,13 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
           case StaticValues.linkAddOn:
             LOG("linkAddOn_in_middleware :", action);
-            dispatchNext = true;
+            if (action.responseData.statuscode == "Scode0039") {
+              dispatchNext = true;
+              Toast("AddOn Linked Successfully");
+              RootNavigation.navigationRef.goBack();
+            } else {
+              Toast("Please Try Again");
+            }
             break;
 
           default:

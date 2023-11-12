@@ -605,13 +605,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     marginHorizontal: 15,
+    // borderWidth: 1,
+    width: "90%",
   },
   foodTab: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 15,
     // borderWidth: 1,
-    padding: 8,
   },
   foodTabContainer: {
     flexDirection: "row",

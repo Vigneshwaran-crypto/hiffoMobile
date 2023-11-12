@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -20,7 +20,7 @@ import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Checkbox } from "react-native-paper";
-import { LOG } from "../../../common/util";
+import { LOG, Toast } from "../../../common/util";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,9 +29,8 @@ const AddOnModalItem = ({
   index,
   activeTab,
   onItemPress,
-  type,
   onCheckingItem,
-  onDecisionPress,
+  checkedList,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -40,8 +39,14 @@ const AddOnModalItem = ({
   };
 
   const onCheckItem = () => {
-    setIsChecked(!isChecked);
-    onCheckingItem(item);
+    LOG("already chosen item :", checkedList);
+
+    if (checkedList.length < 10) {
+      setIsChecked(!isChecked);
+      onCheckingItem(item);
+    } else {
+      Toast("We Can Only Add 10 Items");
+    }
   };
 
   return (
@@ -63,7 +68,7 @@ const AddOnModalItem = ({
           <Text style={styles.foodItemPrice}>{item.rate}</Text>
 
           <View style={styles.addFoodQuantityView}>
-            {type ? (
+            {/* {type ? (
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
                   style={styles.itemAddButton}
@@ -93,17 +98,17 @@ const AddOnModalItem = ({
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
-            ) : (
-              <View style={styles.checkBoxView}>
-                <Checkbox
-                  status={isChecked ? "checked" : "unchecked"}
-                  color={colors.activeGreen}
-                  uncheckedColor={colors.grey}
-                  onPress={onCheckItem}
-                  theme={{ dark: true }}
-                />
-              </View>
-            )}
+            ) : ( */}
+            <View style={styles.checkBoxView}>
+              <Checkbox
+                status={isChecked ? "checked" : "unchecked"}
+                color={colors.activeGreen}
+                uncheckedColor={colors.grey}
+                onPress={onCheckItem}
+                theme={{ dark: true }}
+              />
+            </View>
+            {/* )} */}
           </View>
         </View>
       </View>

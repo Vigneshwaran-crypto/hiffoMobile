@@ -47,7 +47,6 @@ const Application = (props) => {
           result["android.permission.READ_EXTERNAL_STORAGE"] &&
           result["android.permission.WRITE_EXTERNAL_STORAGE"] === "granted"
         ) {
-          console.clear();
           LOG("ALL_PERMISSIONS_ARE_GRANTED ===> APP_LANDED");
 
           setData({
