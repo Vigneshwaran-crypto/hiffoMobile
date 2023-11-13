@@ -367,11 +367,17 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             }
             break;
 
+          case StaticValues.viewFoodAddOns:
+            LOG("viewFoodAddOns_in_middleware :", action);
+            dispatchNext = true;
+            break;
+
           default:
             LOG("Redirection : Default ");
             dispatchNext = true;
             break;
         }
+
         if (action.stopSpinner && dispatchSpinner) {
           store.dispatch(stopSpinner());
         }

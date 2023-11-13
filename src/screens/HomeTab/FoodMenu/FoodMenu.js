@@ -43,6 +43,7 @@ import {
   editMenu,
   getAllAddOn,
   getAllFoods,
+  viewFoodAddOn,
 } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
@@ -243,6 +244,13 @@ const FoodMenu = () => {
 
   const onItemPress = (item) => {
     LOG("onItemPress Item :", item);
+    const req = {
+      token: hotelDetails.token,
+      hid: hotelDetails.hotelId,
+      foodId: item.foodId,
+    };
+
+    // dispatch(viewFoodAddOn(req));
   };
 
   const onEditPress = (item) => {

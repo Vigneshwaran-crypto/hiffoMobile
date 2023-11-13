@@ -21,6 +21,7 @@ const initialState = {
   allFoods: {},
   allAddOns: [],
   counter: 0,
+  viewFoodAddOn: [],
 };
 
 //API-REDUCER NETWORK CALLS WILL BE HANDLED HERE
@@ -203,6 +204,20 @@ const Reducers = (state = initialState, action) => {
       return Object.assign({}, state, {
         // allAddOns: ,
         // counter: ,
+      });
+
+    case StaticValues.viewFoodAddOns:
+      LOG("viewFoodAddOns_in_reducer :", action);
+
+      const foodAddOnList = action.jsonData.addonArray;
+      const checkedList = foodAddOnList.map((item) => {
+        return { ...item, checked: true };
+      });
+
+      LOG("checked List :", checkedList);
+
+      return Object.assign({}, state, {
+        viewFoodAddOn: action.jsonData.addonArray,
       });
 
     default:

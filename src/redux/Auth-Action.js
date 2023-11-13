@@ -127,21 +127,6 @@ export const resetPasswordAction = (jsonData) => {
   };
 };
 
-export const getProviderDetail = (jsondata) => {
-  // get getGroupDetails Action
-  LOG("GET PROVIDER DETAILS Action");
-
-  return (dispatch) => {
-    dispatch({
-      type: GET_API_DATA,
-      jsonData: jsondata,
-      requestUrl: HTTP.GET_PROVIDER_URL,
-      get: true,
-      requestType: GET_PROVIDER_DETAIL,
-    });
-  };
-};
-
 // This action is used to store the header required for in app webview cookies is stored here
 export const storeCookieInState = (value) => {
   return (dispatch) => {

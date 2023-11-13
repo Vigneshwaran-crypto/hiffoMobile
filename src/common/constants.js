@@ -32,6 +32,7 @@ export const StaticValues = {
   deleteAddOn: "deleteAddOn",
 
   linkAddOn: "linkAddOn",
+  viewFoodAddOns: "viewFoodAddOns",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -82,9 +83,7 @@ export const HTTP = {
   DELETE_ADD_ON: ServerUrl + "deletefoodaddons",
 
   LINK_ADD_ON: ServerUrl + "linkaddonstofood",
-
-  EDIT_PROFILE: ServerUrl + "api/editUser",
-  PROFILE_PHOTO_UPLOAD: ServerUrl + "api/updateProfilePhoto", //updateProfilePhoto  fileupload
+  VIEW_FOOD_ADD_ONS: ServerUrl + "foodfetcherwithfoodid",
 
   // Header For Api Call Without Authorization.
   HEADERS: {

@@ -20,7 +20,7 @@ import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
-import { LOG } from "../../../common/util";
+import { LOG, liquidFont } from "../../../common/util";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAddOn, deleteMenu } from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
@@ -76,6 +76,8 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
       onPress={onFoodItemPress.bind(this, item)}
     >
       <View style={styles.itemImageView}>
+        <View style={styles.imageContainer}></View>
+
         {/* <Image style={styles.foodItemImage} source={item.imagePath} /> */}
       </View>
 
@@ -83,6 +85,7 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
         <Text style={styles.foodName}>
           {activeTab == 0 ? item.foodName : item.addonsName}
         </Text>
+
         <Text style={styles.foodItemQuantity}>{item.unit}</Text>
 
         <View style={styles.foodItemPriceView}>
@@ -97,7 +100,13 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
                 end={{ x: 0, y: 0 }}
                 style={styles.addGradient}
               >
-                <Text style={styles.itemButtonsText}>Show</Text>
+                <Text
+                  style={styles.itemButtonsText}
+                  adjustsFontSizeToFit={true}
+                  numberOfLines={1}
+                >
+                  Show
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -111,7 +120,13 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.addGradient}
               >
-                <Text style={styles.itemButtonsText}>Hide</Text>
+                <Text
+                  style={styles.itemButtonsText}
+                  adjustsFontSizeToFit={true}
+                  numberOfLines={1}
+                >
+                  Hide
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -127,7 +142,13 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.addGradient}
               >
-                <Text style={styles.itemButtonsText}>Restock</Text>
+                <Text
+                  adjustsFontSizeToFit={true}
+                  numberOfLines={1}
+                  style={styles.itemButtonsText}
+                >
+                  Restock
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -161,21 +182,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.itemBorderGrey,
     marginTop: 15,
-    padding: 20,
+    paddingHorizontal: 20,
     paddingVertical: 28,
     backgroundColor: colors.mildBg,
-    borderRadius: 25,
-    width: "100%",
+    borderRadius: 23,
+    // width: "100%",
+    flex: 1,
   },
   itemImageView: {
-    elevation: 15,
+    // borderWidth: 1,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  imageContainer: {
+    elevation: 10,
     shadowColor: colors.black,
     shadowOpacity: 10,
     backgroundColor: colors.white,
     height: 75,
     width: 75,
     borderRadius: 50,
-    padding: 0.3,
   },
   foodItemImage: {
     height: 75,
@@ -185,6 +213,8 @@ const styles = StyleSheet.create({
   },
   foodItemTexts: {
     marginStart: 20,
+    // borderWidth: 1,
+    flex: 6,
   },
   foodName: {
     color: colors.black,
@@ -197,33 +227,43 @@ const styles = StyleSheet.create({
   foodItemPrice: {
     color: colors.black,
     fontFamily: textFontFaceLight,
-    marginTop: 5,
-    width: "20%",
+    // marginTop: 5,
+    // width: "20%",
+    alignSelf: "flex-end",
+    // borderWidth: 1,
+    flex: 1,
   },
   foodItemPriceView: {
     flexDirection: "row",
-    width: width * 0.7,
+    // width: width * 0.7,
     justifyContent: "space-between",
     alignItems: "center",
+    // borderWidth: 1,
+    flex: 1,
   },
   addFoodQuantityView: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
+    // borderWidth: 1,
+    flex: 6,
+    // marginHorizontal: 5,
   },
   itemAddButton: {
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-
     elevation: 15,
     backgroundColor: colors.transparent,
     shadowColor: colors.grey,
     shadowOpacity: 3,
     shadowOffset: { height: 2, width: 2 },
-    padding: 0.1,
-    width: width * 0.12,
-    marginEnd: 12,
+    // padding: 0.1,
+    // width: width * 0.12,
+    // marginEnd: 12,
+    // borderWidth: 1,
+    flex: 1,
+    marginHorizontal: 6,
   },
   addGradient: {
     justifyContent: "center",
@@ -237,9 +277,11 @@ const styles = StyleSheet.create({
   },
   itemButtonsText: {
     marginVertical: 5,
+    marginHorizontal: 5,
     fontFamily: textFontFaceLight,
     color: colors.mildBg,
     fontSize: 11,
+    // fontSize: liquidFont(5),
   },
   itemRoundButton: {
     height: 31,
@@ -247,8 +289,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginEnd: 10,
+    // marginEnd: 10,
     backgroundColor: colors.subTextColor,
+    marginHorizontal: 5,
   },
 });
 

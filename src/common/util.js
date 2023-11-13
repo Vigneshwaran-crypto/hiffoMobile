@@ -3,6 +3,7 @@ import {
   Alert,
   BackHandler,
   Dimensions,
+  PixelRatio,
   Platform,
   ToastAndroid,
 } from "react-native";
@@ -270,3 +271,8 @@ export const categoryList = [
   { id: 4, value: "Sea food" },
   { id: 5, value: "Chats" },
 ];
+
+export const liquidFont = (size) => {
+  const fontScale = PixelRatio.getFontScale();
+  return size / fontScale;
+};
