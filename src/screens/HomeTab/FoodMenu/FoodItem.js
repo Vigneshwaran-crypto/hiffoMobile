@@ -159,14 +159,18 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
               ]}
               onPress={onLinkPress}
             >
-              <EnTypo name="link" size={19} color={colors.mildBg} />
+              <EnTypo name="link" size={0.03 * width} color={colors.mildBg} />
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.itemRoundButton}
               onPress={itemDeleteOnPress.bind(this, item)}
             >
-              <Feather name="trash-2" size={19} color={colors.mildBg} />
+              <Feather
+                name="trash-2"
+                size={0.03 * width}
+                color={colors.mildBg}
+              />
             </TouchableOpacity>
           </View>
           {/* </ScrollView> */}
@@ -182,12 +186,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.itemBorderGrey,
     marginTop: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 28,
     backgroundColor: colors.mildBg,
     borderRadius: 23,
-    // width: "100%",
     flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 0.035 * width,
   },
   itemImageView: {
     // borderWidth: 1,
@@ -201,9 +204,10 @@ const styles = StyleSheet.create({
     shadowColor: colors.black,
     shadowOpacity: 10,
     backgroundColor: colors.white,
-    height: 75,
-    width: 75,
-    borderRadius: 50,
+    height: 0.12 * width,
+    width: 0.12 * width,
+    borderRadius: 0.06 * width,
+    borderWidth: 1,
   },
   foodItemImage: {
     height: 75,
@@ -247,7 +251,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // borderWidth: 1,
     flex: 6,
-    // marginHorizontal: 5,
   },
   itemAddButton: {
     alignItems: "center",
@@ -258,13 +261,11 @@ const styles = StyleSheet.create({
     shadowColor: colors.grey,
     shadowOpacity: 3,
     shadowOffset: { height: 2, width: 2 },
-    // padding: 0.1,
-    // width: width * 0.12,
-    // marginEnd: 12,
     // borderWidth: 1,
     flex: 1,
     marginHorizontal: 6,
   },
+
   addGradient: {
     justifyContent: "center",
     alignItems: "center",
@@ -280,18 +281,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     fontFamily: textFontFaceLight,
     color: colors.mildBg,
-    fontSize: 11,
+    // fontSize: 11,
+    fontSize: 0.019 * width,
+    // borderWidth: 1,
     // fontSize: liquidFont(5),
   },
   itemRoundButton: {
-    height: 31,
-    width: 31,
-    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
     // marginEnd: 10,
     backgroundColor: colors.subTextColor,
     marginHorizontal: 5,
+    height: 0.045 * width,
+    width: 0.045 * width,
+    borderRadius: 0.025 * width,
   },
 });
 
