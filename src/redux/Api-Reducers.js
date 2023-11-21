@@ -209,7 +209,7 @@ const Reducers = (state = initialState, action) => {
     case StaticValues.viewFoodAddOns:
       LOG("viewFoodAddOns_in_reducer :", action);
 
-      const foodAddOnList = action.jsonData.addonArray;
+      const foodAddOnList = action.jsonData[0].addonArray;
       const checkedList = foodAddOnList.map((item) => {
         return { ...item, checked: true };
       });
@@ -217,7 +217,7 @@ const Reducers = (state = initialState, action) => {
       LOG("checked List :", checkedList);
 
       return Object.assign({}, state, {
-        viewFoodAddOn: action.jsonData.addonArray,
+        viewFoodAddOn: checkedList,
       });
 
     default:

@@ -114,17 +114,21 @@ const Orders = () => {
         {/* Floating Bottom Buttons */}
         <View style={styles.bottomButtonsView}>
           <TouchableOpacity style={styles.bottomButton}>
-            <MatIcons name="pencil" size={21} color={colors.black} />
+            <MatIcons name="pencil" size={width * 0.03} color={colors.black} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.bottomButton}
             onPress={billPlusOnPress}
           >
-            <Entypo name="plus" size={24} color={colors.black} />
+            <Entypo name="plus" size={width * 0.035} color={colors.black} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.bottomButton}>
-            <MatIcons name="trash-can-outline" size={21} color={colors.black} />
+            <MatIcons
+              name="trash-can-outline"
+              size={width * 0.035}
+              color={colors.black}
+            />
           </TouchableOpacity>
         </View>
 
@@ -253,20 +257,20 @@ const styles = StyleSheet.create({
   },
   bottomButtonsView: {
     position: "absolute",
-    bottom: height * 0.06,
+    bottom: width * 0.1,
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
-    width: width * 0.2,
+    width: width * 0.22,
   },
   bottomButton: {
     borderWidth: 1,
-    height: 32,
-    width: 32,
-    borderRadius: 17,
+    height: width * 0.05,
+    width: width * 0.05,
+    borderRadius: width * 0.025,
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 8,

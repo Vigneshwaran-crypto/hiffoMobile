@@ -20,10 +20,14 @@ const LinkAddOn = (props) => {
   const [addOnList, setAddOnList] = useState([]);
   let addingAddOnList = useRef([]);
 
-  const foodItem = props.route.params.item;
-
   const allAddOns = useSelector(({ api }) => api.allAddOns);
+  const viewAddOns = useSelector(({ api }) => api.viewFoodAddOn);
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
+
+  const foodItem = props.route.params.item;
+  const from = props.route.params.from;
+
+  const isView = from === "view" ? true : false;
 
   useEffect(() => {
     LOG("clicked food item :", foodItem);
@@ -80,19 +84,24 @@ const LinkAddOn = (props) => {
 
   return (
     <View style={styles.container}>
-      <Header title={"Link AddOn"} />
+      <Header title={isView ? "Linked AddOn" : "Link AddOn"} />
 
       <View style={styles.screenContent}>
         <View style={styles.addAddOnView}>
           <FlatList
-            data={allAddOns}
+            data={isView ? viewAddOns : allAddOns}
             renderItem={addAddOnRenderItem}
             keyExtractor={(itm, ind) => ind}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 30 }}
             ListFooterComponent={
-              <View style={styles.modalListEmptyParent}>
+              <View
+                style={[
+                  styles.modalListEmptyParent,
+                  { display: isView ? "none" : "flex" },
+                ]}
+              >
                 <TouchableOpacity
                   style={styles.itemAddButton}
                   onPress={addAddOnPress}

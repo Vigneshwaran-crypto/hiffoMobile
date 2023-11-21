@@ -45,6 +45,14 @@ import {
   getAllFoods,
   viewFoodAddOn,
 } from "../../../redux/Api-Action";
+
+/**
+ * To achieve proper responsiveness you have to handle
+ * UI's with the screen actual size ,
+ * mainly you have to handle with screen width cause height  & width may be different so ,
+ * only handle dynamic UI as width size may more helpful and  simpler to handle
+ */
+
 const { height, width } = Dimensions.get("window");
 
 const FoodMenu = () => {
@@ -250,7 +258,7 @@ const FoodMenu = () => {
       foodId: item.foodId,
     };
 
-    // dispatch(viewFoodAddOn(req));
+    dispatch(viewFoodAddOn(req));
   };
 
   const onEditPress = (item) => {
@@ -443,19 +451,23 @@ const FoodMenu = () => {
           {/* Floating Bottom Buttons */}
           <View style={styles.bottomButtonsView}>
             <TouchableOpacity style={styles.bottomButton}>
-              <MatIcons name="pencil" size={21} color={colors.black} />
+              <MatIcons
+                name="pencil"
+                size={width * 0.03}
+                color={colors.black}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.bottomButton}
               onPress={onFloatingAddPress}
             >
-              <Entypo name="plus" size={24} color={colors.black} />
+              <Entypo name="plus" size={width * 0.035} color={colors.black} />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.bottomButton}>
               <MatIcons
                 name="trash-can-outline"
-                size={21}
+                size={width * 0.035}
                 color={colors.black}
               />
             </TouchableOpacity>
@@ -701,20 +713,21 @@ const styles = StyleSheet.create({
   },
   bottomButtonsView: {
     position: "absolute",
-    bottom: height * 0.06,
+    bottom: width * 0.1,
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
-    width: width * 0.2,
+    width: width * 0.22,
+    // borderWidth: 1,
   },
   bottomButton: {
     borderWidth: 1,
-    height: 32,
-    width: 32,
-    borderRadius: 17,
+    height: width * 0.05,
+    width: width * 0.05,
+    borderRadius: width * 0.025,
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 8,

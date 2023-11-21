@@ -30,12 +30,13 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
 
   const navigation = useNavigation();
+
   const onFoodItemPress = (item) => {
     onItemPress(item);
   };
 
-  const onLinkPress = () => {
-    navigation.navigate("linkAddOn", { item });
+  const onLinkPress = (item) => {
+    navigation.navigate("linkAddOn", { item: item, from: "add" });
   };
 
   const itemDeleteOnPress = (itm) => {
@@ -157,7 +158,7 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
                 styles.itemRoundButton,
                 { display: activeTab == 0 ? "flex" : "none" },
               ]}
-              onPress={onLinkPress}
+              onPress={onLinkPress.bind(this, item)}
             >
               <EnTypo name="link" size={0.03 * width} color={colors.mildBg} />
             </TouchableOpacity>

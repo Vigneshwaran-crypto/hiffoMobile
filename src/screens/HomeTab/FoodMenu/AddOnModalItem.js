@@ -101,7 +101,9 @@ const AddOnModalItem = ({
             ) : ( */}
             <View style={styles.checkBoxView}>
               <Checkbox
-                status={isChecked ? "checked" : "unchecked"}
+                status={
+                  item.checked ? "checked" : isChecked ? "checked" : "unchecked"
+                }
                 color={colors.activeGreen}
                 uncheckedColor={colors.grey}
                 onPress={onCheckItem}

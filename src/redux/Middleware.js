@@ -369,7 +369,12 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
 
           case StaticValues.viewFoodAddOns:
             LOG("viewFoodAddOns_in_middleware :", action);
-            dispatchNext = true;
+            if (action.responseData.statuscode == "Scode0057") {
+              dispatchNext = true;
+              RootNavigation.navigateScreen("linkAddOn", { from: "view" });
+            } else {
+              Toast("Please Try Again");
+            }
             break;
 
           default:
