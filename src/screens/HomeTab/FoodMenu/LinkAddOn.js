@@ -21,21 +21,42 @@ const LinkAddOn = (props) => {
   let addingAddOnList = useRef([]);
 
   const allAddOns = useSelector(({ api }) => api.allAddOns);
-  const viewAddOns = useSelector(({ api }) => api.viewFoodAddOn);
+  const linkedAddOns = useSelector(({ api }) => api.viewFoodAddOn.addonArray);
   const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
 
   const foodItem = props.route.params.item;
+
   const from = props.route.params.from;
 
   const isView = from === "view" ? true : false;
+  const addArray =
+    from === "view" ? props.route.params.foodData.addonArray : [];
 
   useEffect(() => {
     LOG("clicked food item :", foodItem);
-  }, []);
+
+    LOG("all addon list in linkedAddOn :", allAddOns);
+    LOG("linkedAddOns", addArray);
+
+    let getLinked = [];
+    let allDubAdd = allAddOns;
+
+    //legendary again
+    if (isView) {
+      addArray.forEach((lItem) => {
+        allDubAdd = allDubAdd.filter((itm) => {
+          return itm.addonsId != lItem.addonsId;
+        });
+      });
+    }
+    LOG("checked clear item :", allDubAdd);
+
+    const addedAddOn = addArray.concat(allDubAdd);
+    LOG("concated array :", addedAddOn);
+    setAddOnList(addedAddOn);
+  }, [linkedAddOns, allAddOns, addArray]);
 
   const addAddOnPress = () => {
-    LOG("current addOn List :", addOnList);
-
     const addonsIdsList = addingAddOnList.current.map((item) => {
       return item.addonsId;
     });
@@ -89,7 +110,8 @@ const LinkAddOn = (props) => {
       <View style={styles.screenContent}>
         <View style={styles.addAddOnView}>
           <FlatList
-            data={isView ? viewAddOns : allAddOns}
+            // data={isView ? linkedAddOns : allAddOns}
+            data={addOnList}
             renderItem={addAddOnRenderItem}
             keyExtractor={(itm, ind) => ind}
             showsHorizontalScrollIndicator={false}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -33,6 +33,12 @@ const AddOnModalItem = ({
   checkedList,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (item.checked) {
+      setIsChecked(true);
+    }
+  }, [item]);
 
   const onFoodItemPress = (item) => {
     onItemPress(item);
@@ -101,9 +107,7 @@ const AddOnModalItem = ({
             ) : ( */}
             <View style={styles.checkBoxView}>
               <Checkbox
-                status={
-                  item.checked ? "checked" : isChecked ? "checked" : "unchecked"
-                }
+                status={isChecked ? "checked" : "unchecked"}
                 color={colors.activeGreen}
                 uncheckedColor={colors.grey}
                 onPress={onCheckItem}

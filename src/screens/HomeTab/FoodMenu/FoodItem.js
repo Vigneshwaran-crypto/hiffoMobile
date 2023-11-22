@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     height: 0.12 * width,
     width: 0.12 * width,
     borderRadius: 0.06 * width,
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   foodItemImage: {
     height: 75,

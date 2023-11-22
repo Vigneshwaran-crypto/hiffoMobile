@@ -261,10 +261,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     backgroundColor: colors.greyF1,
     borderRadius: 40,
     width: width * 0.22,
+    borderColor: colors.tanGrey,
+    borderWidth: 1,
   },
   bottomButton: {
     borderWidth: 1,
@@ -273,7 +275,6 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.025,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 8,
     marginVertical: 5,
   },
   modalParent: {
