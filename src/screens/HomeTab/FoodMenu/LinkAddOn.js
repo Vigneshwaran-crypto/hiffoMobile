@@ -28,33 +28,41 @@ const LinkAddOn = (props) => {
 
   const from = props.route.params.from;
 
-  const isView = from === "view" ? true : false;
-  const addArray =
-    from === "view" ? props.route.params.foodData.addonArray : [];
+  const addedAddOnProps = props.route.params.foodData.addonArray || [];
 
   useEffect(() => {
+    LOG("allAdd ons list in linkAddOn :", allAddOns);
+    LOG("linked addOn from props  :", addedAddOnProps);
+    LOG("linked add on by store :", linkedAddOns);
     LOG("clicked food item :", foodItem);
 
-    LOG("all addon list in linkedAddOn :", allAddOns);
-    LOG("linkedAddOns", addArray);
+    let mergedAddOn = allAddOns;
+    let clearAddON = addedAddOnProps;
 
-    let getLinked = [];
-    let allDubAdd = allAddOns;
-
-    //legendary again
-    if (isView) {
-      addArray.forEach((lItem) => {
-        allDubAdd = allDubAdd.filter((itm) => {
-          return itm.addonsId != lItem.addonsId;
-        });
+    if (clearAddON.length !== 0) {
+      clearAddON = clearAddON.map((item) => ({ ...item, checked: true }));
+      clearAddON.forEach((item) => {
+        addingAddOnList.current.push(item);
       });
-    }
-    LOG("checked clear item :", allDubAdd);
 
-    const addedAddOn = addArray.concat(allDubAdd);
-    LOG("concated array :", addedAddOn);
-    setAddOnList(addedAddOn);
-  }, [linkedAddOns, allAddOns, addArray]);
+      mergedAddOn = allAddOns.filter((item) => {
+        const isHave = clearAddON.find(
+          (adItem) => adItem.addonsId === item.addonsId
+        );
+        if (isHave) {
+          // return isHave;
+        } else {
+          return item;
+        }
+      });
+
+      LOG("merged array :", mergedAddOn);
+      mergedAddOn = clearAddON.concat(mergedAddOn);
+      LOG("clear Merged addOn :", mergedAddOn);
+    }
+
+    setAddOnList(mergedAddOn);
+  }, [props]);
 
   const addAddOnPress = () => {
     const addonsIdsList = addingAddOnList.current.map((item) => {
@@ -105,7 +113,7 @@ const LinkAddOn = (props) => {
 
   return (
     <View style={styles.container}>
-      <Header title={isView ? "Linked AddOn" : "Link AddOn"} />
+      <Header title={"Link AddOn"} />
 
       <View style={styles.screenContent}>
         <View style={styles.addAddOnView}>
@@ -118,12 +126,7 @@ const LinkAddOn = (props) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 30 }}
             ListFooterComponent={
-              <View
-                style={[
-                  styles.modalListEmptyParent,
-                  { display: isView ? "none" : "flex" },
-                ]}
-              >
+              <View style={styles.modalListEmptyParent}>
                 <TouchableOpacity
                   style={styles.itemAddButton}
                   onPress={addAddOnPress}

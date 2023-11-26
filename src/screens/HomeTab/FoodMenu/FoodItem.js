@@ -22,7 +22,11 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import { LOG, liquidFont } from "../../../common/util";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAddOn, deleteMenu } from "../../../redux/Api-Action";
+import {
+  deleteAddOn,
+  deleteMenu,
+  viewFoodAddOn,
+} from "../../../redux/Api-Action";
 const { height, width } = Dimensions.get("window");
 
 const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
@@ -36,7 +40,15 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
   };
 
   const onLinkPress = (item) => {
-    navigation.navigate("linkAddOn", { item: item, from: "add" });
+    // navigation.navigate("linkAddOn", { item: item, from: "add" });
+
+    const req = {
+      token: hotelDetails.token,
+      hid: hotelDetails.hotelId,
+      foodId: item.foodId,
+    };
+
+    dispatch(viewFoodAddOn(req, item));
   };
 
   const itemDeleteOnPress = (itm) => {

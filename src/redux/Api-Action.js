@@ -155,7 +155,7 @@ export const linkAddOn = (jsonData) => {
   };
 };
 
-export const viewFoodAddOn = (jsonData) => {
+export const viewFoodAddOn = (jsonData, extraData) => {
   LOG("viewFoodAddOn_in_action :", jsonData);
   return (dispatch) => {
     dispatch({
@@ -163,6 +163,7 @@ export const viewFoodAddOn = (jsonData) => {
       requestType: StaticValues.viewFoodAddOns,
       requestUrl: HTTP.VIEW_FOOD_ADD_ONS,
       jsonData: jsonData,
+      extraData,
     });
   };
 };

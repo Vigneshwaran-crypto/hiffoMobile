@@ -252,13 +252,15 @@ const FoodMenu = () => {
 
   const onItemPress = (item) => {
     LOG("onItemPress Item :", item);
-    const req = {
-      token: hotelDetails.token,
-      hid: hotelDetails.hotelId,
-      foodId: item.foodId,
-    };
+    // const req = {
+    //   token: hotelDetails.token,
+    //   hid: hotelDetails.hotelId,
+    //   foodId: item.foodId,
+    // };
 
-    dispatch(viewFoodAddOn(req));
+    // dispatch(viewFoodAddOn(req));
+
+    navigation.navigate("viewSingleFood", { item });
   };
 
   const onEditPress = (item) => {

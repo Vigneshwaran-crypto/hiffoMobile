@@ -28,6 +28,7 @@ import CreateRest from "../screens/Auth/CreateRest";
 import CreateManagement from "../screens/Auth/CreateManagement";
 import LinkAddOn from "../screens/HomeTab/FoodMenu/LinkAddOn";
 import ConfirmSignUp from "../screens/Auth/ConfirmSignUp";
+import ViewSingleFood from "../screens/HomeTab/FoodMenu/ViewSingleFood";
 
 const Route = (props) => {
   const Stack = createNativeStackNavigator();
@@ -225,6 +226,12 @@ const Route = (props) => {
         <Stack.Screen
           name="linkAddOn"
           component={LinkAddOn}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="viewSingleFood"
+          component={ViewSingleFood}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
