@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: colors.black,
     fontFamily: textFontFaceMedium,
-    fontSize: 16,
+    fontSize: win.width * 0.03,
     marginStart: -10,
     marginTop: 3,
   },

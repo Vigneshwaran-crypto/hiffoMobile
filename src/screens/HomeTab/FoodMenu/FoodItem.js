@@ -48,7 +48,7 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
       foodId: item.foodId,
     };
 
-    dispatch(viewFoodAddOn(req, item));
+    dispatch(viewFoodAddOn(req, { ...item, from: "link" }));
   };
 
   const itemDeleteOnPress = (itm) => {

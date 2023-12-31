@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
   Image,
-  KeyboardAvoidingView,
   Modal,
   PixelRatio,
   StyleSheet,
@@ -13,29 +12,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../../../common/colors";
-import Header from "../../../components/DefaultComponents/Header";
-import {
-  textFontFaceLight,
-  textFontFaceMedium,
-  textFontFaceSemiBold,
-} from "../../../common/styles";
+import LinearGradient from "react-native-linear-gradient";
+import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Entypo from "react-native-vector-icons/Entypo";
-import FoodItem from "./FoodItem";
-import {
-  LOG,
-  Toast,
-  addFoodItems,
-  addOnList,
-  categoryList,
-  foodList,
-  scrWidth,
-} from "../../../common/util";
-import LinearGradient from "react-native-linear-gradient";
-import AddOnModalItem from "../FoodMenu/AddOnModalItem";
 import { useDispatch, useSelector } from "react-redux";
+import { colors } from "../../../common/colors";
+import { textFontFaceLight, textFontFaceMedium } from "../../../common/styles";
+import { LOG, Toast, categoryList } from "../../../common/util";
+import Header from "../../../components/DefaultComponents/Header";
 import {
   createAddOn,
   createMenu,
@@ -43,8 +28,8 @@ import {
   editMenu,
   getAllAddOn,
   getAllFoods,
-  viewFoodAddOn,
 } from "../../../redux/Api-Action";
+import FoodItem from "./FoodItem";
 
 /**
  * To achieve proper responsiveness you have to handle
