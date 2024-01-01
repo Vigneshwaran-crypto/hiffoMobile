@@ -96,11 +96,25 @@ export const colors = {
   logoOrange: "#fe5722",
 
   purple: "#512B81",
-  darkBlue: "#241468",
 
-  itemBorderGrey:"#F0F0F4",
-  subTextColor:"#A1A1A1",
-  mildBg:"#FAFAFA"
+  itemBorderGrey: "#F0F0F4",
+  subTextColor: "#A1A1A1",
+  mildBg: "#FAFAFA",
+
+  royalBlue: "#354585",
+  darkBlue: "#111E4B",
+  mediumBlue: "#2D64AC",
+  matteBlack: "#1A1A1A",
+  mildBlack: "#16191C",
+  thinBlack: "#2B2937",
+  lightBlack: "#4A4B59",
+  vantaBlack: "#08090B",
+  darkGrey: "#67696A",
+  gold: "#CDAA59",
+  matteWine: "#572C46",
+  transparent: "#00000000",
+  white: "#FFFFFF",
+  mildPurple: "#5D68F9",
 };
 
 export const TextColors = {

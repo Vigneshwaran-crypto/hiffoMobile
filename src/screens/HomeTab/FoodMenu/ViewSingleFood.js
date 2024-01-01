@@ -18,6 +18,7 @@ import {
   textFontFaceMedium,
 } from "../../../common/styles";
 import MatIcon from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { useSelector } from "react-redux";
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -32,6 +33,8 @@ const ViewSingleFood = (props) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const tipCarouselRef = useRef();
+
+  const ratingList = useState([]);
 
   useEffect(() => {
     LOG("food item in View SingleFood :", food);
@@ -60,6 +63,14 @@ const ViewSingleFood = (props) => {
 
       setFoodItemAddOn(foodAddOn);
     }
+
+    let tempRateList = [];
+
+    for (let i = 0; i < food.ratings; i++) {
+      tempRateList.push(i);
+    }
+
+    ratingList.concat(tempRateList);
   }, []);
 
   const foodImageRender = ({ item, index }) => {
@@ -70,7 +81,18 @@ const ViewSingleFood = (props) => {
     <View style={styles.addOnItem}>
       <View style={styles.itemImage}></View>
 
-      <Text style={styles.addOnName}>{item.addonsName}</Text>
+      <Text style={styles.addOnName} numberOfLines={1} adjustsFontSizeToFit>
+        {item.addonsName}
+      </Text>
+
+      <Text style={styles.itemPriceText}>
+        <MatIcon
+          name="rupee"
+          size={SLIDER_WIDTH * 0.023}
+          color={colors.activeGreen}
+        />
+        {item.rate}
+      </Text>
     </View>
   );
 
@@ -119,12 +141,20 @@ const ViewSingleFood = (props) => {
           </Text>
 
           <View style={styles.ratingView}>
-            <Text>Rating</Text>
+            {ratingList.map((itm) => (
+              <AntDesign key={itm} name="star" color={colors.gold} size={20} />
+            ))}
           </View>
         </View>
 
         <Text style={styles.priceText}>
-          {food.rate} <MatIcon name="rupee" size={26} color={colors.black} />
+          <MatIcon
+            name="rupee"
+            size={SLIDER_WIDTH * 0.04}
+            color={colors.activeGreen}
+          />
+
+          {food.rate}
         </Text>
 
         <Text style={styles.descText}>
@@ -243,13 +273,25 @@ const styles = StyleSheet.create({
     shadowColor: colors.black,
     // borderWidth: 1,
     backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.black,
   },
   addOnName: {
     marginVertical: 8,
     fontFamily: textFontFaceMedium,
-    color: colors.buttonGreen,
+    color: colors.vantaBlack,
     fontSize: SLIDER_WIDTH * 0.022,
     marginHorizontal: 10,
+    // borderWidth: 1,
+    flex: 1,
+  },
+  itemPriceText: {
+    // borderWidth: 1,
+    flex: 0.3,
+    textAlign: "center",
+    fontFamily: textFontFaceMedium,
+    color: colors.buttonGreen,
+    fontSize: SLIDER_WIDTH * 0.023,
   },
 });
 
