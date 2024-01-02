@@ -105,7 +105,12 @@ const FoodItem = ({ item, index, activeTab, onItemPress, editOnPress }) => {
           <Text style={styles.foodItemPrice}>{item.rate}</Text>
 
           {/* <ScrollView style={{ borderWidth: 1 }} horizontal={true}> */}
-          <View style={styles.addFoodQuantityView}>
+          <View
+            style={[
+              styles.addFoodQuantityView,
+              { display: activeTab === 0 ? "none" : "flex" },
+            ]}
+          >
             <TouchableOpacity style={styles.itemAddButton}>
               <LinearGradient
                 colors={[colors.subTextColor, colors.tanGrey]}
