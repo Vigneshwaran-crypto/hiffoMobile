@@ -1,10 +1,13 @@
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -25,15 +28,29 @@ import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import EnTypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LinearGradient from "react-native-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import {
+  deleteAddOn,
+  deleteMenu,
+  editAddOn,
+  editMenu,
+  viewFoodAddOn,
+} from "../../../redux/Api-Action";
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 
 const { height, width } = Dimensions.get("window");
 
 const ViewSingleFood = (props) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const food = props.route.params.item;
+  const activeTab = props.route.params.activeTab;
+  const category = props.route.params.category;
+
+  const hotelDetails = useSelector(({ auth }) => auth.hotelDetails);
   const allAddOns = useSelector(({ api }) => api.allAddOns);
 
   const [foodItemAddOn, setFoodItemAddOn] = useState([]);
@@ -49,8 +66,11 @@ const ViewSingleFood = (props) => {
   const [foodType, setFoodType] = useState("");
   const [description, setDesc] = useState("");
   const [showFoodModal, setShowFoodModal] = useState("");
+  const [modalType, setModalType] = useState("");
 
   let foodId = useRef(0);
+
+  const foodModalTitle = activeTab === 0 ? "Edit Food" : "Edit AddOn";
 
   useEffect(() => {
     LOG("food item in View SingleFood :", food);
@@ -89,23 +109,127 @@ const ViewSingleFood = (props) => {
     ratingList.concat(tempRateList);
   }, []);
 
-  // const onEditPress = () => {
-  //   LOG("editOnPress view Food :", food);
-  //   // if (activeTab == 0) {
-  //     setShowFoodModal("ef"); //edit food menu
-  //     setFoodName(food.foodName);
-  //     foodId.current = food.foodId;
-  //   // } else {
-  //   //   setShowFoodModal("ea"); // edit add On
-  //   //   setFoodName(item.addonsName);
-  //   //   foodId.current = item.addonsId;
-  //   // }
+  const onEditPress = () => {
+    LOG("editOnPress view Food :", food);
+    // if (activeTab == 0) {
+    setShowFoodModal("ef"); //edit food menu
+    setFoodName(food.foodName);
+    foodId.current = food.foodId;
+    // } else {
+    //   setShowFoodModal("ea"); // edit add On
+    //   setFoodName(item.addonsName);
+    //   foodId.current = item.addonsId;
+    // }
 
-  //   setPrice(food.rate);
-  //   setQuantity(food.unit);
-  //   setFoodType(food.cType);
-  //   setDesc(food.description);
-  // };
+    setPrice(food.rate);
+    setQuantity(food.unit);
+    setFoodType(food.cType);
+    setDesc(food.description);
+  };
+
+  const onCreateMenuSave = () => {
+    if (!foodName) {
+      Toast("Please enter food name");
+    } else if (!price) {
+      Toast("Please enter price");
+    } else if (!quantity) {
+      Toast("Please enter quantity");
+    } else if (!foodType) {
+      Toast("Please enter food type");
+    } else if (activeTab == 0 && !description) {
+      Toast("Please enter description");
+    } else {
+      if (activeTab == 0) {
+        // Edit Food Item
+        const req = {
+          hid: hotelDetails.hotelId,
+          foodId: foodId.current,
+          category: category,
+          foodName: foodName,
+          unit: quantity,
+          rate: price,
+          description: description,
+          displayTime: "",
+          cType: foodType,
+          token: hotelDetails.token,
+        };
+        dispatch(editMenu(req));
+      } else {
+        // Edit addOn Item
+        const req = {
+          hid: hotelDetails.hotelId,
+          // category: categoryFocus.value.toLocaleLowerCase(),
+          addonsName: foodName,
+          unit: quantity,
+          rate: price,
+          cType: foodType,
+          token: hotelDetails.token,
+          addonsId: foodId.current,
+        };
+        dispatch(editAddOn(req));
+      }
+    }
+
+    setShowFoodModal(""); // for closing the modal after done operation
+  };
+
+  const modalCloseOnPress = () => {
+    setShowFoodModal("");
+  };
+
+  const onLinkPress = () => {
+    // navigation.navigate("linkAddOn", { item: item, from: "add" });
+
+    const req = {
+      token: hotelDetails.token,
+      hid: hotelDetails.hotelId,
+      foodId: food.foodId,
+    };
+
+    dispatch(viewFoodAddOn(req, { ...food, from: "link" }));
+  };
+
+  const itemDeleteOnPress = (itm) => {
+    LOG("item gonna be deleted clicked :");
+
+    Alert.alert(
+      null,
+      `Delete This ${activeTab == 0 ? "Food" : "AddOn"} Item ?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Ok",
+          style: "destructive",
+          onPress: () => {
+            if (activeTab == 0) {
+              const req = {
+                hid: hotelDetails.hotelId,
+                token: hotelDetails.token,
+                foodId: food.foodId,
+              };
+
+              const extra = {
+                cat: food.category,
+                id: food.foodId,
+              };
+
+              dispatch(deleteMenu(req, extra));
+            } else {
+              const req = {
+                hid: hotelDetails.hotelId,
+                token: hotelDetails.token,
+                addonsId: food.addonsId,
+              };
+              dispatch(deleteAddOn(req));
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const foodImageRender = ({ item, index }) => {
     return <CarouselFoodItem index={index} item={item} />;
@@ -129,6 +253,28 @@ const ViewSingleFood = (props) => {
       </Text>
     </View>
   );
+
+  // Modal list item
+  const renderAddFoodInModal = ({ item, index }) => {
+    return (
+      <View style={styles.addFoodItemParent}>
+        <View style={styles.itemImageView}>
+          <Image
+            style={styles.foodItemImage}
+            source={require("../../../../Assests/images/nofood1.png")}
+          />
+        </View>
+        <Text
+          style={[
+            styles.slotText,
+            { display: modalType == "addOn" ? "flex" : "none" },
+          ]}
+        >
+          {"Slot " + item}
+        </Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -168,7 +314,7 @@ const ViewSingleFood = (props) => {
         />
       </View>
 
-      <ScrollView nestedScrollEnabled style={{ flex: 2 }}>
+      <ScrollView nestedScrollEnabled={true} style={{ flex: 2 }}>
         <View style={styles.foodItemContent}>
           <View style={styles.foodRateView}>
             <Text
@@ -262,7 +408,7 @@ const ViewSingleFood = (props) => {
           <View style={styles.roundButtonsView}>
             <TouchableOpacity
               style={styles.itemRoundButton}
-              // onPress={onEditPress}
+              onPress={onEditPress}
             >
               <MatIcons
                 name="pencil"
@@ -273,14 +419,14 @@ const ViewSingleFood = (props) => {
 
             <TouchableOpacity
               style={[styles.itemRoundButton, { marginHorizontal: 20 }]}
-              // onPress={onLinkPress.bind(this, item)}
+              onPress={onLinkPress}
             >
               <EnTypo name="link" size={0.032 * width} color={colors.mildBg} />
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.itemRoundButton}
-              // onPress={itemDeleteOnPress.bind(this, item)}
+              onPress={itemDeleteOnPress}
             >
               <Feather
                 name="trash-2"
@@ -292,14 +438,7 @@ const ViewSingleFood = (props) => {
 
           {/* copied code ended */}
 
-          <Text style={styles.descText}>
-            Upon the symbol's adoption in July 2010, the Indian government said
-            it would try to adopt the sign within six months in the country and
-            globally within 18 to 24 months, Major banks have also started
-            printing cheques with the new Indian rupee sign, where the
-            traditional ⟨₨⟩ sign was used. The Indian Postal Department also
-            started printing
-          </Text>
+          <Text style={styles.descText}>{food.description}</Text>
 
           <Text style={styles.addOnTitle}>AddOn List</Text>
           <View style={styles.addOnListView}>
@@ -312,6 +451,145 @@ const ViewSingleFood = (props) => {
           </View>
         </View>
       </ScrollView>
+
+      {/* Add Food Modal */}
+      <Modal
+        visible={showFoodModal.length != 0 ? true : false}
+        animationType="slide"
+        transparent={true}
+        statusBarTranslucent={true}
+      >
+        <TouchableOpacity
+          style={styles.modalParent}
+          activeOpacity={1}
+          onPress={() => setShowFoodModal("")}
+        >
+          <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
+            <View style={styles.modalWholeView}>
+              <Text style={styles.modalTopicText}>{foodModalTitle}</Text>
+
+              <View style={styles.addFoodListView}>
+                <FlatList
+                  data={[1, 2, 3, 4, 5]}
+                  renderItem={renderAddFoodInModal}
+                  keyExtractor={(itm, ind) => ind}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Food name"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+                onChangeText={setFoodName}
+                value={foodName}
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Price"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+                onChangeText={setPrice}
+                value={price}
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Quantity"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+                onChangeText={setQuantity}
+                value={quantity}
+              />
+              <TextInput
+                style={styles.modalInputs}
+                placeholder={"Veg or Non-veg"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+                onChangeText={setFoodType}
+                value={foodType}
+              />
+              <TextInput
+                style={[
+                  styles.modalInputs,
+                  {
+                    display:
+                      showFoodModal == "af" || showFoodModal == "ef"
+                        ? "flex"
+                        : "none",
+                  },
+                ]}
+                placeholder={"Description"}
+                placeholderTextColor={colors.grey}
+                keyboardType={"ascii-capable"}
+                underlineColorAndroid={colors.transparent}
+                selectionColor={colors.baseBackground}
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
+                onChangeText={setDesc}
+                value={description}
+              />
+
+              <View style={styles.modalBottomButtonsView}>
+                <TouchableOpacity
+                  style={styles.modalBottomButtons}
+                  onPress={modalCloseOnPress}
+                >
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.activeGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.modalButtonGradient}
+                  >
+                    <Text style={styles.modalButtontext}>Close</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.modalBottomButtons}
+                  onPress={onCreateMenuSave}
+                >
+                  <LinearGradient
+                    colors={[colors.buttonGreen, colors.activeGreen]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.modalButtonGradient}
+                  >
+                    <Text style={styles.modalButtontext}>Save</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
@@ -492,6 +770,138 @@ const styles = StyleSheet.create({
     height: 0.055 * width,
     width: 0.055 * width,
     borderRadius: 0.027 * width,
+  },
+
+  // pasted
+  addFoodItemParent: {
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    marginVertical: 8,
+    marginHorizontal: 5,
+    alignItems: "center",
+  },
+  itemImageView: {
+    elevation: 7,
+    shadowColor: colors.black,
+    shadowOpacity: 1,
+    backgroundColor: colors.white,
+    height: 77,
+    width: 77,
+    borderRadius: 40,
+    padding: 0.3,
+    marginHorizontal: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  foodItemImage: {
+    height: 110,
+    width: 110,
+    borderRadius: 60,
+    resizeMode: "center",
+  },
+  slotText: {
+    fontFamily: textFontFaceLight,
+    marginVertical: 2,
+  },
+  modalInputs: {
+    backgroundColor: colors.inputGrey,
+    color: colors.black,
+    paddingVertical: 10,
+    borderRadius: 5,
+    fontFamily: textFontFaceLight,
+    paddingStart: 10,
+    width: "80%",
+    marginVertical: 12,
+  },
+  modalBottomButtonsView: {
+    width: "80%",
+    flexDirection: "row",
+    marginTop: 15,
+  },
+  modalBottomButtons: {
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalButtonGradient: {
+    borderRadius: 156,
+    marginVertical: 10,
+    paddingVertical: 8,
+  },
+  modalButtontext: {
+    color: colors.white,
+    alignSelf: "center",
+    paddingBottom: 2,
+  },
+  modalParent: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    backgroundColor: colors.transparentGrey,
+  },
+  modalContent: {
+    height: "75%",
+    width: "85%",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    borderWidth: 1,
+  },
+  modalWholeView: {
+    flex: 1,
+    margin: 15,
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  modalTopicText: {
+    color: colors.activeGreen,
+    fontFamily: textFontFaceMedium,
+    fontSize: 23,
+    alignSelf: "center",
+  },
+  addFoodListView: {
+    height: "18%",
+    width: "90%",
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  addFoodItemParent: {
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    marginVertical: 8,
+    marginHorizontal: 5,
+    alignItems: "center",
+  },
+  itemImageView: {
+    elevation: 7,
+    shadowColor: colors.black,
+    shadowOpacity: 1,
+    backgroundColor: colors.white,
+    height: 77,
+    width: 77,
+    borderRadius: 40,
+    padding: 0.3,
+    marginHorizontal: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  foodItemImage: {
+    height: 110,
+    width: 110,
+    borderRadius: 60,
+    resizeMode: "center",
+  },
+  slotText: {
+    fontFamily: textFontFaceLight,
+    marginVertical: 2,
+  },
+  modalInputs: {
+    backgroundColor: colors.inputGrey,
+    color: colors.black,
+    paddingVertical: 10,
+    borderRadius: 5,
+    fontFamily: textFontFaceLight,
+    paddingStart: 10,
+    width: "80%",
+    marginVertical: 12,
   },
 });
 

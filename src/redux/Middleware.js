@@ -72,7 +72,7 @@ export const apiMiddleware = (store) => (next) => (action) => {
           return Promise.all([response.data, response.status]);
         })
         .then((responseData, status) => {
-          LOG("---------------->Response Data<----------------------" + status);
+          LOG("---------------->Response Data<----------------------");
           LOG("request Type ==>" + action.requestType);
           LOG("Axios Response  >>:" + JSON.stringify(responseData));
           next({
@@ -321,6 +321,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "Scode0045") {
               dispatchNext = true;
               Toast("Food Deleted Successfully");
+              RootNavigation.navigationRef.goBack();
             } else {
               Toast("Please Try Again");
             }

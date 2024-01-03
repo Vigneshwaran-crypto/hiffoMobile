@@ -245,7 +245,11 @@ const FoodMenu = () => {
 
     // dispatch(viewFoodAddOn(req));
 
-    navigation.navigate("viewSingleFood", { item });
+    navigation.navigate("viewSingleFood", {
+      item,
+      activeTab,
+      category: categoryFocus.value.toLocaleLowerCase(),
+    });
   };
 
   const onEditPress = (item) => {
