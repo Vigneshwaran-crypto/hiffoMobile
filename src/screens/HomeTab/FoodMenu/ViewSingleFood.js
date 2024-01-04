@@ -111,15 +111,15 @@ const ViewSingleFood = (props) => {
 
   const onEditPress = () => {
     LOG("editOnPress view Food :", food);
-    // if (activeTab == 0) {
-    setShowFoodModal("ef"); //edit food menu
-    setFoodName(food.foodName);
-    foodId.current = food.foodId;
-    // } else {
-    //   setShowFoodModal("ea"); // edit add On
-    //   setFoodName(item.addonsName);
-    //   foodId.current = item.addonsId;
-    // }
+    if (activeTab == 0) {
+      setShowFoodModal("ef"); //edit food menu
+      setFoodName(food.foodName);
+      foodId.current = food.foodId;
+    } else {
+      setShowFoodModal("ea"); // edit add On
+      setFoodName(food.addonsName);
+      foodId.current = food.addonsId;
+    }
 
     setPrice(food.rate);
     setQuantity(food.unit);
@@ -278,7 +278,7 @@ const ViewSingleFood = (props) => {
 
   return (
     <View style={styles.container}>
-      <Header title={"Food Item"} />
+      <Header title={activeTab === 0 ? "Food Item" : "AddOn Item"} />
 
       <View style={styles.carouselView}>
         <Carousel
@@ -322,7 +322,7 @@ const ViewSingleFood = (props) => {
               adjustsFontSizeToFit
               numberOfLines={1}
             >
-              {food.foodName}
+              {activeTab === 0 ? food.foodName : food.addonsName}
             </Text>
 
             <View style={styles.ratingView}>
@@ -418,7 +418,12 @@ const ViewSingleFood = (props) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.itemRoundButton, { marginHorizontal: 20 }]}
+              style={[
+                styles.itemRoundButton,
+                {
+                  display: activeTab === 0 ? "flex" : "none",
+                },
+              ]}
               onPress={onLinkPress}
             >
               <EnTypo name="link" size={0.032 * width} color={colors.mildBg} />
@@ -440,8 +445,20 @@ const ViewSingleFood = (props) => {
 
           <Text style={styles.descText}>{food.description}</Text>
 
-          <Text style={styles.addOnTitle}>AddOn List</Text>
-          <View style={styles.addOnListView}>
+          <Text
+            style={[
+              styles.addOnTitle,
+              { display: activeTab === 0 ? "flex" : "none" },
+            ]}
+          >
+            AddOn List
+          </Text>
+          <View
+            style={[
+              styles.addOnListView,
+              { display: activeTab === 0 ? "flex" : "none" },
+            ]}
+          >
             <FlatList
               data={foodItemAddOn}
               key={(item, ind) => ind}
@@ -770,6 +787,7 @@ const styles = StyleSheet.create({
     height: 0.055 * width,
     width: 0.055 * width,
     borderRadius: 0.027 * width,
+    marginHorizontal: 10,
   },
 
   // pasted

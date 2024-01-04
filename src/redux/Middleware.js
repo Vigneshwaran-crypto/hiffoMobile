@@ -352,6 +352,7 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             if (action.responseData.statuscode == "Scode0048") {
               dispatchNext = true;
               Toast("AddOn Deleted Successfully");
+              RootNavigation.navigationRef.goBack();
             } else {
               Toast("Please Try Again");
             }
