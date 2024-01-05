@@ -32,10 +32,12 @@ import { useDispatch, useSelector } from "react-redux";
 import LinearGradient from "react-native-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import {
+  addOnAvailabilityStatus,
   deleteAddOn,
   deleteMenu,
   editAddOn,
   editMenu,
+  foodAvailabilityStatus,
   viewFoodAddOn,
 } from "../../../redux/Api-Action";
 const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -81,7 +83,7 @@ const ViewSingleFood = (props) => {
 
     for (let i = 1; i <= 10; i++) {
       const foodAddOn = food[`addon${i}`];
-      if (foodAddOn) {
+      if (foodAddOn && foodAddOn !== "0") {
         foodAddOnList.push(parseInt(foodAddOn));
       }
     }
@@ -90,7 +92,7 @@ const ViewSingleFood = (props) => {
     if (foodAddOnList.length != 0) {
       const foodAddOn = foodAddOnList.map((fAddOn) => {
         const allAddOn = allAddOns.find((allAdd) => fAddOn === allAdd.addonsId);
-        if (allAddOn) {
+        if (allAddOn && allAddOn !== undefined) {
           return allAddOn;
         }
       });
@@ -231,6 +233,26 @@ const ViewSingleFood = (props) => {
     );
   };
 
+  const onAvailabilityPress = (val) => {
+    LOG("pressing values :", val);
+
+    // hid=&token=&addonsId=&availability=
+
+    let req = {
+      hid: hotelDetails.hotelId,
+      token: hotelDetails.token,
+      availability: val,
+    };
+
+    if (activeTab === 0) {
+      req.foodId = food.foodId;
+      dispatch(foodAvailabilityStatus(req));
+    } else {
+      req.addonsId = food.addonsId;
+      dispatch(addOnAvailabilityStatus(req));
+    }
+  };
+
   const foodImageRender = ({ item, index }) => {
     return <CarouselFoodItem index={index} item={item} />;
   };
@@ -337,20 +359,37 @@ const ViewSingleFood = (props) => {
             </View>
           </View>
 
-          <Text style={styles.priceText}>
-            <MatIcon
-              name="rupee"
-              size={SLIDER_WIDTH * 0.04}
-              color={colors.activeGreen}
-            />
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.priceText}>
+              <MatIcon
+                name="rupee"
+                size={SLIDER_WIDTH * 0.04}
+                color={colors.activeGreen}
+              />
 
-            {food.rate}
-          </Text>
+              {food.rate}
+            </Text>
+
+            <MatIcons
+              name="square-circle"
+              size={SLIDER_WIDTH * 0.06}
+              color={food.cType === "veg" ? colors.activeGreen : colors.red}
+            />
+          </View>
 
           {/* Copied code start */}
 
           <View style={styles.addFoodQuantityView}>
-            <TouchableOpacity style={styles.itemAddButton}>
+            <TouchableOpacity
+              style={styles.itemAddButton}
+              onPress={onAvailabilityPress.bind(this, "A")}
+            >
               <LinearGradient
                 colors={[colors.subTextColor, colors.tanGrey]}
                 start={{ x: 1, y: 0 }}
@@ -369,7 +408,7 @@ const ViewSingleFood = (props) => {
 
             <TouchableOpacity
               style={[styles.itemAddButton, { marginHorizontal: 10 }]}
-              // onPress={onEditPress.bind(this, item)}
+              onPress={onAvailabilityPress.bind(this, "H")}
             >
               <LinearGradient
                 colors={[colors.buttonGreen, colors.activeGreen]}
@@ -387,7 +426,13 @@ const ViewSingleFood = (props) => {
               </LinearGradient>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.itemAddButton}>
+            <TouchableOpacity
+              style={[
+                styles.itemAddButton,
+                { display: activeTab == 0 ? "flex" : "none" },
+              ]}
+              onPress={onAvailabilityPress.bind(this, "RS")}
+            >
               <LinearGradient
                 colors={[colors.subTextColor, colors.tanGrey]}
                 start={{ x: 0, y: 0 }}

@@ -167,3 +167,27 @@ export const viewFoodAddOn = (jsonData, extraData) => {
     });
   };
 };
+
+export const foodAvailabilityStatus = (jsonData, extraData) => {
+  LOG("foodAvailabilityStatus_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.foodAvailabilityStatus,
+      requestUrl: HTTP.FOOD_AVAILABILITY_STATUS,
+      jsonData: jsonData,
+    });
+  };
+};
+
+export const addOnAvailabilityStatus = (jsonData, extraData) => {
+  LOG("addOnAvailabilityStatus_in_action :", jsonData);
+  return (dispatch) => {
+    dispatch({
+      type: GET_API_DATA,
+      requestType: StaticValues.addOnAvailabilityStatus,
+      requestUrl: HTTP.ADDON_AVAILABILITY_STATUS,
+      jsonData: jsonData,
+    });
+  };
+};

@@ -383,6 +383,20 @@ export const ApplicationMiddleware = (store) => (next) => (action) => {
             }
             break;
 
+          case StaticValues.foodAvailabilityStatus:
+            LOG("foodAvailabilityStatus_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0083") {
+              Toast("Food availability status changed");
+            }
+            break;
+
+          case StaticValues.addOnAvailabilityStatus:
+            LOG("addOnAvailabilityStatus_in_middleware :", action);
+            if (action.responseData.statuscode == "Scode0083") {
+              Toast("Addon  availability status changed");
+            }
+            break;
+
           default:
             LOG("Redirection : Default ");
             dispatchNext = true;

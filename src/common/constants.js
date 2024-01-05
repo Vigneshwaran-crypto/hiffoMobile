@@ -33,6 +33,9 @@ export const StaticValues = {
 
   linkAddOn: "linkAddOn",
   viewFoodAddOns: "viewFoodAddOns",
+
+  foodAvailabilityStatus: "foodAvailabilityStatus",
+  addOnAvailabilityStatus: "addOnAvailabilityStatus",
 };
 //Api Constants
 export const GET_API_DATA = "GET_API_DATA";
@@ -84,6 +87,9 @@ export const HTTP = {
 
   LINK_ADD_ON: ServerUrl + "linkaddonstofood",
   VIEW_FOOD_ADD_ONS: ServerUrl + "foodfetcherwithfoodid",
+
+  FOOD_AVAILABILITY_STATUS: ServerUrl + "foodavailabilitystatuschanger",
+  ADDON_AVAILABILITY_STATUS: ServerUrl + "addonsavailabilitystatuschanger",
 
   // Header For Api Call Without Authorization.
   HEADERS: {
