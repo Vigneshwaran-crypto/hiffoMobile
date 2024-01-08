@@ -40,6 +40,7 @@ import {
   foodAvailabilityStatus,
   viewFoodAddOn,
 } from "../../../redux/Api-Action";
+import { AirbnbRating, Rating } from "react-native-ratings";
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
 
@@ -249,6 +250,10 @@ const ViewSingleFood = (props) => {
       dispatch(foodAvailabilityStatus(req));
     } else {
       req.addonsId = food.addonsId;
+      // req.cType = food.cType;
+      // req.rate = food.rate;
+      // req.unit = food.unit;
+
       dispatch(addOnAvailabilityStatus(req));
     }
   };
@@ -348,14 +353,24 @@ const ViewSingleFood = (props) => {
             </Text>
 
             <View style={styles.ratingView}>
-              {ratingList.map((itm) => (
+              {/* {ratingList.map((itm) => (
                 <AntDesign
                   key={itm}
                   name="star"
                   color={colors.gold}
                   size={20}
                 />
-              ))}
+              ))} */}
+
+              <Rating
+                style={{ display: activeTab === 0 ? "flex" : "none" }}
+                ratingCount={5}
+                // readonly
+                startingValue={food?.ratings?.toString()}
+                fractions={"10"}
+                imageSize={30}
+                jumpValue={0.5}
+              />
             </View>
           </View>
 

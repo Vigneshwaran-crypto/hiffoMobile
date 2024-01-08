@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -28,6 +29,7 @@ import {
   editMenu,
   getAllAddOn,
   getAllFoods,
+  initSpinner,
 } from "../../../redux/Api-Action";
 import FoodItem from "./FoodItem";
 
@@ -48,6 +50,7 @@ const FoodMenu = () => {
   const allAddOns = useSelector(({ api }) => api.allAddOns);
 
   const counter = useSelector(({ api }) => api.counter);
+  const customSpinner = useSelector(({ api }) => api.customSpinner);
 
   const [wholeFood, setWholeFood] = useState(allFoods);
   const [wholeAddOn, setWholeAddOn] = useState(allAddOns);
@@ -126,6 +129,7 @@ const FoodMenu = () => {
         token: hotelDetails.token,
       };
 
+      dispatch(initSpinner());
       dispatch(getAllFoods(req));
       dispatch(getAllAddOn(req));
     }
@@ -465,6 +469,17 @@ const FoodMenu = () => {
           </View>
         </View>
       </View>
+
+      {customSpinner ? (
+        <View style={styles.loaderView}>
+          <ActivityIndicator
+            size={"large"}
+            color={colors.buttonGreen}
+            animating={customSpinner}
+            style={styles.loaderStyle}
+          />
+        </View>
+      ) : null}
 
       {/* Add Food Modal */}
       <Modal
@@ -813,6 +828,18 @@ const styles = StyleSheet.create({
     color: colors.white,
     alignSelf: "center",
     paddingBottom: 2,
+  },
+  loaderView: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    zIndex: 2,
+    elevation: 5,
+    marginTop: 55,
   },
 });
 

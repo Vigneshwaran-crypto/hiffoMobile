@@ -103,6 +103,7 @@ export const getAllAddOn = (jsonData) => {
       requestType: StaticValues.getAllAddOn,
       requestUrl: HTTP.GET_ALL_ADDON,
       jsonData: jsonData,
+      stopSpinner: true,
     });
   };
 };
@@ -188,6 +189,7 @@ export const addOnAvailabilityStatus = (jsonData, extraData) => {
       requestType: StaticValues.addOnAvailabilityStatus,
       requestUrl: HTTP.ADDON_AVAILABILITY_STATUS,
       jsonData: jsonData,
+      get: true,
     });
   };
 };
